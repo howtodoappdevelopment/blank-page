@@ -1,0 +1,23 @@
+{
+  "plugins": [
+    "node-workspace"
+  ],
+  "bump-minor-pre-major": true,
+  "bump-patch-for-minor-pre-major": true,
+  "bootstrap-sha": "fba653dc38c2a0fabb664991ec65a92403fac656",
+  "packages": {
+    ".": {
+      "release-as": ""
+    },
+    "ui/apps/todo-list": {
+      "release-type": "simple",
+      "release-as" : "",
+      "package-name": "todo-list"
+    },
+    "ui/libs/realtime-markdown": {
+      "release-type": "node",
+      "release-as": "",
+      "package-name": "realtime-markdown"
+    }
+  }
+}
