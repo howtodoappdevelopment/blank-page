@@ -2,3 +2,15 @@
 @tailwind components;
 @tailwind base;
 @tailwind utilities;
+@tailwind forms;
+
+.root,
+#root,
+#docs-root {
+  --primary: #367ee9;
+  --secondary: #a0aec0;
+  --accent: #718096;
+  --background: #fff;
+  --main: #0d0106;
+  --header: #2d3748;
+}
