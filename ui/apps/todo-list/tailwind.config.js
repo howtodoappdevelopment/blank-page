@@ -4,21 +4,19 @@ const { join } = require('path');
 
 module.exports = {
   content: [
-    join(
-      __dirname,
-      '{src,pages,components}/**/*!(*.stories|*.spec).{ts,tsx,html}'
-    ),
+    join(__dirname, 'src/**/*!(*.stories|*.spec).{ts,tsx}'),
     ...createGlobPatternsForDependencies(__dirname),
   ],
   theme: {
     extend: {
       colors: {
-        primary: 'var(--primary)',
-        secondary: 'var(--secondary)',
-        main: 'var(--main)',
-        background: 'var(--background)',
-        header: 'var(--header)',
-        accent: 'var(--accent)',
+        primary: {
+          900: 'rgb(194, 72, 75)',
+          600: 'rgba(194, 72, 75, 0.6)',
+          300: 'rgba(194, 72, 75, 0.3)',
+        },
+        secondary: 'orange',
+        tertiary: 'blue',
       },
     },
   },
