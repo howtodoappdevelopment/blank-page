@@ -1,10 +1,11 @@
-// Button.stories.ts|tsx
+// Empty.stories.ts|tsx
 
 import React from 'react';
 
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { Button, ButtonProps } from './button';
+import { Button } from './button';
+import { ButtonProps, buttonSizes, buttonTypes } from './button.props';
 
 export default {
   component: Button,
@@ -13,10 +14,10 @@ export default {
       control: 'text',
     },
     size: {
-      options: ['x-large', 'large', 'medium', 'default', 'small', 'x-small'],
+      options: buttonSizes,
     },
     type: {
-      options: ['default', 'primary', 'secondary', 'tertiary'],
+      options: buttonTypes,
     },
   },
   args: {

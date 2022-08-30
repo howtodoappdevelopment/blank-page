@@ -4,13 +4,21 @@
 @tailwind utilities;
 @tailwind forms;
 
-.root,
-#root,
-#docs-root {
-  --primary: #367ee9;
-  --secondary: #a0aec0;
-  --accent: #718096;
-  --background: #fff;
-  --main: #0d0106;
-  --header: #2d3748;
+h2 {
+  @apply text-4xl
+}
+h3 {
+  @apply text-3xl
+}
+h4 {
+  @apply text-2xl
+}
+h5 {
+  @apply text-xl
+}
+h6 {
+  @apply text-lg
+}
+p, span {
+  @apply text-base
 }
