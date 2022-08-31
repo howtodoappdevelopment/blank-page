@@ -1,4 +1,4 @@
-// Empty.stories.ts|tsx
+// Issue.stories.ts|tsx
 
 import React from 'react';
 
@@ -15,5 +15,5 @@ const Template: ComponentStory<typeof Empty> = (args: EmptyProps) => (
   <Empty {...args} />
 );
 
-// export const Empty = Template.bind({});
-// Empty.args = {};
+// export const Issue = Template.bind({});
+// Issue.args = {};

@@ -1,4 +1,4 @@
-// Empty.stories.ts|tsx
+// Issue.stories.ts|tsx
 
 import React from 'react';
 

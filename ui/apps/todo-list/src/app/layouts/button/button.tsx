@@ -3,18 +3,20 @@ import { ButtonProps, buttonSize, buttonType } from './button.props';
 
 const commonClasses = 'rounded-full';
 const typesClasses: { [type: buttonType]: string } = {
-  primary: 'border-2 border-transparent bg-primary-300 text-primary-900',
-  secondary: 'border-2 border-primary-300 text-primary-900',
+  primary: 'border-2 border-transparent bg-primary-100 text-primary-900',
+  secondary: 'border-2 border-primary-400 text-primary-900',
   tertiary: 'border-2 border-transparent bg-gray-100 text-gray-700',
   ghost: 'border-2 border-transparent text-gray-700',
-  default: 'border-2 border-transparent bg-primary-300 text-primary-900',
+  url: 'text text-cyan-500 !p-0',
+  active: 'border-2 border-transparent bg-cyan-100 text-cyan-700',
+  default: 'border-2 border-transparent bg-primary-100 text-primary-900',
 };
 const sizesClasses: { [size: buttonSize]: string } = {
   'x-large': 'text-3xl px-6 py-2',
   large: 'text-2xl px-5 py-2',
-  default: 'text-base px-3 py-1',
-  small: 'text-sm px-2 py-1',
-  'x-small': 'text-xs px-2 py-1',
+  default: 'text-base px-4 py-1',
+  small: 'text-sm px-3 py-0.5',
+  'x-small': 'text-xs px-3 py-0.5',
 };
 export const Button: FunctionComponent<PropsWithChildren<ButtonProps>> = ({
   children,
@@ -31,7 +33,7 @@ export const Button: FunctionComponent<PropsWithChildren<ButtonProps>> = ({
   const typeClasses = typesClasses[type]
     ? typesClasses[type]
     : typesClasses['default'];
-  const classes = `${commonClasses} ${sizeClasses} ${typeClasses} ${className}`;
+  const classes = `${commonClasses} ${sizeClasses} ${typeClasses} ${className} `;
   return (
     <button className={classes} onClick={onClick}>
       {children}
