@@ -5,6 +5,7 @@ import { Button } from './components/button/button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 import { PageHeader } from './components/page-header/page-header';
+import { Empty } from './components/empty/empty';
 
 export function App() {
   return (
@@ -31,6 +32,7 @@ export function App() {
           </>
         }
       />
+      <Empty />
     </div>
   );
 }
