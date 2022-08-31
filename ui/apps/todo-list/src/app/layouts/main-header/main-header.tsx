@@ -13,7 +13,7 @@ export const MainHeader: FunctionComponent<
   return (
     <div className="flex flex-row justify-between align-middle border-b-2 border-gray-100 px-8 py-6">
       <Button
-        className="px-2"
+        className="!px-2.5"
         type="tertiary"
         onClick={() => {
           onSideNavToggle(!open);

@@ -2,13 +2,22 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:@nrwl/nx/react", "../../.eslintrc.json"
+    "plugin:@nrwl/nx/react",
+    "plugin:react-hooks/recommended",
+    "../../.eslintrc.json"
   ],
   "ignorePatterns": ["!**/*"],
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-      "rules": {}
+      "rules": {
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": [
+          "warn", {
+            "additionalHooks": "(useRecoilCallback|useRecoilTransaction_UNSTABLE)"
+          }
+        ]
+      }
     },
     {
       "files": ["*.ts", "*.tsx"],

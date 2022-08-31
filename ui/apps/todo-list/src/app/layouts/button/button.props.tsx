@@ -1,3 +1,5 @@
+import { MouseEvent } from 'react';
+
 export const buttonSizes: string[] = [
   'x-large',
   'large',
@@ -13,6 +15,8 @@ export const buttonTypes = [
   'secondary',
   'tertiary',
   'ghost',
+  'url',
+  'active',
 ];
 export type buttonType = typeof buttonTypes[number];
 
@@ -22,5 +26,5 @@ export type ButtonProps = {
 
   className?: string;
 
-  onClick?: (e: unknown) => unknown;
+  onClick?: (e: MouseEvent<HTMLElement>) => unknown;
 };
