@@ -17,6 +17,7 @@ export const buttonTypes = [
   'ghost',
   'url',
   'active',
+  'side-nav',
 ];
 export type buttonType = typeof buttonTypes[number];
 
