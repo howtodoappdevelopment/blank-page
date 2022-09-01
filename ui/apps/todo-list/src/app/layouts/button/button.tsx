@@ -9,6 +9,7 @@ const typesClasses: { [type: buttonType]: string } = {
   ghost: 'border-2 border-transparent text-gray-700',
   url: 'text text-cyan-500 !p-0',
   active: 'border-2 border-transparent bg-cyan-100 text-cyan-700',
+  'side-nav': 'border-2 border-transparent text-gray-700 text-left !px-0',
   default: 'border-2 border-transparent bg-primary-100 text-primary-900',
 };
 const sizesClasses: { [size: buttonSize]: string } = {
