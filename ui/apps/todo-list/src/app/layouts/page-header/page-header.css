@@ -1,0 +1,21 @@
+#page-header h2 {
+  @apply text-gray-900
+}
+#page-header h3 {
+  @apply text-gray-800
+}
+#page-header h4 {
+  @apply text-gray-800
+}
+#page-header h5 {
+  @apply text-gray-700
+}
+#page-header h6 {
+  @apply text-gray-700
+}
+#page-header p, #page-header span {
+  @apply text-gray-600
+}
+#page-header small {
+  @apply text-gray-600
+}

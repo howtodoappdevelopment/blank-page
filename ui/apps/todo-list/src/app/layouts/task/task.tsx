@@ -7,6 +7,8 @@ import { isOverdue } from './utils';
 import { SubTasksBadge } from './sub-tasks-badge';
 import { Text } from '../../components/text/text';
 
+import './task.css';
+
 export const Task: FunctionComponent<PropsWithChildren<TaskProps>> = ({
   children,
   task,
@@ -14,9 +16,9 @@ export const Task: FunctionComponent<PropsWithChildren<TaskProps>> = ({
   const { id, title, description, subTasks, isLeaf, dates } = task;
   return (
     <div
+      key={`task-${id}`}
+      id="task"
       className="border-2 border-gray-100 flex flex-col items-start w-full rounded-md p-4 gap-3"
-      data-component-name={this}
-      id={id}
     >
       <h4>{title}</h4>
       <div className="flex flex-row items-start w-full gap-2">
