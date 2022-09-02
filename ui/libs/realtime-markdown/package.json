@@ -1,0 +1,7 @@
+{
+  "name": "@blank-page/realtime-markdown",
+  "version": "0.3.0",
+  "dependencies": {
+    "redom": "^3.29.1"
+  }
+}
