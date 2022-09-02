@@ -1,9 +1,9 @@
 import React, { FunctionComponent, useState } from 'react';
 import { truncate } from 'lodash-es';
 import { Button } from '../../layouts/button/button';
-import { TextProps } from './text.props';
+import { TextDisplayProps } from './text-display.props';
 
-export const Text: FunctionComponent<TextProps> = ({
+export const TextDisplay: FunctionComponent<TextDisplayProps> = ({
   text,
   maxLength = 512,
 }) => {

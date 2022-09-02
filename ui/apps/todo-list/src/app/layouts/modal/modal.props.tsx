@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { MutableRefObject, ReactNode } from 'react';
 
 export type ModalProps = {
   footerContent?: ReactNode;
