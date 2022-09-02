@@ -10,7 +10,13 @@
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "@environment/*": ["apps/todo-list/src/environments/*"],
+      "@layouts/*": ["apps/todo-list/src/app/components/*"],
+      "@pages/*": ["apps/todo-list/src/app/components/*"],
+      "@blank-page/realtime-markdown": ["libs/realtime-markdown/src/index.ts"]
+    }
   },
   "files": [],
   "include": [],

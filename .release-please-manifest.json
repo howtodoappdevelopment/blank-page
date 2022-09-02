@@ -1,0 +1,5 @@
+{
+  ".": "0.2.0",
+  "ui/libs/realtime-markdown": "0.3.0",
+  "ui/apps/todo-list": "0.6.0"
+}
