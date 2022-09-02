@@ -13,7 +13,7 @@ export const TodoPage: FunctionComponent = () => {
     <>
       <PageHeader
         title="Todo"
-        backUrl="/inbox"
+        backUrl="/"
         extras={
           <Button>
             <FontAwesomeIcon icon={faEye} />

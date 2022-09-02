@@ -1,0 +1,18 @@
+#task h2 {
+  @apply text-gray-900
+}
+#task h3 {
+  @apply text-gray-800
+}
+#task h4 {
+  @apply text-gray-800
+}
+#task h5 {
+  @apply text-gray-700
+}
+#task h6 {
+  @apply text-gray-700
+}
+#task p, #task span {
+  @apply text-gray-600
+}

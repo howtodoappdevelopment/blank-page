@@ -6,25 +6,32 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons/faPen';
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
 import { fullTaskDataMock } from '../data-mocks/tasks';
+import { faArrowRotateLeft } from '@fortawesome/free-solid-svg-icons/faArrowRotateLeft';
 
-export const InboxPage: FunctionComponent = () => {
+export const TrashPage: FunctionComponent = () => {
   return (
     <>
-      <PageHeader title="Inbox" />
+      <PageHeader
+        title="Trash"
+        description="Items in bin will be removed automatically after a week."
+        backUrl="/"
+        extras={
+          <>
+            <Button>
+              <FontAwesomeIcon icon={faTrash} /> &nbsp; Remove all
+            </Button>
+            <Button type="secondary">
+              <FontAwesomeIcon icon={faArrowRotateLeft} /> &nbsp; Restore all
+            </Button>
+          </>
+        }
+      />
       <Task task={fullTaskDataMock}>
-        <Button
-          size="small"
-          type="secondary"
-          onClick={(e) =>
-            console.log(e.currentTarget.parentElement?.parentElement)
-          }
-        >
-          <FontAwesomeIcon icon={faPen} />
-          &nbsp; Edit
+        <Button size="small">
+          <FontAwesomeIcon icon={faTrash} /> &nbsp; Remove
         </Button>
         <Button size="small" type="secondary">
-          <FontAwesomeIcon icon={faTrash} />
-          &nbsp; Remove
+          <FontAwesomeIcon icon={faArrowRotateLeft} /> &nbsp; Restore
         </Button>
       </Task>
     </>

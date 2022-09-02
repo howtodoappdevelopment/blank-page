@@ -7,8 +7,8 @@ const typesClasses: { [type: buttonType]: string } = {
   secondary: 'border-2 border-primary-400 text-primary-900',
   tertiary: 'border-2 border-transparent bg-gray-100 text-gray-700',
   ghost: 'border-2 border-transparent text-gray-700',
-  url: 'text text-cyan-500 !p-0',
-  active: 'border-2 border-transparent bg-cyan-100 text-cyan-700',
+  url: 'text-cyan-500 !p-0',
+  'active-nav': 'border-2 border-transparent text-left text-cyan-500 !px-0',
   'side-nav': 'border-2 border-transparent text-gray-700 text-left !px-0',
   default: 'border-2 border-transparent bg-primary-100 text-primary-900',
 };
