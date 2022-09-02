@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock } from '@fortawesome/free-solid-svg-icons/faClock';
 import { isOverdue } from './utils';
 import { SubTasksBadge } from './sub-tasks-badge';
-import { Text } from '../../components/text/text';
+import { TextDisplay } from '../../components/text-display/text-display';
 
 import './task.css';
 
@@ -36,7 +36,7 @@ export const Task: FunctionComponent<PropsWithChildren<TaskProps>> = ({
           />
         )}
       </div>
-      {description && <Text text={description} />}
+      {description && <TextDisplay text={description} />}
       <div className="flex flex-row gap-2">{children}</div>
     </div>
   );
