@@ -10,8 +10,8 @@ export const Modal: FunctionComponent<PropsWithChildren<ModalProps>> = ({
 }) => {
   return (
     <div className="absolute w-screen h-screen bg-white/50 flex flex-col justify-center items-center">
-      <div className="flex flex-col w-1/2 items-start bg-white border-2 border-gray-100 rounded-md">
-        <div className="px-8 py-6">{children}</div>
+      <div className="flex flex-col w-3/5 items-start bg-white border-2 border-gray-100 rounded-md">
+        <div className="px-8 py-6 w-full">{children}</div>
         <div className="inline-block px-8 py-3 w-full">
           {!footerContent && (
             <>
