@@ -1,4 +1,4 @@
-export type TextProps = {
+export type TextDisplayProps = {
   text: string;
   maxLength?: number;
 };

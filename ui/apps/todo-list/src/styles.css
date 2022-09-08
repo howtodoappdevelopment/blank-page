@@ -2,6 +2,9 @@
 @tailwind base;
 @tailwind utilities;
 
+h1 {
+  @apply text-5xl
+}
 h2 {
   @apply text-4xl
 }
@@ -16,12 +19,6 @@ h5 {
 }
 h6 {
   @apply text-lg
-}
-p, span {
-  @apply text-base
-}
-small {
-  @apply text-sm
 }
 a {
   @apply text-cyan-600 underline

@@ -4,8 +4,7 @@ import { Button } from './layouts/button/button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 import { Modal } from './layouts/modal/modal';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
+import { MarkdownInput } from './components/markdown-input/markdown-input';
 
 export const AppMainComponent: FunctionComponent<
   PropsWithChildren<{
@@ -42,21 +41,7 @@ export const AppMainComponent: FunctionComponent<
           onModalCancel={() => setOpenAddModal(false)}
           onModalSubmit={() => setOpenAddModal(false)}
         >
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
-            {`A paragraph with *emphasis* and **strong importance**.
-
-> A block quote with ~strikethrough~ and a URL: https://reactjs.org.
-
-* Lists
-* [ ] todo
-* [x] done
-
-A table:
-
-| a | b |
-| - | - |
-`}
-          </ReactMarkdown>
+          <MarkdownInput />
         </Modal>
       )}
     </>
