@@ -43,7 +43,7 @@ export const parseToHtml = (fullMarkdown: string) => {
   }
 
   // fill gaps
-  const missingLinesRanges = _missingLinesRanges(ranges, fullMarkdown.length);
+  const missingLinesRanges = _calcGapsRanges(ranges, fullMarkdown.length);
   for (const [rangeStart, rangeEnd] of missingLinesRanges) {
     parsedDoc[rangeStart] = <p>{fullMarkdown.slice(rangeStart, rangeEnd)}</p>;
   }
@@ -54,7 +54,7 @@ export const parseToHtml = (fullMarkdown: string) => {
     .map((key) => parsedDoc[key]);
 };
 
-export const _missingLinesRanges = (
+export const _calcGapsRanges = (
   ranges: [number, number][],
   maxLength: number
 ): [number, number][] => {
