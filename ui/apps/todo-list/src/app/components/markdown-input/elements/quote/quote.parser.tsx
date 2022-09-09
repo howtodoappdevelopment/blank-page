@@ -6,7 +6,7 @@ import { config } from '../../config';
 import { uniqueId } from 'lodash-es';
 
 export const QUOTE_PARSER: ParserType = {
-  regex: /^( ?)+> .*(\n|$)/gm,
+  regex: /^( ?)+> .*$/gm,
   parse: (txt: string) => (
     <Quote
       key={uniqueId('quote')}

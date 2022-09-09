@@ -5,6 +5,7 @@ import {
   CHECKBOX_PARSER,
 } from './elements/checkbox/checkbox.parser';
 import { QUOTE_PARSER } from './elements/quote/quote.parser';
+import { CODE_BLOCK_PARSER } from './elements/code-block/code-block.parser';
 
 export const config = Object.freeze({
   tabIndentPx: 20,
@@ -15,5 +16,5 @@ export const BLOCK_PARSERS: Readonly<ParserType[]> = [
   CHECKBOX_PARSER,
   CHECKBOX_CHECKED_PARSER,
   QUOTE_PARSER,
-  // CODE_BLOCK_PARSER,
+  CODE_BLOCK_PARSER,
 ];

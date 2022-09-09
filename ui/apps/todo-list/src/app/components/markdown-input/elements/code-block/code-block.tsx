@@ -1,11 +1,16 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, PropsWithChildren } from 'react';
 
-export const CodeBlock: FunctionComponent<{ children: string }> = ({
-  children,
-}) => {
+export const CodeBlock: FunctionComponent<
+  PropsWithChildren<{ indentPx?: number }>
+> = ({ children, indentPx }) => {
   return (
-    <pre>
-      <code>{children.replace(/(^(```)\n|\n(```)$)/gm, '')}</code>
+    <pre
+      className="border border-gray-200 bg-gray-100"
+      style={{
+        marginLeft: `${indentPx}px`,
+      }}
+    >
+      <code>{children}</code>
     </pre>
   );
 };
