@@ -1,24 +1,31 @@
 import { ReactNode } from 'react';
-import { ParserType } from './type';
 import { toNumber } from 'lodash-es';
+import { MarkdownElementConfig } from '../type';
 
-export const parseToHtml = (
-  fullMarkdown: string,
-  blockParsers: ParserType[]
+export const _countTabs = (txt: string) =>
+  Math.floor((txt.match(/^ */g) as RegExpMatchArray)[0].length / 2);
+
+export const _parseTextToHtml = (
+  txt: string,
+  txtParsers: MarkdownElementConfig[]
 ) => {
   const ranges: [number, number][] = [];
   const parsedDoc: { [startIndex: string]: ReactNode } = {};
 
-  for (const { range, element } of _parseElements(fullMarkdown, blockParsers)) {
+  for (const {
+    range,
+    config: { parser, removeSign },
+    match,
+  } of _parseElements(txt, txtParsers)) {
     ranges.push(range);
-    parsedDoc[range[0]] = element;
+    parsedDoc[range[0]] = parser(removeSign(match));
   }
 
   for (const [rangeStart, rangeEnd] of _calcNotCoveredTextRanges(
     ranges,
-    fullMarkdown.length
+    txt.length
   )) {
-    parsedDoc[rangeStart] = <p>{fullMarkdown.slice(rangeStart, rangeEnd)}</p>;
+    parsedDoc[rangeStart] = txt.slice(rangeStart, rangeEnd);
   }
 
   return [..._toSortedValues(parsedDoc)];
@@ -35,15 +42,21 @@ export function* _toSortedValues(obj: { [startIndex: string]: ReactNode }) {
 
 export function* _parseElements(
   markdown: string,
-  blockParsers: ParserType[]
-): Generator<{ range: [number, number]; element: ReactNode }> {
-  for (const { regex, parse } of blockParsers) {
+  blockElementConfigs: MarkdownElementConfig[]
+): Generator<{
+  range: [number, number];
+  config: MarkdownElementConfig;
+  match: string;
+}> {
+  for (const config of blockElementConfigs) {
+    const { regex } = config;
     for (const match of markdown.matchAll(regex)) {
       const txt = match[0];
       const lastIndex = (match.index || 0) + txt.length;
       yield {
         range: [match.index as number, lastIndex],
-        element: parse(txt),
+        config,
+        match: txt,
       };
     }
   }
@@ -54,7 +67,7 @@ export function* _calcNotCoveredTextRanges(
   maxLength: number
 ): Generator<[number, number]> {
   if (ranges.length === 0 || maxLength === 0) {
-    return yield [0, 0];
+    return yield [0, maxLength];
   }
 
   ranges = ranges.sort((a, b) => a[0] - b[0]);

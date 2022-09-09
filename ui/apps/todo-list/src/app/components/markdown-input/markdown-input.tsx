@@ -2,9 +2,9 @@ import React, { FunctionComponent, useRef } from 'react';
 import { MarkdownInputProps } from './markdown-input.props';
 
 import './mardown-input.css';
-import { parseToHtml } from './parse.utils';
+import { parseBlocksToHtml } from './utils/full-markdown-parser.utils';
 import { BLOCK_PARSERS } from './config';
-import { ParserType } from './type';
+import { MarkdownElementConfig } from './type';
 
 export const MarkdownInput: FunctionComponent<MarkdownInputProps> = ({
   markdown = '',
@@ -35,7 +35,7 @@ export const MarkdownInput: FunctionComponent<MarkdownInputProps> = ({
           // console.log('mouse up', getCursorPosition(content.current));
         }}
       >
-        {parseToHtml(
+        {parseBlocksToHtml(
           `
 
 random text
@@ -53,7 +53,7 @@ random text
 ###### Heading 6
 
 random text
- random text
+ \`random text\`
   - random text
   ### random text
 
@@ -68,7 +68,7 @@ random text
 - [x] filled
  - [ ] filled child
 
-> my block quoute
+> my **block quote**
     > test
 
 > separate
@@ -89,7 +89,7 @@ code block
  - un 2
   - un 2.1
    - un 3
-* unordered 2
+* unor *dered 2*
 + unordered
 
 1. ordered
@@ -109,11 +109,11 @@ http://url.com
 ![Alt](https://picsum.photos/200/300)
 ![Alt](https://picsum.photos/200/300 "Title")
 
-~~strike trough~~
-==highlight==
+  ~~strike trough~~
+ ==highlight==
 <span style="border: 1px solid red">my custom span</span>
           `,
-          BLOCK_PARSERS as ParserType[]
+          BLOCK_PARSERS as MarkdownElementConfig[]
         )}
       </div>
     </div>
