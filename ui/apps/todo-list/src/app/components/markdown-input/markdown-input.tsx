@@ -2,7 +2,9 @@ import React, { FunctionComponent, useRef } from 'react';
 import { MarkdownInputProps } from './markdown-input.props';
 
 import './mardown-input.css';
-import { getCursorPosition, parseToHtml } from './utils';
+import { parseToHtml } from './parse.utils';
+import { BLOCK_PARSERS } from './config';
+import { ParserType } from './type';
 
 export const MarkdownInput: FunctionComponent<MarkdownInputProps> = ({
   markdown = '',
@@ -102,7 +104,8 @@ http://url.com
 ~~strike trough~~
 ==highlight==
 <span style="border: 1px solid red">my custom span</span>
-          `
+          `,
+          BLOCK_PARSERS as ParserType[]
         )}
       </div>
     </div>

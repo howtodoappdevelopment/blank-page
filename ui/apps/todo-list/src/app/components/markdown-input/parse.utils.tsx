@@ -1,95 +1,77 @@
-import { ParserType } from './type';
 import { ReactNode } from 'react';
-import { HEADING_PARSER } from './elements/heading/heading.parser';
-import {
-  CHECKBOX_CHECKED_PARSER,
-  CHECKBOX_PARSER,
-} from './elements/checkbox/checkbox.parser';
+import { ParserType } from './type';
+import { toNumber } from 'lodash-es';
 
-export const getCursorPosition = (
-  editableElement:
-    | HTMLDivElement
-    | HTMLParagraphElement
-    | HTMLSpanElement
-    | null
-): number | null => {
-  const selection = window.getSelection() as Selection;
-  if (!editableElement || !selection) {
-    return null;
-  }
-
-  // const range = selection.getRangeAt(0);
-  // const preCaretRange = range.cloneRange();
-  // preCaretRange.selectNodeContents(editableElement);
-  // preCaretRange.setEnd(range.endContainer, range.endOffset);
-  // return preCaretRange.toString().length;
-  return null;
-};
-
-export const parseToHtml = (fullMarkdown: string) => {
+export const parseToHtml = (
+  fullMarkdown: string,
+  blockParsers: ParserType[]
+) => {
   const ranges: [number, number][] = [];
   const parsedDoc: { [startIndex: string]: ReactNode } = {};
 
-  // parse
-  for (const { regex, parse } of _blockParsers) {
-    for (const match of fullMarkdown.matchAll(regex)) {
-      const txt = match[0];
-
-      const lastIndex = (match.index || 0) + txt.length;
-      ranges.push([match.index as number, lastIndex]);
-
-      parsedDoc[match.index as number] = parse(txt);
-    }
+  for (const { range, element } of _parseElements(fullMarkdown, blockParsers)) {
+    ranges.push(range);
+    parsedDoc[range[0]] = element;
   }
 
-  // fill gaps
-  const missingLinesRanges = _calcGapsRanges(ranges, fullMarkdown.length);
-  for (const [rangeStart, rangeEnd] of missingLinesRanges) {
+  for (const [rangeStart, rangeEnd] of _calcNotCoveredTextRanges(
+    ranges,
+    fullMarkdown.length
+  )) {
     parsedDoc[rangeStart] = <p>{fullMarkdown.slice(rangeStart, rangeEnd)}</p>;
   }
 
-  return Object.keys(parsedDoc)
-    .map((key) => +key)
-    .sort((a, b) => a - b)
-    .map((key) => parsedDoc[key]);
+  return [..._toSortedValues(parsedDoc)];
 };
 
-export const _calcGapsRanges = (
+export function* _toSortedValues(obj: { [startIndex: string]: ReactNode }) {
+  const sortedKeys = Object.keys(obj)
+    .map(toNumber)
+    .sort((a, b) => a - b);
+  for (const key of sortedKeys) {
+    yield obj[key];
+  }
+}
+
+export function* _parseElements(
+  markdown: string,
+  blockParsers: ParserType[]
+): Generator<{ range: [number, number]; element: ReactNode }> {
+  for (const { regex, parse } of blockParsers) {
+    for (const match of markdown.matchAll(regex)) {
+      const txt = match[0];
+      const lastIndex = (match.index || 0) + txt.length;
+      yield {
+        range: [match.index as number, lastIndex],
+        element: parse(txt),
+      };
+    }
+  }
+}
+
+export function* _calcNotCoveredTextRanges(
   ranges: [number, number][],
   maxLength: number
-): [number, number][] => {
+): Generator<[number, number]> {
   if (ranges.length === 0 || maxLength === 0) {
-    return [];
+    return yield [0, 0];
   }
 
   ranges = ranges.sort((a, b) => a[0] - b[0]);
   let prevRange = ranges.shift() as [number, number];
-  let missingLinesRanges: [number, number][] =
-    prevRange[0] > 0 ? [[0, prevRange[0]]] : [];
+  if (prevRange[0] > 0) {
+    yield [0, prevRange[0]];
+  }
 
   for (const currentRange of ranges) {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars,prefer-const
-    let [rangeStart, _] = currentRange;
-    const prevRangeEnd = prevRange[1] + 1;
-    prevRange = currentRange;
-
-    if (rangeStart - prevRangeEnd > 0) {
-      const newRange = [prevRangeEnd, rangeStart] as [number, number];
-      missingLinesRanges = [...missingLinesRanges, newRange];
+    if (currentRange[0] - (prevRange[1] + 1) > 0) {
+      yield [prevRange[1] + 1, currentRange[0]] as [number, number];
     }
-  }
-  const lastRangeEnd = prevRange[1];
-  if (maxLength - lastRangeEnd) {
-    missingLinesRanges.push([lastRangeEnd + 1, maxLength]);
+
+    prevRange = currentRange;
   }
 
-  return missingLinesRanges;
-};
-
-export const _blockParsers: ParserType[] = [
-  HEADING_PARSER,
-  CHECKBOX_PARSER,
-  CHECKBOX_CHECKED_PARSER,
-  // QUOTE_PARSER,
-  // CODE_BLOCK_PARSER,
-];
+  if (maxLength - prevRange[1]) {
+    yield [prevRange[1] + 1, maxLength];
+  }
+}
