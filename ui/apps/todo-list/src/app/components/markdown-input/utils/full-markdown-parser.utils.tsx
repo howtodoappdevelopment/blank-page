@@ -35,7 +35,14 @@ export const parseBlocksToHtml = (
     ranges,
     fullMarkdown.length
   )) {
-    parsedDoc[rangeStart] = <p>{fullMarkdown.slice(rangeStart, rangeEnd)}</p>;
+    parsedDoc[rangeStart] = (
+      <p>
+        {_parseTextToHtml(
+          fullMarkdown.slice(rangeStart, rangeEnd),
+          TEXT_PARSERS as MarkdownElementConfig[]
+        )}
+      </p>
+    );
   }
 
   return [..._toSortedValues(parsedDoc)];

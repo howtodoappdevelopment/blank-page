@@ -4,7 +4,7 @@ import { uniqueId } from 'lodash-es';
 import { OrderedListItem } from './ordered-list-item';
 
 export const UNORDERED_LIST_ITEM_PARSER: MarkdownElementConfig = {
-  regex: /^( ?)+[-+*] .*$/gm,
+  regex: /^( ?)+[-+*] (?!\[(x| )]).*$/gm,
   parser: (children, indentPx = 0) => (
     <UnorderedListItem
       key={uniqueId('unordered-list-item')}

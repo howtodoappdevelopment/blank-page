@@ -18,6 +18,7 @@ import {
   UNORDERED_LIST_ITEM_PARSER,
 } from './block-elements/list-item/list-item.parser';
 import { BOLD_PARSER } from './text-elements/bold/bold.parser';
+import { CODE_SNIPPET_PARSER } from './text-elements/code-snippet/code-snippet.parser';
 
 export const config = Object.freeze({
   tabIndentPx: 20,
@@ -37,4 +38,7 @@ export const BLOCK_PARSERS: Readonly<MarkdownElementConfig[]> = [
   UNORDERED_LIST_ITEM_PARSER,
   ORDERED_LIST_ITEM_PARSER,
 ];
-export const TEXT_PARSERS: Readonly<MarkdownElementConfig[]> = [BOLD_PARSER];
+export const TEXT_PARSERS: Readonly<MarkdownElementConfig[]> = [
+  BOLD_PARSER,
+  CODE_SNIPPET_PARSER,
+];
