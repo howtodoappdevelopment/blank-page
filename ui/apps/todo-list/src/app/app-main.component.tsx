@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 import { Modal } from './layouts/modal/modal';
 import { MarkdownInput } from './components/markdown-input/markdown-input';
+import { fullMarkdown } from './components/markdown-input/mocks/full-markdown.mock';
 
 export const AppMainComponent: FunctionComponent<
   PropsWithChildren<{
@@ -41,7 +42,7 @@ export const AppMainComponent: FunctionComponent<
           onModalCancel={() => setOpenAddModal(false)}
           onModalSubmit={() => setOpenAddModal(false)}
         >
-          <MarkdownInput />
+          <MarkdownInput markdown={fullMarkdown} />
         </Modal>
       )}
     </>

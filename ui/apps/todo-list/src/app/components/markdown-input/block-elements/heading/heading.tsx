@@ -1,4 +1,5 @@
 import { FunctionComponent, PropsWithChildren } from 'react';
+import { uniqueId } from 'lodash-es';
 
 export const Heading: FunctionComponent<
   PropsWithChildren<{
@@ -6,5 +7,9 @@ export const Heading: FunctionComponent<
   }>
 > = ({ children, size }) => {
   const HeadingTag = `h${size}` as keyof JSX.IntrinsicElements;
-  return <HeadingTag>{children}</HeadingTag>;
+  return (
+    <HeadingTag id={uniqueId('heading-')} key={uniqueId('heading-')}>
+      {children}
+    </HeadingTag>
+  );
 };
