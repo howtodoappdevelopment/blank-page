@@ -8,7 +8,11 @@ export const Heading: FunctionComponent<
 > = ({ children, size }) => {
   const HeadingTag = `h${size}` as keyof JSX.IntrinsicElements;
   return (
-    <HeadingTag id={uniqueId('heading-')} key={uniqueId('heading-')}>
+    <HeadingTag
+      id={uniqueId(`${HeadingTag}-`)}
+      key={uniqueId(`${HeadingTag}-`)}
+      className={HeadingTag}
+    >
       {children}
     </HeadingTag>
   );

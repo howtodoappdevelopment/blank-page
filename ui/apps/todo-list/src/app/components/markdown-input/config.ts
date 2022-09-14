@@ -11,10 +11,12 @@ import {
   CHECKBOX_CHECKED_PARSER,
   CHECKBOX_PARSER,
 } from './block-elements/checkbox/checkbox.parser';
-import { QUOTE_PARSER } from './block-elements/quote/quote.parser';
+import { QUOTE_ID, QUOTE_PARSER } from './block-elements/quote/quote.parser';
 import { CODE_BLOCK_PARSER } from './block-elements/code-block/code-block.parser';
 import {
+  ORDERED_LIST_ITEM_ID,
   ORDERED_LIST_ITEM_PARSER,
+  UNORDERED_LIST_ITEM_ID,
   UNORDERED_LIST_ITEM_PARSER,
 } from './block-elements/list-item/list-item.parser';
 import { BOLD_PARSER } from './text-elements/bold/bold.parser';
@@ -25,7 +27,7 @@ export const config = Object.freeze({
   tabIndentPx: 20,
 });
 
-export const BLOCK_PARSERS: Readonly<MarkdownElementConfig[]> = [
+export const BLOCK_PARSERS: MarkdownElementConfig[] = [
   HEADING_1_PARSER,
   HEADING_2_PARSER,
   HEADING_3_PARSER,
@@ -39,8 +41,14 @@ export const BLOCK_PARSERS: Readonly<MarkdownElementConfig[]> = [
   UNORDERED_LIST_ITEM_PARSER,
   ORDERED_LIST_ITEM_PARSER,
 ];
-export const TEXT_PARSERS: Readonly<MarkdownElementConfig[]> = [
+export const TEXT_PARSERS: MarkdownElementConfig[] = [
   BOLD_PARSER,
   CODE_SNIPPET_PARSER,
   ITALIC_PARSER,
+];
+export const ALL_PARSERS = [...BLOCK_PARSERS, ...TEXT_PARSERS];
+export const EXTEND_ON_NEW_LINE: string[] = [
+  QUOTE_ID,
+  UNORDERED_LIST_ITEM_ID,
+  ORDERED_LIST_ITEM_ID,
 ];

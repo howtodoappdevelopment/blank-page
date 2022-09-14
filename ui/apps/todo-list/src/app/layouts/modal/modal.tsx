@@ -1,17 +1,18 @@
-import React, { FunctionComponent, PropsWithChildren } from 'react';
+import React, { forwardRef, PropsWithChildren } from 'react';
 import { ModalProps } from './modal.props';
 import { Button } from '../button/button';
 
-export const Modal: FunctionComponent<PropsWithChildren<ModalProps>> = ({
-  children,
-  footerContent,
-  onModalCancel,
-  onModalSubmit,
-}) => {
+export const Modal = forwardRef<
+  HTMLDivElement | null,
+  PropsWithChildren<ModalProps>
+>(({ children, footerContent, onModalCancel, onModalSubmit }, ref) => {
   return (
-    <div className="absolute w-screen h-screen bg-white/50 flex flex-col justify-center items-center">
+    <div
+      ref={ref}
+      className="absolute w-screen h-screen bg-white/50 flex flex-col justify-center items-center"
+    >
       <div className="flex flex-col w-3/5 items-start bg-white border-2 border-gray-100 rounded-md">
-        <div className="px-8 py-6 w-full">{children}</div>
+        <div className="content px-8 py-6 w-full">{children}</div>
         <div className="inline-block px-8 py-3 w-full">
           {!footerContent && (
             <>
@@ -26,4 +27,5 @@ export const Modal: FunctionComponent<PropsWithChildren<ModalProps>> = ({
       </div>
     </div>
   );
-};
+});
+Modal.displayName = 'Modal';

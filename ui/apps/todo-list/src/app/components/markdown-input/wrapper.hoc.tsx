@@ -1,8 +1,16 @@
 import { FunctionComponent, PropsWithChildren, useRef } from 'react';
-import { uniqueId } from 'lodash-es';
+import { find, uniqueId } from 'lodash-es';
 
-import './wrapper.hoc.css';
-import { getCaretPosition } from './utils/caret.utils';
+import '../realtime-markdown/realtime-markdown.css';
+import { getCaretPosition } from '../realtime-markdown/utils/caret.utils';
+import { ALL_PARSERS } from './config';
+import { MarkdownElementConfig } from './type';
+import { handleBoldText, isBoldTextEvent } from './handlers/bold-text.handler';
+import {
+  handleItalicText,
+  isItalicTextEvent,
+} from './handlers/italic-text.handler';
+import { handleNewLine, isNewLine } from './handlers/new-line-handler';
 
 export const WrapperHoc: FunctionComponent<PropsWithChildren> = ({
   children,
@@ -16,30 +24,52 @@ export const WrapperHoc: FunctionComponent<PropsWithChildren> = ({
       contentEditable
       suppressContentEditableWarning={true}
       onKeyUp={($event) => {
-        if ($event.target instanceof HTMLElement)
-          console.log(getCaretPosition($event.currentTarget));
-        // console.log('key up', getCursorPosition(content.current));
+        //
       }}
       onKeyDown={($event) => {
-        console.log($event.key);
-        // console.log('key down', getCursorPosition(content.current));
-        // event.preventDefault();
-        // event.stopPropagation();
+        const caretPosition = getCaretPosition($event.currentTarget);
+        console.log('KEY DOWN', caretPosition?.position?.absolute);
+
+        const currentNode = caretPosition?.currentNode;
+        if (!currentNode) {
+          $event.preventDefault();
+          $event.stopPropagation();
+          return;
+        }
+
+        const configId = currentNode.id.replace(/-\d+$/g, '');
+        const elementConfig = find(ALL_PARSERS, {
+          id: configId,
+        }) as MarkdownElementConfig;
+        if (!elementConfig) {
+          return;
+        }
+
+        if (isBoldTextEvent($event)) {
+          handleBoldText($event, caretPosition, elementConfig);
+        } else if (isItalicTextEvent($event)) {
+          handleItalicText($event, caretPosition, elementConfig);
+        } else if (isNewLine($event)) {
+          handleNewLine($event, caretPosition, elementConfig);
+        }
+
+        // handle enter
+        // handle shift + enter
+        // handle esc
+        // unselect text
+        // handle ctrl + 1, ... (headers)
+        // handle backspace on position relative 0
+        // move all node elements into prev sibling or new paragraph
       }}
       onMouseDown={($event) => {
-        // console.log(position($event.currentTarget).pos);
         // console.log('mouse down', getCursorPosition(content.current));
       }}
       onMouseUp={($event) => {
-        // $event.stopPropagation();
-        // const target = $event.target as HTMLElement;
-        // console.log(().innerText);
-        // console.log(document.getElementById(($event.target as HTMLElement).id));
-        // if ($event.target instanceof HTMLElement)
-        console.log(getCaretPosition($event.currentTarget as HTMLElement));
-        console.log(($event.target as HTMLElement).attributes);
-        // console.log($event.target);
-        // console.log('mouse up', getCursorPosition(content.current));
+        console.log(
+          'MOUSE UP',
+          getCaretPosition($event.currentTarget)?.position?.absolute
+        );
+        // console.log(getCaretPosition($event.currentTarget as HTMLElement));
       }}
     >
       {children}

@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { toNumber } from 'lodash-es';
-import { MarkdownElementConfig } from '../type';
+import { MarkdownElementConfig } from '../../markdown-input/type';
 
 export const _countTabs = (txt: string) =>
   Math.floor((txt.match(/^ */g) as RegExpMatchArray)[0].length / 2);
