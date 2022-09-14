@@ -1,7 +1,8 @@
 import { mount } from 'redom';
-import { createHeading, createParagraph } from '../elements';
 import { CaretPosition } from '../utils/caret.utils';
 import { range } from 'lodash-es';
+import { createParagraph } from './paragraph.element';
+import { createHeading } from './heading.element';
 
 const HANDLED_TAGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p'];
 
