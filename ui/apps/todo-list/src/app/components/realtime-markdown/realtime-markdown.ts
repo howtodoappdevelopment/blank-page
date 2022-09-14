@@ -6,7 +6,7 @@ import { getCaretPosition, setCaretPosition } from './utils/caret.utils';
 import {
   handleHeading,
   handleHeadingShortcuts,
-} from './elements/heading.utils';
+} from './elements/heading/heading.utils';
 import { createWrapper } from './elements/wrapper.element';
 import { createParagraph } from './elements/paragraph.element';
 import { parseToHtml } from './utils/parser.utils';

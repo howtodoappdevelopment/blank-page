@@ -1,5 +1,5 @@
 import { createHeading } from './heading.element';
-import { ParserType } from '../utils/parser.type';
+import { ParserType } from '../../utils/parser.type';
 
 const HEADING_REGEX = /^#{1,6} .*\n/gm;
 const PARSE_HEADING = (innerHtml: string): HTMLElement => {
