@@ -1,7 +1,7 @@
-type CaretPosition = {
-  currentNode: ParentNode | null | undefined;
+export type CaretPosition = {
+  currentNode: HTMLElement;
   position: {
-    relative: number;
+    relative: [number, number];
     absolute: number;
   };
 };
@@ -23,10 +23,21 @@ export const getCaretPosition = (element: Element): CaretPosition | null => {
   const absolutePosition = clonedRange.toString().length;
   clonedRange.detach();
 
+  let currentNode = selection.anchorNode as HTMLElement;
+  if (
+    currentNode.nodeType === 3 ||
+    currentNode.tagName.toLowerCase() === 'span'
+  ) {
+    currentNode = selection.anchorNode?.parentNode as HTMLElement;
+  }
+
   return {
-    currentNode: selection.anchorNode?.parentNode,
+    currentNode,
     position: {
-      relative: selection.anchorOffset,
+      relative: [
+        selection.anchorOffset,
+        selection.anchorOffset + selection.focusOffset,
+      ],
       absolute: absolutePosition,
     },
   };

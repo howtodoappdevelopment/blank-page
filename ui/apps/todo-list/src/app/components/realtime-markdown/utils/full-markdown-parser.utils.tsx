@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { MarkdownElementConfig } from '../type';
+import { MarkdownElementConfig } from '../../markdown-input/type';
 import {
   _calcNotCoveredTextRanges,
   _countTabs,
@@ -7,7 +7,7 @@ import {
   _parseTextToHtml,
   _toSortedValues,
 } from './parse.utils';
-import { config, TEXT_PARSERS } from '../config';
+import { config, TEXT_PARSERS } from '../../markdown-input/config';
 
 export const parseBlocksToHtml = (
   fullMarkdown: string,

@@ -1,11 +1,19 @@
-import { FunctionComponent, PropsWithChildren, useState } from 'react';
+import {
+  FunctionComponent,
+  PropsWithChildren,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { MainHeader } from './layouts/main-header/main-header';
 import { Button } from './layouts/button/button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 import { Modal } from './layouts/modal/modal';
-import { MarkdownInput } from './components/markdown-input/markdown-input';
+import { createMarkdownInput } from './components/realtime-markdown/realtime-markdown';
 import { fullMarkdown } from './components/markdown-input/mocks/full-markdown.mock';
+// import { MarkdownInput } from './components/markdown-input/markdown-input';
+// import { fullMarkdown } from './components/markdown-input/mocks/full-markdown.mock';
 
 export const AppMainComponent: FunctionComponent<
   PropsWithChildren<{
@@ -19,6 +27,16 @@ export const AppMainComponent: FunctionComponent<
   onSideNavToggle = () => {},
 }) => {
   const [openAddModal, setOpenAddModal] = useState(true);
+
+  const ref = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    const elm = document.getElementById('some-static-html');
+    if (ref && ref.current) {
+      Array.from(
+        ref.current?.getElementsByClassName('content') || []
+      )[0]?.replaceChildren(createMarkdownInput(fullMarkdown));
+    }
+  }, []);
 
   return (
     <>
@@ -39,10 +57,11 @@ export const AppMainComponent: FunctionComponent<
       </div>
       {openAddModal && (
         <Modal
+          ref={ref}
           onModalCancel={() => setOpenAddModal(false)}
           onModalSubmit={() => setOpenAddModal(false)}
         >
-          <MarkdownInput markdown={fullMarkdown} />
+          {/*<MarkdownInput markdown={fullMarkdown} />*/}
         </Modal>
       )}
     </>

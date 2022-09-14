@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import { MarkdownInputProps } from './markdown-input.props';
 
-import './wrapper.hoc.css';
-import { parseBlocksToHtml } from './utils/full-markdown-parser.utils';
+import '../realtime-markdown/realtime-markdown.css';
+import { parseBlocksToHtml } from '../realtime-markdown/utils/full-markdown-parser.utils';
 import { BLOCK_PARSERS } from './config';
 import { MarkdownElementConfig } from './type';
 import { WrapperHoc } from './wrapper.hoc';
