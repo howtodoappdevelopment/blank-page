@@ -11,9 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 import { Modal } from './layouts/modal/modal';
 import { createMarkdownInput } from './components/realtime-markdown/realtime-markdown';
-import { fullMarkdown } from './components/markdown-input/mocks/full-markdown.mock';
-// import { MarkdownInput } from './components/markdown-input/markdown-input';
-// import { fullMarkdown } from './components/markdown-input/mocks/full-markdown.mock';
+import { fullMarkdown } from './components/mocks/full-markdown.mock';
 
 export const AppMainComponent: FunctionComponent<
   PropsWithChildren<{

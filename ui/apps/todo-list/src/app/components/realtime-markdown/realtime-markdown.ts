@@ -1,27 +1,33 @@
 import { el, setAttr } from 'redom';
-import { range, uniqueId } from 'lodash-es';
+import { uniqueId } from 'lodash-es';
 
 import './realtime-markdown.css';
 import { getCaretPosition, setCaretPosition } from './utils/caret.utils';
-import { createParagraph, createWrapper } from './elements';
 import {
   handleHeading,
   handleHeadingShortcuts,
-} from './handlers/heading.utils';
+} from './elements/heading.utils';
+import { createWrapper } from './elements/wrapper.element';
+import { createParagraph } from './elements/paragraph.element';
+import { parseToHtml } from './utils/parser.utils';
 
 export const createMarkdownInput = (
   initialMarkdown?: string
 ): HTMLDivElement => {
-  const initialChildren = range(0, 6).map(createParagraph);
-  return createWrapper(createContentEditable(initialChildren));
+  let innerHtml: string = Array(10)
+    .fill(createParagraph(' ').outerHTML)
+    .join('\n');
+  if (initialMarkdown) {
+    innerHtml = parseToHtml(initialMarkdown);
+  }
+
+  return createWrapper(createContentEditable(innerHtml));
 };
 
 /* UTILS */
-
-export const createContentEditable = (
-  children?: string | HTMLElement | HTMLElement[]
-): HTMLElement => {
-  const contentEditable = el('div', children ?? ' ');
+export const createContentEditable = (children: string): HTMLElement => {
+  const contentEditable = el('div');
+  contentEditable.innerHTML = children;
   setAttr(contentEditable, {
     contentEditable: 'true',
     id: uniqueId('realtime-markdown-input'),
