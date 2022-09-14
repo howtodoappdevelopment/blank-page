@@ -1,9 +1,10 @@
 import { el, setAttr } from 'redom';
 
 export const createParagraph = (
-  innerText: string | number = ' '
+  children: string | number = ' '
 ): HTMLParagraphElement => {
-  const regularTextElement = el('p', innerText);
+  const regularTextElement = el('p');
+  regularTextElement.innerHTML = `${children}`;
   setAttr(regularTextElement, {
     className: 'w-full mb-1',
   });

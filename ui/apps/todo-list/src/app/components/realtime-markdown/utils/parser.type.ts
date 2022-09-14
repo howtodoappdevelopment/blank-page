@@ -1,4 +1,4 @@
 export type ParserType = {
   regex: RegExp;
-  parser: (innerHtml: string) => HTMLElement;
+  parser: (innerHtml: string) => HTMLElement | HTMLElement[];
 };
