@@ -1,5 +1,5 @@
 export type CaretPosition = {
-  currentNode: HTMLElement;
+  currentHtmlElement: HTMLElement;
   position: {
     relative: [number, number];
     absolute: number;
@@ -32,7 +32,7 @@ export const getCaretPosition = (element: Element): CaretPosition | null => {
   }
 
   return {
-    currentNode,
+    currentHtmlElement: currentNode,
     position: {
       relative: [
         selection.anchorOffset,

@@ -2,6 +2,7 @@ import { PARSERS } from '../parsers';
 import { isArray } from 'lodash-es';
 
 export const parseToHtml = (markdown: string): string => {
+  console.log(markdown);
   for (const { regex, parser } of PARSERS) {
     markdown = markdown.replace(regex, (match) => {
       const parsedMatch = parser(match);
@@ -9,6 +10,8 @@ export const parseToHtml = (markdown: string): string => {
       return parsedElements.map((element) => element.outerHTML).join('');
     });
   }
+
+  console.log(markdown);
 
   return markdown;
 };

@@ -4,8 +4,8 @@ import { createCheckbox } from './checkbox.element';
 import { ParserType } from '../../utils/parser.type';
 import { config } from '../../config';
 
-const CHECKBOX_REGEX = /^ *- \[(x| )] .*\n/gm;
-const PARSE_CHECKBOX = (innerHtml: string) => {
+export const CHECKBOX_REGEX = /^ *- \[(x| )] .*\n/gm;
+export const PARSE_CHECKBOX = (innerHtml: string) => {
   const indent = Math.floor(
     (innerHtml.match(/^ */g) as RegExpMatchArray)[0].length / 2
   );
