@@ -14,22 +14,29 @@ export const handleHeading = (
   const contentEditableElement = $event.currentTarget as HTMLElement;
   const parentHtmlElement = currentHtmlElement.parentNode as HTMLElement;
 
-  // TODO: handle sign on shortcut
   if (_shouldHandleShortcuts($event, currentHtmlElement)) {
-    const currentSize = _isParagraph(currentHtmlElement)
-      ? 0
-      : _sizeOf(currentHtmlElement);
+    const oldElement = isSign(currentHtmlElement)
+      ? parentHtmlElement
+      : currentHtmlElement;
+    const currentSize = _isParagraph(oldElement) ? 0 : _sizeOf(oldElement);
     const newSize = +$event.key;
-    const innerHtml = _removeSign(currentHtmlElement.innerHTML);
+    const innerHtml = _removeSign(oldElement.innerHTML);
     let newElement = createParagraph(innerHtml);
     if (newSize > 0) {
       newElement = createHeading(+$event.key, innerHtml);
     }
-    mount(contentEditableElement, newElement, currentHtmlElement, true);
-    setCaretPosition(
-      contentEditableElement,
-      position.absolute - currentSize + newSize
-    );
+    mount(contentEditableElement, newElement, oldElement, true);
+    if (isSign(currentHtmlElement)) {
+      setCaretPosition(
+        newElement,
+        newSize < position.relative ? newSize : position.relative
+      );
+    } else {
+      setCaretPosition(
+        contentEditableElement,
+        position.absolute - currentSize + newSize
+      );
+    }
   } else if (
     _isParagraph(currentHtmlElement) &&
     _hasTextSign(currentHtmlElement.innerHTML)
