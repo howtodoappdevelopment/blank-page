@@ -1,8 +1,17 @@
-import { el } from 'redom';
+import { el, mount, setAttr } from 'redom';
 
 export const createHeading = (
   size: number,
-  children?: string | HTMLElement | HTMLElement[]
+  children?: string
 ): HTMLHeadingElement => {
-  return el(`h${size}`, children ?? ' ') as HTMLHeadingElement;
+  const sign = Array(size).fill('#').join('');
+  const signElement = el('span', `${sign} `) as HTMLSpanElement;
+  setAttr(signElement, {
+    className: 'sign text-gray-300',
+  });
+
+  const heading = el(`h${size}`) as HTMLHeadingElement;
+  heading.innerHTML = children ?? '&nbsp;';
+  mount(heading, signElement, heading.firstChild as ChildNode);
+  return heading;
 };

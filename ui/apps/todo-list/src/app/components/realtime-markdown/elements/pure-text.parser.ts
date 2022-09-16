@@ -13,7 +13,7 @@ export const PURE_TEXT_PARSER: ParserType = {
   parser: PARSE_PURE_TEXT,
 };
 
-const NEXT_LINE_REGEX = /^ *\n/gm;
+const NEXT_LINE_REGEX = /^ *\n$/gm;
 const PARSE_NEXT_LINE = (): HTMLElement => {
   return createParagraph('&nbsp;');
 };

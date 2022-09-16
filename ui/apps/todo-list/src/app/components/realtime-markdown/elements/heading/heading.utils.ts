@@ -1,101 +1,83 @@
-import { mount } from 'redom';
 import { CaretPosition } from '../../utils/caret.utils';
 import { range } from 'lodash-es';
+import { HEADING_REGEX } from './heading.parser';
 import { createParagraph } from '../paragraph.element';
 import { createHeading } from './heading.element';
+import { mount } from 'redom';
+import { isSign } from '../signs.utils';
 
-const HANDLED_TAGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p'];
-
-/**
- * @param $event
- * @param caretPosition
- * @return true if have been handled
- */
 export const handleHeading = (
   $event: KeyboardEvent,
-  caretPosition: CaretPosition
-): boolean => {
-  const canTagBeHandled = HANDLED_TAGS.includes(
-    caretPosition.currentNode.tagName.toLowerCase()
-  );
-  if (!canTagBeHandled) {
-    return false;
-  }
+  { currentHtmlElement, position }: CaretPosition,
+  setCaretPosition: (position: number) => void
+): void => {
+  const contentEditableElement = $event.currentTarget as HTMLElement;
+  const parentHtmlElement = currentHtmlElement.parentNode as HTMLElement;
 
-  const match = caretPosition.currentNode.innerHTML.match(/^#{1,6} /g);
-  const isHeadingElement = caretPosition.currentNode.tagName
-    .toLowerCase()
-    .startsWith('h');
-  const nothingToConvert = !match && !isHeadingElement;
-  if (nothingToConvert) {
-    return false;
-  }
-
-  const replaceWithParagraph = !match && isHeadingElement;
-  if (replaceWithParagraph) {
-    mount(
-      $event.currentTarget as HTMLElement,
-      createParagraph(caretPosition.currentNode.innerHTML),
-      caretPosition.currentNode,
-      true
+  if (_shouldHandleShortcuts($event, currentHtmlElement)) {
+    const currentSize = _isParagraph(currentHtmlElement)
+      ? 0
+      : _sizeOf(currentHtmlElement);
+    const newSize = +$event.key;
+    const innerHtml = _removeSign(currentHtmlElement.innerHTML);
+    let newElement = createParagraph(innerHtml);
+    if (newSize > 0) {
+      newElement = createHeading(+$event.key, innerHtml);
+    }
+    mount(contentEditableElement, newElement, currentHtmlElement, true);
+    setCaretPosition(position.absolute - currentSize + newSize);
+  } else if (
+    _isParagraph(currentHtmlElement) &&
+    _hasTextSign(currentHtmlElement.innerHTML)
+  ) {
+    const newHeading = createHeading(
+      _calcSize(currentHtmlElement.innerHTML),
+      _removeSign(currentHtmlElement.innerHTML)
     );
-    return true;
+    mount(contentEditableElement, newHeading, currentHtmlElement, true);
+    setCaretPosition(
+      position.absolute - _calcSize(currentHtmlElement.innerHTML)
+    ); // TODO: fix caret pos
+  } else if (
+    isSign(currentHtmlElement) &&
+    _hasTextSign(parentHtmlElement.innerText)
+  ) {
+    const newSize = _calcSize(parentHtmlElement.innerText);
+    const newHeading = createHeading(
+      newSize,
+      _removeSign(parentHtmlElement.innerHTML)
+    );
+    mount(contentEditableElement, newHeading, parentHtmlElement, true);
+    // setCaretPosition(position.absolute - newSize + 1); // TODO: fix caret pos
+  } else if (
+    isSign(currentHtmlElement) &&
+    _isHeading(parentHtmlElement) &&
+    !_hasTextSign(parentHtmlElement.innerText)
+  ) {
+    const newParagraph = createParagraph(
+      _removeSign(parentHtmlElement.innerHTML)
+    );
+    mount(contentEditableElement, newParagraph, parentHtmlElement, true);
   }
-
-  const newSize = (match as RegExpMatchArray)[0].length - 1;
-  const nothingChanged = newSize === +caretPosition.currentNode.tagName[1];
-  if (nothingChanged) {
-    return false;
-  }
-
-  mount(
-    $event.currentTarget as HTMLElement,
-    createHeading(newSize, caretPosition.currentNode.innerHTML),
-    caretPosition.currentNode,
-    true
-  );
-
-  return true;
 };
-
-export const handleHeadingShortcuts = (
+const _shouldHandleShortcuts = (
   $event: KeyboardEvent,
-  caretPosition: CaretPosition
-): boolean => {
-  if (!$event.altKey || !$event.ctrlKey || !range(0, 7).includes(+$event.key)) {
-    return false;
-  }
-
-  const newSize = +$event.key;
-  const nothingChanged = newSize === +caretPosition.currentNode.tagName[1];
-  if (nothingChanged) {
-    return false;
-  }
-
-  const elementContentWithoutHashes =
-    caretPosition.currentNode.innerHTML.replace(/^#{1,6} /g, '');
-  const isHeadingElement = caretPosition.currentNode.tagName
-    .toLowerCase()
-    .startsWith('h');
-  const replaceWithParagraph = newSize === 0 && isHeadingElement;
-  if (replaceWithParagraph) {
-    mount(
-      $event.currentTarget as HTMLElement,
-      createParagraph(elementContentWithoutHashes),
-      caretPosition.currentNode,
-      true
-    );
-    return true;
-  }
-
-  const innerHtml =
-    Array(newSize).fill('#').join('') + ' ' + elementContentWithoutHashes;
-  mount(
-    $event.currentTarget as HTMLElement,
-    createHeading(newSize, innerHtml),
-    caretPosition.currentNode,
-    true
-  );
-
-  return true;
+  currentElement: HTMLElement
+) => {
+  const keysArePressed =
+    $event.altKey && $event.ctrlKey && range(0, 7).includes(+$event.key);
+  const haveSameSizeAsRequested = +$event.key === +currentElement.tagName[1];
+  return keysArePressed && !haveSameSizeAsRequested;
 };
+
+/* utils */
+export const _calcSize = (txt: string) =>
+  (txt.match(/^#{1,6} /gm) as RegExpMatchArray)[0].length - 1;
+export const _removeSign = (txt: string): string =>
+  txt.replace(/^#{1,6} /g, '').replace(/^<[^>]*>[^>]*<\/[^>]*>/g, '');
+const _hasTextSign = (txt: string): boolean => !!txt.match(HEADING_REGEX);
+const _isHeading = (currentElement: HTMLElement): boolean =>
+  currentElement.tagName.toLowerCase().startsWith('h');
+const _isParagraph = (currentElement: HTMLElement): boolean =>
+  currentElement.tagName.toLowerCase() === 'p';
+const _sizeOf = (heading: HTMLElement) => +heading.tagName[1];
