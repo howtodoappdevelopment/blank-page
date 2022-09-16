@@ -43,7 +43,6 @@ export const createContentEditable = (children: string): HTMLElement => {
       return;
     }
 
-    console.log(caretPosition.position.absolute);
     handleShowSign($event, caretPosition);
   });
   contentEditable.addEventListener('keyup', ($event) => {
@@ -58,9 +57,7 @@ export const createContentEditable = (children: string): HTMLElement => {
       return;
     }
 
-    const setPosition = (position: number) =>
-      setCaretPosition($event.currentTarget as HTMLElement, position);
-    handleHeading($event, caretPosition, setPosition);
+    handleHeading($event, caretPosition, setCaretPosition);
   });
 
   return contentEditable;

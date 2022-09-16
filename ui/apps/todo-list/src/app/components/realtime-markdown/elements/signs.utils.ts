@@ -1,20 +1,16 @@
 import { CaretPosition } from '../utils/caret.utils';
 
-let PREV_NODE_SIGNS: HTMLElement[] = [];
 export const handleShowSign = (
   $event: MouseEvent | KeyboardEvent,
   { currentHtmlElement }: CaretPosition
 ) => {
-  hideSigns(PREV_NODE_SIGNS);
+  hideSigns(getAllSignsElements($event.currentTarget as HTMLElement));
   if (isSign(currentHtmlElement)) {
     showSigns([currentHtmlElement]);
-    PREV_NODE_SIGNS = [currentHtmlElement];
     return;
   }
 
-  const currentNodeSigns = getAllSignsElements(currentHtmlElement);
-  showSigns(currentNodeSigns);
-  PREV_NODE_SIGNS = currentNodeSigns;
+  showSigns(getAllSignsElements(currentHtmlElement));
 };
 
 export const isSign = (element: HTMLElement): boolean =>
