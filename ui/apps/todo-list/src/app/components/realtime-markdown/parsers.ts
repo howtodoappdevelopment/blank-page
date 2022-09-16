@@ -7,8 +7,8 @@ import {
 } from './elements/pure-text.parser';
 
 export const PARSERS: ParserType[] = [
-  PURE_TEXT_PARSER,
   HEADING_PARSER,
   CHECKBOX_PARSER,
+  PURE_TEXT_PARSER,
   NEXT_LINE_PARSER,
 ];

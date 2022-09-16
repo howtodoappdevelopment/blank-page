@@ -13,5 +13,9 @@ export const parseToHtml = (markdown: string): string => {
 
   console.log(markdown);
 
+  markdown = markdown.replace(/<\/[^>]*>\n<[^>]*>/gm, (match) => {
+    return match.replace('\n', '');
+  });
+
   return markdown;
 };
