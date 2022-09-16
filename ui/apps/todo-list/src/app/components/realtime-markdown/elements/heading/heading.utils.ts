@@ -9,11 +9,12 @@ import { isSign } from '../signs.utils';
 export const handleHeading = (
   $event: KeyboardEvent,
   { currentHtmlElement, position }: CaretPosition,
-  setCaretPosition: (position: number) => void
+  setCaretPosition: (element: Element, position: number) => void
 ): void => {
   const contentEditableElement = $event.currentTarget as HTMLElement;
   const parentHtmlElement = currentHtmlElement.parentNode as HTMLElement;
 
+  // TODO: handle sign on shortcut
   if (_shouldHandleShortcuts($event, currentHtmlElement)) {
     const currentSize = _isParagraph(currentHtmlElement)
       ? 0
@@ -25,7 +26,10 @@ export const handleHeading = (
       newElement = createHeading(+$event.key, innerHtml);
     }
     mount(contentEditableElement, newElement, currentHtmlElement, true);
-    setCaretPosition(position.absolute - currentSize + newSize);
+    setCaretPosition(
+      contentEditableElement,
+      position.absolute - currentSize + newSize
+    );
   } else if (
     _isParagraph(currentHtmlElement) &&
     _hasTextSign(currentHtmlElement.innerHTML)
@@ -35,9 +39,7 @@ export const handleHeading = (
       _removeSign(currentHtmlElement.innerHTML)
     );
     mount(contentEditableElement, newHeading, currentHtmlElement, true);
-    setCaretPosition(
-      position.absolute - _calcSize(currentHtmlElement.innerHTML)
-    ); // TODO: fix caret pos
+    setCaretPosition(newHeading, position.relative);
   } else if (
     isSign(currentHtmlElement) &&
     _hasTextSign(parentHtmlElement.innerText)
@@ -48,16 +50,17 @@ export const handleHeading = (
       _removeSign(parentHtmlElement.innerHTML)
     );
     mount(contentEditableElement, newHeading, parentHtmlElement, true);
-    // setCaretPosition(position.absolute - newSize + 1); // TODO: fix caret pos
+    setCaretPosition(newHeading, position.relative);
   } else if (
     isSign(currentHtmlElement) &&
     _isHeading(parentHtmlElement) &&
     !_hasTextSign(parentHtmlElement.innerText)
   ) {
     const newParagraph = createParagraph(
-      _removeSign(parentHtmlElement.innerHTML)
+      currentHtmlElement.innerText + _removeSign(parentHtmlElement.innerHTML)
     );
     mount(contentEditableElement, newParagraph, parentHtmlElement, true);
+    setCaretPosition(newParagraph, position.relative);
   }
 };
 const _shouldHandleShortcuts = (
