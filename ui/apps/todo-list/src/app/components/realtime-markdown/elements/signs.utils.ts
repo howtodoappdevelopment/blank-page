@@ -1,6 +1,6 @@
 import { CaretPosition } from '../utils/caret.utils';
 
-export const handleShowSign = (
+export const displayCurrentHtmlElementSign = (
   $event: MouseEvent | KeyboardEvent,
   { currentHtmlElement }: CaretPosition
 ) => {

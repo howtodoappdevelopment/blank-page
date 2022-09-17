@@ -3,13 +3,16 @@ import { uniqueId } from 'lodash-es';
 
 import './realtime-markdown.css';
 import { getCaretPosition, setCaretPosition } from './utils/caret.utils';
-import { handleHeading } from './elements/heading/heading.utils';
+import {
+  handleHeadingOnKeyDown,
+  handleHeadingOnKeyUp,
+} from './elements/heading/heading.utils';
 import { createWrapper } from './elements/wrapper.element';
 import { createParagraph } from './elements/paragraph.element';
 import { parseToHtml } from './utils/parser.utils';
 import {
   getAllSignsElements,
-  handleShowSign,
+  displayCurrentHtmlElementSign,
   hideSigns,
 } from './elements/signs.utils';
 
@@ -43,7 +46,20 @@ export const createContentEditable = (children: string): HTMLElement => {
       return;
     }
 
-    handleShowSign($event, caretPosition);
+    displayCurrentHtmlElementSign($event, caretPosition);
+  });
+  contentEditable.addEventListener('keydown', ($event) => {
+    const caretPosition = getCaretPosition(contentEditable);
+    if (!caretPosition) {
+      return;
+    }
+
+    const SKIP_EVENTS = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
+    if (SKIP_EVENTS.includes($event.key)) {
+      return;
+    }
+
+    handleHeadingOnKeyDown($event, caretPosition, setCaretPosition);
   });
   contentEditable.addEventListener('keyup', ($event) => {
     const caretPosition = getCaretPosition(contentEditable);
@@ -53,11 +69,11 @@ export const createContentEditable = (children: string): HTMLElement => {
 
     const SKIP_EVENTS = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
     if (SKIP_EVENTS.includes($event.key)) {
-      handleShowSign($event, caretPosition);
+      displayCurrentHtmlElementSign($event, caretPosition);
       return;
     }
 
-    handleHeading($event, caretPosition, setCaretPosition);
+    handleHeadingOnKeyUp($event, caretPosition, setCaretPosition);
   });
 
   return contentEditable;
