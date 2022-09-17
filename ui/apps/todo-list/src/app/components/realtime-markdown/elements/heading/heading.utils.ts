@@ -6,7 +6,39 @@ import { createHeading } from './heading.element';
 import { mount } from 'redom';
 import { isSign } from '../signs.utils';
 
-export const handleHeading = (
+export const handleHeadingOnKeyDown = (
+  $event: KeyboardEvent,
+  { currentHtmlElement, position }: CaretPosition,
+  setCaretPosition: (element: Element, position: number) => void
+): void => {
+  const parentHtmlElement = currentHtmlElement.parentNode as HTMLElement;
+
+  // move letter from sign to header text
+  if (
+    `${$event.key}`.length === 1 &&
+    isSign(currentHtmlElement) &&
+    _hasTextSign(parentHtmlElement.innerText) &&
+    currentHtmlElement.innerText.length === position.relative
+  ) {
+    $event.preventDefault();
+    $event.stopPropagation();
+
+    const nextElement = currentHtmlElement.nextSibling;
+    if (!nextElement) {
+      parentHtmlElement.append($event.key);
+    } else if (nextElement.nodeType === 3) {
+      (nextElement as Text).before($event.key);
+    } else {
+      (nextElement as HTMLElement).innerText = `${$event.key}${
+        (nextElement as HTMLElement).innerText
+      }`;
+    }
+
+    setCaretPosition(parentHtmlElement, position.relative + 1);
+  }
+};
+
+export const handleHeadingOnKeyUp = (
   $event: KeyboardEvent,
   { currentHtmlElement, position }: CaretPosition,
   setCaretPosition: (element: Element, position: number) => void
@@ -14,6 +46,7 @@ export const handleHeading = (
   const contentEditableElement = $event.currentTarget as HTMLElement;
   const parentHtmlElement = currentHtmlElement.parentNode as HTMLElement;
 
+  // handle shortcuts
   if (_shouldHandleShortcuts($event, currentHtmlElement)) {
     const oldElement = isSign(currentHtmlElement)
       ? parentHtmlElement
@@ -37,7 +70,9 @@ export const handleHeading = (
         position.absolute - currentSize + newSize
       );
     }
-  } else if (
+  }
+  // to heading from paragraph
+  else if (
     _isParagraph(currentHtmlElement) &&
     _hasTextSign(currentHtmlElement.innerHTML)
   ) {
@@ -47,7 +82,9 @@ export const handleHeading = (
     );
     mount(contentEditableElement, newHeading, currentHtmlElement, true);
     setCaretPosition(newHeading, position.relative);
-  } else if (
+  }
+  // to heading from heading
+  else if (
     isSign(currentHtmlElement) &&
     _hasTextSign(parentHtmlElement.innerText)
   ) {
@@ -58,7 +95,9 @@ export const handleHeading = (
     );
     mount(contentEditableElement, newHeading, parentHtmlElement, true);
     setCaretPosition(newHeading, position.relative);
-  } else if (
+  }
+  // to paragraph from heading
+  else if (
     isSign(currentHtmlElement) &&
     _isHeading(parentHtmlElement) &&
     !_hasTextSign(parentHtmlElement.innerText)
