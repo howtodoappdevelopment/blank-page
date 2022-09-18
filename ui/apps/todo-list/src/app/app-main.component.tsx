@@ -10,8 +10,8 @@ import { Button } from './layouts/button/button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 import { Modal } from './layouts/modal/modal';
-import { createMarkdownInput } from './components/realtime-markdown/realtime-markdown';
-import { fullMarkdown } from './components/mocks/full-markdown.mock';
+import { fullMarkdown } from '@pages/mocks/full-markdown.mock';
+import { createMarkdownInput } from '@blank-page/realtime-markdown';
 
 export const AppMainComponent: FunctionComponent<
   PropsWithChildren<{
