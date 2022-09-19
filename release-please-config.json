@@ -1,13 +1,12 @@
 {
   "packages": {
     "ui/apps/todo-list": {
-      "changelog-path": "CHANGELOG.md",
+      "changelog-path": "ui/apps/todo-list/CHANGELOG.md",
       "release-type": [
-        "node",
         "node"
       ],
-      "bump-minor-pre-major": false,
-      "bump-patch-for-minor-pre-major": false,
+      "bump-minor-pre-major": true,
+      "bump-patch-for-minor-pre-major": true,
       "draft": false,
       "prerelease": false
     }
