@@ -4,7 +4,7 @@
   ],
   "bump-minor-pre-major": true,
   "bump-patch-for-minor-pre-major": true,
-  "bootstrap-sha": "fba653dc38c2a0fabb664991ec65a92403fac656",
+  "bootstrap-sha": "70d21eca04bd2a9a3252b1a328db718693632223",
   "packages": {
     "ui/apps/todo-list": {
       "release-type": "simple",
