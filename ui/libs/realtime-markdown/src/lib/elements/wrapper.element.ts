@@ -1,12 +1,16 @@
-import { el, setAttr } from 'redom';
+import { el, setStyle } from 'redom';
 
 export const createWrapper = (
   children?: string | HTMLElement | HTMLElement[]
 ): HTMLDivElement => {
   const wrapper = el('div', children ?? ' ');
-  setAttr(wrapper, {
-    className:
-      'border-2 border-gray-100 w-full rounded-md focus:!border-gray-300 whitespace-pre h-96 overflow-auto p-4',
+  setStyle(wrapper, {
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    'border-width': '2px',
+    'border-color': '#f3f4f6',
+    'border-radius': '0.375rem',
   });
   return wrapper;
 };
