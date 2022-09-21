@@ -1,9 +1,9 @@
-name: release
+name: prerelease
 on:
   workflow_dispatch:
   push:
     branches:
-      - master
+      - development
 
 jobs:
   release-please:
@@ -14,4 +14,5 @@ jobs:
           command: manifest
           monorepo-tags: true
           token: ${{secrets.GITHUB_TOKEN}}
-          default-branch: master
+          prerelease: 'true'
+          default-branch: development
