@@ -1,7 +1,6 @@
-import { el, setAttr } from 'redom';
+import { el, setAttr, setStyle } from 'redom';
 import { uniqueId } from 'lodash-es';
 
-import './realtime-markdown.css';
 import { getCaretPosition, setCaretPosition } from './utils/caret.utils';
 import {
   handleHeadingOnKeyDown,
@@ -34,10 +33,20 @@ export const createMarkdownInput = (
 export const createContentEditable = (children: string): HTMLElement => {
   const contentEditable = el('div');
   contentEditable.innerHTML = children;
+  setStyle(contentEditable, {
+    width: '100%',
+    height: '100%',
+    outline: 'none',
+    border: 'none',
+    'overflow-x': 'hidden',
+    'overflow-y': 'auto',
+    'box-shadow': 'none',
+    'word-break': 'break-all',
+    padding: '1rem',
+  });
   setAttr(contentEditable, {
     contentEditable: 'true',
     id: uniqueId('realtime-markdown-input'),
-    className: 'realtime-markdown-input inline-block w-full',
   });
 
   contentEditable.addEventListener('mouseup', ($event) => {
