@@ -12,7 +12,9 @@ export const Modal = forwardRef<
       className="absolute w-screen h-screen bg-white/50 flex flex-col justify-center items-center"
     >
       <div className="flex flex-col w-3/5 items-start bg-white border-2 border-gray-100 rounded-md">
-        <div className="content px-8 py-6 w-full">{children}</div>
+        <div className="content max-h-96 px-8 py-6 w-full overflow-auto-y">
+          {children}
+        </div>
         <div className="inline-block px-8 py-3 w-full">
           {!footerContent && (
             <>
