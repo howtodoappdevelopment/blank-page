@@ -4,7 +4,7 @@
   ],
   "bump-minor-pre-major": true,
   "bump-patch-for-minor-pre-major": true,
-  "bootstrap-sha": "fba653dc38c2a0fabb664991ec65a92403fac656",
+  "bootstrap-sha": "8555420f2949d05174438a0b8aa8751480eccc65",
   "packages": {
     ".": {
       "release-as": ""
