@@ -1,4 +1,4 @@
-export type CaretPosition = {
+export type CaretContext = {
   currentHtmlElement: HTMLElement;
   position: {
     relative: number;
@@ -6,7 +6,7 @@ export type CaretPosition = {
   };
 };
 
-export const getCaretPosition = (element: Element): CaretPosition | null => {
+export const getCaretContext = (element: Element): CaretContext | null => {
   const selection = window.getSelection() as Selection;
   if (!selection) {
     return null;

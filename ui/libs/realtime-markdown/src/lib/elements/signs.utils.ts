@@ -1,8 +1,8 @@
-import { CaretPosition } from '../utils/caret.utils';
+import { CaretContext } from '../utils/caret.utils';
 
 export const displayCurrentHtmlElementSign = (
   $event: MouseEvent | KeyboardEvent,
-  { currentHtmlElement }: CaretPosition
+  { currentHtmlElement }: CaretContext
 ) => {
   hideSigns(getAllSignsElements($event.currentTarget as HTMLElement));
   if (isSign(currentHtmlElement)) {

@@ -5,7 +5,8 @@ export const createHeading = (
   children?: string
 ): HTMLHeadingElement => {
   const sign = Array(size).fill('#').join('');
-  const signElement = el('span', `${sign} `) as HTMLSpanElement;
+  const signElement = el('span') as HTMLSpanElement;
+  signElement.innerHTML = `${sign}&nbsp;`;
   setAttr(signElement, {
     className: 'sign text-gray-300',
   });
