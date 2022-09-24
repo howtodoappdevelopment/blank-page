@@ -1,14 +1,15 @@
-import { CaretPosition } from '../../utils/caret.utils';
+import { CaretContext } from '../../utils/caret.utils';
 import { range } from 'lodash-es';
 import { HEADING_REGEX } from './heading.parser';
 import { createParagraph } from '../paragraph.element';
 import { createHeading } from './heading.element';
 import { mount } from 'redom';
 import { isSign } from '../signs.utils';
+import { isParagraph } from '../../utils/elements.utils';
 
 export const handleHeadingOnKeyDown = (
   $event: KeyboardEvent,
-  { currentHtmlElement, position }: CaretPosition,
+  { currentHtmlElement, position }: CaretContext,
   setCaretPosition: (element: Element, position: number) => void
 ): void => {
   const parentHtmlElement = currentHtmlElement.parentNode as HTMLElement;
@@ -40,7 +41,7 @@ export const handleHeadingOnKeyDown = (
 
 export const handleHeadingOnKeyUp = (
   $event: KeyboardEvent,
-  { currentHtmlElement, position }: CaretPosition,
+  { currentHtmlElement, position }: CaretContext,
   setCaretPosition: (element: Element, position: number) => void
 ): void => {
   const contentEditableElement = $event.currentTarget as HTMLElement;
@@ -51,7 +52,7 @@ export const handleHeadingOnKeyUp = (
     const oldElement = isSign(currentHtmlElement)
       ? parentHtmlElement
       : currentHtmlElement;
-    const currentSize = _isParagraph(oldElement) ? 0 : _sizeOf(oldElement);
+    const currentSize = isParagraph(oldElement) ? 0 : _sizeOf(oldElement);
     const newSize = +$event.key;
     const innerHtml = _removeSign(oldElement.innerHTML);
     let newElement = createParagraph(innerHtml);
@@ -73,7 +74,7 @@ export const handleHeadingOnKeyUp = (
   }
   // to heading from paragraph
   else if (
-    _isParagraph(currentHtmlElement) &&
+    isParagraph(currentHtmlElement) &&
     _hasTextSign(currentHtmlElement.innerHTML)
   ) {
     const newHeading = createHeading(
@@ -127,6 +128,4 @@ export const _removeSign = (txt: string): string =>
 const _hasTextSign = (txt: string): boolean => !!txt.match(HEADING_REGEX);
 const _isHeading = (currentElement: HTMLElement): boolean =>
   currentElement.tagName.toLowerCase().startsWith('h');
-const _isParagraph = (currentElement: HTMLElement): boolean =>
-  currentElement.tagName.toLowerCase() === 'p';
 const _sizeOf = (heading: HTMLElement) => +heading.tagName[1];

@@ -15,7 +15,7 @@ export const PURE_TEXT_PARSER: ParserType = {
 
 const NEXT_LINE_REGEX = /(^ *(\n|\r\n|\r)$)|(^$)/gm;
 const PARSE_NEXT_LINE = (): HTMLElement => {
-  return createParagraph('&nbsp;');
+  return createParagraph('<br />');
 };
 export const NEXT_LINE_PARSER: ParserType = {
   regex: NEXT_LINE_REGEX,
