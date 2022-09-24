@@ -1,7 +1,7 @@
 import { el, setAttr, setStyle } from 'redom';
 import { uniqueId } from 'lodash-es';
 
-import { getCaretPosition, setCaretPosition } from './utils/caret.utils';
+import { getCaretContext, setCaretPosition } from './utils/caret.utils';
 import {
   handleHeadingOnKeyDown,
   handleHeadingOnKeyUp,
@@ -14,6 +14,14 @@ import {
   displayCurrentHtmlElementSign,
   hideSigns,
 } from './elements/signs.utils';
+import {
+  handleCheckboxOnKeyDown,
+  handleCheckboxOnKeyUp,
+} from './elements/checkbox/checkbox.utils';
+import {
+  handleParagraphOnKeyDown,
+  handleParagraphOnKeyUp,
+} from './elements/paragraph.utils';
 
 export const createMarkdownInput = (
   initialMarkdown?: string
@@ -50,39 +58,44 @@ export const createContentEditable = (children: string): HTMLElement => {
   });
 
   contentEditable.addEventListener('mouseup', ($event) => {
-    const caretPosition = getCaretPosition(contentEditable);
-    if (!caretPosition) {
+    const caretContext = getCaretContext(contentEditable);
+    if (!caretContext) {
       return;
     }
 
-    displayCurrentHtmlElementSign($event, caretPosition);
+    displayCurrentHtmlElementSign($event, caretContext);
   });
   contentEditable.addEventListener('keydown', ($event) => {
-    const caretPosition = getCaretPosition(contentEditable);
-    if (!caretPosition) {
+    const caretContext = getCaretContext(contentEditable);
+    if (!caretContext) {
       return;
     }
+
+    handleCheckboxOnKeyDown($event, caretContext, setCaretPosition);
 
     const SKIP_EVENTS = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
     if (SKIP_EVENTS.includes($event.key)) {
       return;
     }
 
-    handleHeadingOnKeyDown($event, caretPosition, setCaretPosition);
+    handleHeadingOnKeyDown($event, caretContext, setCaretPosition);
+    handleParagraphOnKeyDown($event, caretContext, setCaretPosition);
   });
   contentEditable.addEventListener('keyup', ($event) => {
-    const caretPosition = getCaretPosition(contentEditable);
-    if (!caretPosition) {
+    const caretContext = getCaretContext(contentEditable);
+    if (!caretContext) {
       return;
     }
 
     const SKIP_EVENTS = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
     if (SKIP_EVENTS.includes($event.key)) {
-      displayCurrentHtmlElementSign($event, caretPosition);
+      displayCurrentHtmlElementSign($event, caretContext);
       return;
     }
 
-    handleHeadingOnKeyUp($event, caretPosition, setCaretPosition);
+    handleParagraphOnKeyUp($event, caretContext, setCaretPosition);
+    handleHeadingOnKeyUp($event, caretContext, setCaretPosition);
+    handleCheckboxOnKeyUp($event, caretContext, setCaretPosition);
   });
 
   return contentEditable;
