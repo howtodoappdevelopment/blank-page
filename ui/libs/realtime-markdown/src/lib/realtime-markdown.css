@@ -1,0 +1,91 @@
+/* padding left aka indent */
+.pl-0 {
+  padding-left: 0;
+}
+
+.pl-1 {
+  padding-left: calc(1 * 15px);
+}
+
+.pl-2 {
+  padding-left: calc(2 * 15px);
+}
+
+.pl-3 {
+  padding-left: calc(3 * 15px);
+}
+
+.pl-4 {
+  padding-left: calc(4 * 15px);
+}
+
+.pl-5 {
+  padding-left: calc(5 * 15px);
+}
+
+.pl-6 {
+  padding-left: calc(6 * 15px);
+}
+
+.pl-7 {
+  padding-left: calc(7 * 15px);
+}
+
+.pl-8 {
+  padding-left: calc(8 * 15px);
+}
+
+.pl-9 {
+  padding-left: calc(9 * 15px);
+}
+
+.pl-10 {
+  padding-left: calc(10 * 15px);
+}
+
+/* Lists */
+/* TODO: Li markers */
+ul.pl-0 {
+  list-style-type: circle;
+}
+
+ul.pl-1 {
+  list-style-type: square;
+}
+
+ol.pl-0 {
+  list-style-type: decimal;
+}
+
+/* Code block */
+.et-precode {
+  padding: 8px;
+  background-color: #f1f1f1;
+}
+
+/* Quote */
+.et-quote {
+  border-left: 4px;
+  border-style: solid;
+  border-color: lightgray;
+  padding-left: 10px;
+  background-color: #f1f1f1;
+}
+
+/* Code */
+.et-code {
+  color: crimson;
+  background-color: #f1f1f1;
+  padding: 4px;
+  font-size: 80%;
+}
+
+/* Strike */
+.et-strike {
+  text-decoration: line-through;
+}
+
+/* Highlight */
+.et-highlight {
+  background-color: yellowgreen;
+}

@@ -1,33 +1,21 @@
 import { el, setAttr, setStyle } from 'redom';
 import { uniqueId } from 'lodash-es';
 
-import { getCaretContext, setCaretPosition } from './utils/caret.utils';
-import {
-  handleHeadingOnKeyDown,
-  handleHeadingOnKeyUp,
-} from './elements/heading/heading.utils';
-import { createWrapper } from './elements/wrapper.element';
-import { createParagraph } from './elements/paragraph.element';
+import { getCaretContext } from './utils/caret.utils';
+import { createWrapper } from './wrapper.element';
 import { parseToHtml } from './utils/parser.utils';
 import {
   getAllSignsElements,
   displayCurrentHtmlElementSign,
   hideSigns,
-} from './elements/signs.utils';
-import {
-  handleCheckboxOnKeyDown,
-  handleCheckboxOnKeyUp,
-} from './elements/checkbox/checkbox.utils';
-import {
-  handleParagraphOnKeyDown,
-  handleParagraphOnKeyUp,
-} from './elements/paragraph.utils';
+} from './helpers/signs.utils';
+import { createNewElement } from './utils/elements.utils';
 
 export const createMarkdownInput = (
   initialMarkdown?: string
 ): HTMLDivElement => {
   let innerHtml: string = Array(10)
-    .fill(createParagraph(' ').outerHTML)
+    .fill(createNewElement({ emmet: 'p{ }' }).outerHTML)
     .join('\n');
   if (initialMarkdown) {
     innerHtml = parseToHtml(initialMarkdown);
@@ -50,7 +38,7 @@ export const createContentEditable = (children: string): HTMLElement => {
     'overflow-y': 'auto',
     'box-shadow': 'none',
     'word-break': 'break-all',
-    padding: '1rem',
+    padding: '2rem',
   });
   setAttr(contentEditable, {
     contentEditable: 'true',
@@ -70,32 +58,12 @@ export const createContentEditable = (children: string): HTMLElement => {
     if (!caretContext) {
       return;
     }
-
-    handleCheckboxOnKeyDown($event, caretContext, setCaretPosition);
-
-    const SKIP_EVENTS = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
-    if (SKIP_EVENTS.includes($event.key)) {
-      return;
-    }
-
-    handleHeadingOnKeyDown($event, caretContext, setCaretPosition);
-    handleParagraphOnKeyDown($event, caretContext, setCaretPosition);
   });
   contentEditable.addEventListener('keyup', ($event) => {
     const caretContext = getCaretContext(contentEditable);
     if (!caretContext) {
       return;
     }
-
-    const SKIP_EVENTS = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
-    if (SKIP_EVENTS.includes($event.key)) {
-      displayCurrentHtmlElementSign($event, caretContext);
-      return;
-    }
-
-    handleParagraphOnKeyUp($event, caretContext, setCaretPosition);
-    handleHeadingOnKeyUp($event, caretContext, setCaretPosition);
-    handleCheckboxOnKeyUp($event, caretContext, setCaretPosition);
   });
 
   return contentEditable;
