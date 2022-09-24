@@ -1,26 +1,13 @@
-import { PARSERS } from '../parsers';
 import { isArray } from 'lodash-es';
-import {
-  NEXT_LINE_PARSER,
-  PURE_TEXT_PARSER,
-} from '../elements/pure-text.parser';
+import { STATIC_PARSERS } from '../config';
 
 export const parseToHtml = (markdown: string): string => {
-  for (const { regex, parser } of [
-    ...PARSERS,
-    PURE_TEXT_PARSER,
-    NEXT_LINE_PARSER,
-  ]) {
-    markdown = markdown.replace(regex, (match) => {
-      const parsedMatch = parser(match);
-      const parsedElements = isArray(parsedMatch) ? parsedMatch : [parsedMatch];
-      return parsedElements.map((element) => element.outerHTML).join('');
-    });
+  for (const { regex, toHtml } of STATIC_PARSERS) {
+    markdown = markdown.replace(regex, (match) =>
+      toArray<string>(toHtml(match)).join('')
+    );
   }
-
-  markdown = markdown.replace(/<\/[^>]*>\n<[^>]*>/gm, (match) => {
-    return match.replace('\n', '');
-  });
-
   return markdown;
 };
+
+const toArray = <T>(val: unknown): T[] => (isArray(val) ? val : [val as T]);

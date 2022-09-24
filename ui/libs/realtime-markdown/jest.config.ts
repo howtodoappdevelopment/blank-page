@@ -11,6 +11,9 @@ export default {
   transform: {
     '^.+\\.[tj]sx?$': 'ts-jest',
   },
+  moduleNameMapper: {
+    '^lodash-es$': 'lodash',
+  },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../coverage/libs/realtime-markdown',
 };
