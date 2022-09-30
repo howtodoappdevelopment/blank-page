@@ -1,15 +1,19 @@
 import './realtime-markdown.css';
 import { ElementRepresentationConfig, ParserType } from './types';
 import { aConfig, aParsers } from './parsers/a-configs';
+import { bConfig, bParser } from './parsers/b-configs';
 
 export const config = {
   maxIndent: 10,
 };
 
-export const STATIC_PARSERS: ParserType[] = [...aParsers];
+export const STATIC_PARSERS: ParserType[] = [...aParsers, bParser];
 
 // .et-* === .element-type-*
-export const DYNAMIC_ELEMENTS_CONFIG: ElementRepresentationConfig[] = [aConfig];
+export const DYNAMIC_ELEMENTS_CONFIG: ElementRepresentationConfig[] = [
+  aConfig,
+  bConfig,
+];
 
 // {
 //   id: 'checkbox',
@@ -105,19 +109,6 @@ export const DYNAMIC_ELEMENTS_CONFIG: ElementRepresentationConfig[] = [aConfig];
 //     const rightSign = innerHtml.match(/[ <]$/g) || '';
 //     innerHtml = innerHtml.replace(/^[ >]?\*|\*[ <]$/g, '');
 //     const emmet = DYNAMIC_ELEMENTS_CONFIG['i'].initialEmmet({
-//       innerHtml,
-//     });
-//     return `${leftSign}${expand(emmet)}${rightSign}`;
-//   },
-// },
-// {
-//   id: 'b',
-//   regex: /( |^|>)\*\*[^*]*\*\*( |$|<)/gm,
-//   toHtml: (innerHtml: string) => {
-//     const leftSign = innerHtml.match(/^[ >]/g) || '';
-//     const rightSign = innerHtml.match(/[ <]$/g) || '';
-//     innerHtml = innerHtml.replace(/^[ >]?\*\*|\*\*[ <]$/g, '');
-//     const emmet = DYNAMIC_ELEMENTS_CONFIG['b'].initialEmmet({
 //       innerHtml,
 //     });
 //     return `${leftSign}${expand(emmet)}${rightSign}`;
@@ -278,13 +269,6 @@ export const DYNAMIC_ELEMENTS_CONFIG: ElementRepresentationConfig[] = [aConfig];
 //     `i.et-i>span.sign{\\*}+span.content{${innerHtml}}+span.sign{\\*}`,
 //   signLeft: /\*/g,
 //   signRight: /\*/g,
-//   extendOnNewLine: false,
-// },
-// b: {
-//   initialEmmet: ({ innerHtml = '&nbsp;' }) =>
-//     `b.et-b>span.sign{\\*\\*}+span.content{${innerHtml}}+span.sign{\\*\\*}`,
-//   signLeft: /\*\*/g,
-//   signRight: /\*\*/g,
 //   extendOnNewLine: false,
 // },
 // a: ,
