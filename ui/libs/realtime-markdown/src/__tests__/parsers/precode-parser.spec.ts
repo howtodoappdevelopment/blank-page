@@ -9,9 +9,9 @@ xdescribe('precode', () => {
       `<ol class="pl-0"><li class="et-ol"><span class="content">${content}</span></li><li class="et-ol"><ol class="pl-1"><li class="et-ol"><span class="content">${content}</span></li></ol></li></ol>`
     );
   });
-  test('without indent', () => {});
-  test('precode > b', () => {});
-  test('precode > i', () => {});
-  test('precode > code', () => {});
-  test('should be extended', () => {});
+  // test('without indent', () => {});
+  // test('precode > b', () => {});
+  // test('precode > i', () => {});
+  // test('precode > code', () => {});
+  // test('should be extended', () => {});
 });

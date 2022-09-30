@@ -2,7 +2,7 @@
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "npmScope": "blank-page",
   "affected": {
-    "defaultBase": "main"
+    "defaultBase": "origin/master"
   },
   "implicitDependencies": {
     "package.json": {
