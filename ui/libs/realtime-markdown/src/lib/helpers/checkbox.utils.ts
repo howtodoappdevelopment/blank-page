@@ -1,6 +1,6 @@
-import { CaretContext } from '../utils/caret.utils';
-import { isDiv, isParagraph } from '../utils/elements.utils';
-import { mount, setStyle, unmount } from 'redom';
+// import { CaretContext } from '../utils/caret.utils';
+// import { isDiv, isParagraph } from '../utils/elements.utils';
+// import { mount, setStyle, unmount } from 'redom';
 
 // on key down don't allow to go left from input
 // handle tab

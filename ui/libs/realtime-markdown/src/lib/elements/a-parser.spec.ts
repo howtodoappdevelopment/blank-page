@@ -1,6 +1,6 @@
 import { parseToHtml } from '../utils/parser.utils';
 
-describe('a hrefs', () => {
+xdescribe('a hrefs', () => {
   test('should parse [url](http://url.com)', () => {
     const url = 'http://url.com';
     const title = 'url';

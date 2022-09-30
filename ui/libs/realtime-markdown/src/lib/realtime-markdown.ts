@@ -1,14 +1,9 @@
 import { el, setAttr, setStyle } from 'redom';
 import { uniqueId } from 'lodash-es';
 
-import { getCaretContext } from './utils/caret.utils';
 import { createWrapper } from './wrapper.element';
 import { parseToHtml } from './utils/parser.utils';
-import {
-  getAllSignsElements,
-  displayCurrentHtmlElementSign,
-  hideSigns,
-} from './helpers/signs.utils';
+import { getAllSignsElements, hideSigns } from './helpers/signs.utils';
 import { createNewElement } from './utils/elements.utils';
 
 export const createMarkdownInput = (
@@ -45,26 +40,26 @@ export const createContentEditable = (children: string): HTMLElement => {
     id: uniqueId('realtime-markdown-input'),
   });
 
-  contentEditable.addEventListener('mouseup', ($event) => {
-    const caretContext = getCaretContext(contentEditable);
-    if (!caretContext) {
-      return;
-    }
-
-    displayCurrentHtmlElementSign($event, caretContext);
-  });
-  contentEditable.addEventListener('keydown', ($event) => {
-    const caretContext = getCaretContext(contentEditable);
-    if (!caretContext) {
-      return;
-    }
-  });
-  contentEditable.addEventListener('keyup', ($event) => {
-    const caretContext = getCaretContext(contentEditable);
-    if (!caretContext) {
-      return;
-    }
-  });
+  // contentEditable.addEventListener('mouseup', ($event) => {
+  //   const caretContext = getCaretContext(contentEditable);
+  //   if (!caretContext) {
+  //     return;
+  //   }
+  //
+  //   displayCurrentHtmlElementSign($event, caretContext);
+  // });
+  // contentEditable.addEventListener('keydown', ($event) => {
+  //   const caretContext = getCaretContext(contentEditable);
+  //   if (!caretContext) {
+  //     return;
+  //   }
+  // });
+  // contentEditable.addEventListener('keyup', ($event) => {
+  //   const caretContext = getCaretContext(contentEditable);
+  //   if (!caretContext) {
+  //     return;
+  //   }
+  // });
 
   return contentEditable;
 };
