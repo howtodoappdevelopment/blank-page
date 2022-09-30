@@ -4,12 +4,7 @@ export const config = {
   maxIndent: 10,
 };
 
-export const STATIC_PARSERS: ParserType[] = [
-  // ...aParsers,
-  // bParser,
-  // highlightParser,
-  // strikeParser,
-];
+export const STATIC_PARSERS: ParserType[] = [];
 
 // .et-* === .element-type-*
 // export const DYNAMIC_ELEMENTS_CONFIG: ElementRepresentationConfig[] = [
@@ -91,17 +86,6 @@ export const STATIC_PARSERS: ParserType[] = [
 //       .split('\n')
 //       .filter((html) => html.trim() !== '')
 //       .map((html) => expand(`p{${html}}`));
-//   },
-// },
-// {
-//   id: 'code',
-//   regex: /( |^|>)`[^ ][^`]+[^ ]`( |$|<)/gm,
-//   toHtml: (innerHtml: string) => {
-//     const leftSign = innerHtml.match(/^[ >]/g) || '';
-//     const rightSign = innerHtml.match(/[ <]$/g) || '';
-//     innerHtml = innerHtml.trim().replace(/^[ >]?`|`[ <]?$/g, '');
-//     const emmet = DYNAMIC_ELEMENTS_CONFIG['code'].initialEmmet({ innerHtml });
-//     return `${leftSign}${expand(emmet)}${rightSign}`;
 //   },
 // },
 // {
@@ -209,13 +193,6 @@ export const STATIC_PARSERS: ParserType[] = [
 //     `p.et-quote.pl-${indent}>span.content{${innerHtml}}`,
 //   newLineEmmet: () => ``,
 //   signLeft: /^ *- \[([x ])]/g,
-//   extendOnNewLine: false,
-// },
-// code: {
-//   initialEmmet: ({ innerHtml = '&nbsp;' }) =>
-//     `code.et-code>span.sign{\`}+span.content{${innerHtml}}+span.sign{\`}`,
-//   signLeft: /`/g,
-//   signRight: /`/g,
 //   extendOnNewLine: false,
 // },
 // i: {
