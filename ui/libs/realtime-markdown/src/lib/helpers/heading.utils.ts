@@ -5,7 +5,7 @@
 // import { createHeading } from './heading.element';
 // import { mount } from 'redom';
 // import { isSign } from '../signs.utils';
-// import { isParagraph } from '../../utils/elements.utils';
+// import { isParagraph } from '../../utils/parsers.utils';
 
 // export const handleHeadingOnKeyDown = (
 //   $event: KeyboardEvent,

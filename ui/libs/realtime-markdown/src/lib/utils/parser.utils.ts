@@ -1,8 +1,12 @@
 import { isArray } from 'lodash-es';
 import { STATIC_PARSERS } from '../config';
+import { ParserType } from '../types';
 
-export const parseToHtml = (markdown: string): string => {
-  for (const { regex, toHtml } of STATIC_PARSERS) {
+export const parseToHtml = (
+  markdown: string,
+  parsers: ParserType[] = STATIC_PARSERS
+): string => {
+  for (const { regex, toHtml } of parsers) {
     markdown = markdown.replace(regex, (match) =>
       toArray<string>(toHtml(match)).join('')
     );
