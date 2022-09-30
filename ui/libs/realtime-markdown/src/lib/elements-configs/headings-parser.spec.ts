@@ -1,7 +1,8 @@
-import { toHtml } from '@fortawesome/fontawesome-svg-core';
-import { calcHeadingSize } from '../../lib/utils/elements.utils';
+import { calcHeadingSize } from '../utils/elements.utils';
+import { parseToHtml } from '../utils/parser.utils';
+import { headingsParser } from './headings-configs';
 
-xdescribe('heading', () => {
+describe('heading', () => {
   test('should parse heading', () => {
     const headings = Array(6).map(
       (_, index) =>
@@ -11,7 +12,7 @@ xdescribe('heading', () => {
           .join('') + ' content'
     );
     for (const heading in headings) {
-      const html = toHtml(heading);
+      const html = parseToHtml(heading, [headingsParser]);
       const size = calcHeadingSize(heading);
       const [sign, content] = heading.split(' ');
       expect(html).toEqual(
@@ -30,7 +31,7 @@ xdescribe('heading', () => {
         ' content'
     );
     for (const heading in headings) {
-      const html = toHtml(heading);
+      const html = parseToHtml(heading, [headingsParser]);
       expect(html).toEqual(`<p>${heading}</p>`);
     }
   });
