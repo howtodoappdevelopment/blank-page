@@ -16,7 +16,15 @@ describe('code', () => {
     expect(html).toEqual(expectedOutput);
   });
   test("shouldn't parse ```", () => {
-    const html = parseToHtml(`\`\`\``, [codeParser]);
-    expect(html).toEqual(`\`\`\``);
+    let content = '```';
+    let html = parseToHtml(`${content}`, [codeParser]);
+    expect(html).toEqual(`${content}`);
+
+    content = 'content';
+    html = parseToHtml(`\`${content} \``, [codeParser]);
+    expect(html).toEqual(`\`${content} \``);
+
+    html = parseToHtml(`\` ${content}\``, [codeParser]);
+    expect(html).toEqual(`\` ${content}\``);
   });
 });
