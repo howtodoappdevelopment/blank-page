@@ -55,17 +55,7 @@ export const STATIC_PARSERS: ParserType[] = [];
 //       })
 //     ),
 // },
-// {
-//   id: 'quote',
-//   regex: /^( ?)+> .*$/gm,
-//   toHtml: (innerHtml: string) =>
-//     expand(
-//       DYNAMIC_ELEMENTS_CONFIG['quote'].initialEmmet({
-//         indent: calcIndent(innerHtml),
-//         innerHtml: innerHtml.replace(/^ *> /g, ''),
-//       })
-//     ),
-// },
+
 // {
 //   id: 'text',
 //   regex: /[^<>\n]+(?![^<]*>|[^<>]*<\/)$/gm,
@@ -109,10 +99,4 @@ export const STATIC_PARSERS: ParserType[] = [];
 //   signLeft: /^ *- \[([x ])]/g,
 //   extendOnNewLine: false,
 // },
-// quote: {
-//   initialEmmet: ({ indent = 0, innerHtml = '&nbsp;' }) =>
-//     `p.et-quote.pl-${indent}>span.content{${innerHtml}}`,
-//   newLineEmmet: () => ``,
-//   signLeft: /^ *- \[([x ])]/g,
-//   extendOnNewLine: false,
-// },
+// quote:
