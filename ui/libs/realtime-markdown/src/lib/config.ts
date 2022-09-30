@@ -78,12 +78,6 @@ export const STATIC_PARSERS: ParserType[] = [];
 // },
 //
 
-// {
-//   id: 'empty-line',
-//   regex: /(^ *(\n|\r\n|\r)$)|(^$)/gm,
-//   toHtml: () => expand('p{&nbsp;}'),
-// },
-
 // precode: {
 //   initialEmmet: ({ indent = 0, innerHtml = '<br />' }) =>
 //     `pre.et-precode.pl-${indent}>code.et-precode>span.content{${innerHtml}}`,
