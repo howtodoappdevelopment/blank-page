@@ -1,19 +1,25 @@
 import './realtime-markdown.css';
-import { ElementRepresentationConfig, ParserType } from './types';
-import { aConfig, aParsers } from './parsers/a-configs';
-import { bConfig, bParser } from './parsers/b-configs';
+import { ParserType } from './types';
+import { aParsers } from './parsers/a-configs';
+import { bParser } from './parsers/b-configs';
+import { highlightParser } from './parsers/highlight-config';
 
 export const config = {
   maxIndent: 10,
 };
 
-export const STATIC_PARSERS: ParserType[] = [...aParsers, bParser];
+export const STATIC_PARSERS: ParserType[] = [
+  ...aParsers,
+  bParser,
+  highlightParser,
+];
 
 // .et-* === .element-type-*
-export const DYNAMIC_ELEMENTS_CONFIG: ElementRepresentationConfig[] = [
-  aConfig,
-  bConfig,
-];
+// export const DYNAMIC_ELEMENTS_CONFIG: ElementRepresentationConfig[] = [
+//   aConfig,
+//   bConfig,
+//   highlightConfig
+// ];
 
 // {
 //   id: 'checkbox',
@@ -149,22 +155,7 @@ export const DYNAMIC_ELEMENTS_CONFIG: ElementRepresentationConfig[] = [
 //     return `${leftSign}${expand(emmet)}${rightSign}`;
 //   },
 // },
-// {
-//   id: 'highlight',
-//   regex: /( |^|>)==[^=]*==( |$|<)/gm,
-//   toHtml: (innerHtml: string) => {
-//     const leftSign = innerHtml.match(/^[ >]/g) || '';
-//     const rightSign = innerHtml.match(/[ <]$/g) || '';
-//
-//     console.log(innerHtml);
-//     innerHtml = innerHtml.replace(/(( |^|>)==|==( |$|<))/g, '');
-//     console.log(innerHtml);
-//     const emmet = DYNAMIC_ELEMENTS_CONFIG['highlight'].initialEmmet({
-//       innerHtml,
-//     });
-//     return `${leftSign}${expand(emmet)}${rightSign}`;
-//   },
-// },
+
 // {
 //   id: 'empty-line',
 //   regex: /(^ *(\n|\r\n|\r)$)|(^$)/gm,
@@ -285,12 +276,5 @@ export const DYNAMIC_ELEMENTS_CONFIG: ElementRepresentationConfig[] = [
 //     `span.et-strike>span.sign{~~}+span.content{${innerHtml}}+span.sign{~~}`,
 //   signLeft: /~~/g,
 //   signRight: /~~/g,
-//   extendOnNewLine: false,
-// },
-// highlight: {
-//   initialEmmet: ({ innerHtml = '&nbsp;' }) =>
-//     `span.et-highlight>span.sign{==}+span.content{${innerHtml}}+span.sign{==}`,
-//   signLeft: /==/g,
-//   signRight: /==/g,
 //   extendOnNewLine: false,
 // },

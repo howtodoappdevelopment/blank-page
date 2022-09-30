@@ -1,4 +1,3 @@
-import { DYNAMIC_ELEMENTS_CONFIG } from '../config';
 import expand from 'emmet';
 import { ElementRepresentationConfig, ParserType } from '../types';
 
