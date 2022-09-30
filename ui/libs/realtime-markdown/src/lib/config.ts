@@ -88,19 +88,6 @@ export const STATIC_PARSERS: ParserType[] = [];
 //       .map((html) => expand(`p{${html}}`));
 //   },
 // },
-// {
-//   id: 'i',
-//   regex: /( |^|>)\*[^*]*\*( |$|<)/gm,
-//   toHtml: (innerHtml: string) => {
-//     const leftSign = innerHtml.match(/^[ >]/g) || '';
-//     const rightSign = innerHtml.match(/[ <]$/g) || '';
-//     innerHtml = innerHtml.replace(/^[ >]?\*|\*[ <]$/g, '');
-//     const emmet = DYNAMIC_ELEMENTS_CONFIG['i'].initialEmmet({
-//       innerHtml,
-//     });
-//     return `${leftSign}${expand(emmet)}${rightSign}`;
-//   },
-// },
 //
 
 // {
@@ -195,10 +182,4 @@ export const STATIC_PARSERS: ParserType[] = [];
 //   signLeft: /^ *- \[([x ])]/g,
 //   extendOnNewLine: false,
 // },
-// i: {
-//   initialEmmet: ({ innerHtml = '&nbsp;' }) =>
-//     `i.et-i>span.sign{\\*}+span.content{${innerHtml}}+span.sign{\\*}`,
-//   signLeft: /\*/g,
-//   signRight: /\*/g,
-//   extendOnNewLine: false,
-// },
+// i:
