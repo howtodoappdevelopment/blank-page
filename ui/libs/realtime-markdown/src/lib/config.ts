@@ -1,19 +1,14 @@
-import './realtime-markdown.css';
 import { ParserType } from './types';
-import { aParsers } from './parsers/a-configs';
-import { bParser } from './parsers/b-configs';
-import { highlightParser } from './parsers/highlight-config';
-import { strikeParser } from './parsers/strike-configs';
 
 export const config = {
   maxIndent: 10,
 };
 
 export const STATIC_PARSERS: ParserType[] = [
-  ...aParsers,
-  bParser,
-  highlightParser,
-  strikeParser,
+  // ...aParsers,
+  // bParser,
+  // highlightParser,
+  // strikeParser,
 ];
 
 // .et-* === .element-type-*
@@ -123,27 +118,7 @@ export const STATIC_PARSERS: ParserType[] = [
 //   },
 // },
 //
-// {
-//   id: 'img',
-//   regex: /( |^|>)!\[[^[\]]*]\([^()]*\)( |$|<)/gm,
-//   toHtml: (innerHtml: string) => {
-//     const leftSign = innerHtml.match(/^[ >]/g) || '';
-//     const rightSign = innerHtml.match(/[ <]$/g) || '';
-//     const alt = (innerHtml.match(/\[.*]/g) as RegExpMatchArray)[0].replace(
-//       /[\\[\]]/g,
-//       ''
-//     );
-//     const src = (innerHtml.match(/\(.*\)/g) as RegExpMatchArray)[0].replace(
-//       /[()]/g,
-//       ''
-//     );
-//     const emmet = DYNAMIC_ELEMENTS_CONFIG['img'].initialEmmet({
-//       alt,
-//       src,
-//     });
-//     return `${leftSign}${expand(emmet)}${rightSign}`;
-//   },
-// },
+
 // {
 //   id: 'empty-line',
 //   regex: /(^ *(\n|\r\n|\r)$)|(^$)/gm,
@@ -248,14 +223,5 @@ export const STATIC_PARSERS: ParserType[] = [
 //     `i.et-i>span.sign{\\*}+span.content{${innerHtml}}+span.sign{\\*}`,
 //   signLeft: /\*/g,
 //   signRight: /\*/g,
-//   extendOnNewLine: false,
-// },
-// a: ,
-// img: {
-//   initialEmmet: ({ src = '&nbsp;', alt = '' }) =>
-//     `img.et-img[alt=${alt}][src=${src}]`,
-//   signLeft: /!\[/g,
-//   signRight: /\)/g,
-//   signInner: /]\(/g,
 //   extendOnNewLine: false,
 // },
