@@ -12,7 +12,6 @@ export const STATIC_PARSERS: ParserType[] = [];
 //   bConfig,
 //   highlightConfig
 // ];
-
 // {
 //   id: 'checkbox',
 //   regex: /^ *- \[([x ])] .*(\n|$)/gm,
@@ -25,17 +24,6 @@ export const STATIC_PARSERS: ParserType[] = [];
 //       })
 //     ),
 // },
-// {
-//   id: 'heading',
-//   regex: /^#{1,6} .*$/gm,
-//   toHtml: (innerHtml: string) =>
-//     expand(
-//       DYNAMIC_ELEMENTS_CONFIG[`h${calcHeadingSize(innerHtml)}`].initialEmmet({
-//         innerHtml: innerHtml.replace(/^#{1,6} /g, ''), // .replace(/^<[^>]*>[^>]*<\/[^>]*>/g, '')
-//       })
-//     ),
-// },
-// {
 //   id: 'precode',
 //   regex: /^( ?)+(```)((?!```)(.|\n))+(```)$/gm,
 //   toHtml: (innerHtml: string) =>
@@ -96,54 +84,6 @@ export const STATIC_PARSERS: ParserType[] = [];
 //   toHtml: () => expand('p{&nbsp;}'),
 // },
 
-// h1: {
-//   initialEmmet: ({ innerHtml = '&nbsp;' }) =>
-//     `h1.et-h1>span.sign{#&nbsp;}+span.content{${innerHtml}}`,
-//   newLineEmmet: () => 'p{&nbsp;}',
-//   signLeft: /^# /g,
-//   extendOnNewLine: false,
-//   shortcut: ['ctrl', 1],
-// },
-// h2: {
-//   initialEmmet: ({ innerHtml = '&nbsp;' }) =>
-//     `h2.et-h2>span.sign{##&nbsp;}+span.content{${innerHtml}}`,
-//   newLineEmmet: () => 'p{&nbsp;}',
-//   signLeft: /^#{2} /g,
-//   extendOnNewLine: false,
-//   shortcut: ['ctrl', 2],
-// },
-// h3: {
-//   initialEmmet: ({ innerHtml = '&nbsp;' }) =>
-//     `h3.et-h3>span.sign{###&nbsp;}+span.content{${innerHtml}}`,
-//   newLineEmmet: () => 'p{&nbsp;}',
-//   signLeft: /^#{2} /g,
-//   extendOnNewLine: false,
-//   shortcut: ['ctrl', 2],
-// },
-// h4: {
-//   initialEmmet: ({ innerHtml = '&nbsp;' }) =>
-//     `h4.et-h4>span.sign{####&nbsp;}+span.content{${innerHtml}}`,
-//   newLineEmmet: () => 'p{&nbsp;}',
-//   signLeft: /^#{2} /g,
-//   extendOnNewLine: false,
-//   shortcut: ['ctrl', 2],
-// },
-// h5: {
-//   initialEmmet: ({ innerHtml = '&nbsp;' }) =>
-//     `h5.et-h5>span.sign{#####&nbsp;}+span.content{${innerHtml}}`,
-//   newLineEmmet: () => 'p>span.content{&nbsp;}',
-//   signLeft: /^#{2} /g,
-//   extendOnNewLine: false,
-//   shortcut: ['ctrl', 2],
-// },
-// h6: {
-//   initialEmmet: ({ innerHtml = '&nbsp;' }) =>
-//     `h6.et-h6>span.sign{######&nbsp;}+span.content{${innerHtml}}`,
-//   newLineEmmet: () => 'p>span.content{&nbsp;}',
-//   signLeft: /^#{2} /g,
-//   extendOnNewLine: false,
-//   shortcut: ['ctrl', 2],
-// },
 // precode: {
 //   initialEmmet: ({ indent = 0, innerHtml = '<br />' }) =>
 //     `pre.et-precode.pl-${indent}>code.et-precode>span.content{${innerHtml}}`,
@@ -182,4 +122,3 @@ export const STATIC_PARSERS: ParserType[] = [];
 //   signLeft: /^ *- \[([x ])]/g,
 //   extendOnNewLine: false,
 // },
-// i:
