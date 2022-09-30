@@ -3,6 +3,7 @@ import { ParserType } from './types';
 import { aParsers } from './parsers/a-configs';
 import { bParser } from './parsers/b-configs';
 import { highlightParser } from './parsers/highlight-config';
+import { strikeParser } from './parsers/strike-configs';
 
 export const config = {
   maxIndent: 10,
@@ -12,6 +13,7 @@ export const STATIC_PARSERS: ParserType[] = [
   ...aParsers,
   bParser,
   highlightParser,
+  strikeParser,
 ];
 
 // .et-* === .element-type-*
@@ -143,20 +145,6 @@ export const STATIC_PARSERS: ParserType[] = [
 //   },
 // },
 // {
-//   id: 'strike',
-//   regex: /( |^|>)~~[^~]*~~( |$|<)/gm,
-//   toHtml: (innerHtml: string) => {
-//     const leftSign = innerHtml.match(/^[ >]/g) || '';
-//     const rightSign = innerHtml.match(/[ <]$/g) || '';
-//     innerHtml = innerHtml.replace(/(( |^|>)~~|~~( |$|<))/g, '');
-//     const emmet = DYNAMIC_ELEMENTS_CONFIG['strike'].initialEmmet({
-//       innerHtml,
-//     });
-//     return `${leftSign}${expand(emmet)}${rightSign}`;
-//   },
-// },
-
-// {
 //   id: 'empty-line',
 //   regex: /(^ *(\n|\r\n|\r)$)|(^$)/gm,
 //   toHtml: () => expand('p{&nbsp;}'),
@@ -269,12 +257,5 @@ export const STATIC_PARSERS: ParserType[] = [
 //   signLeft: /!\[/g,
 //   signRight: /\)/g,
 //   signInner: /]\(/g,
-//   extendOnNewLine: false,
-// },
-// strike: {
-//   initialEmmet: ({ innerHtml = '&nbsp;' }) =>
-//     `span.et-strike>span.sign{~~}+span.content{${innerHtml}}+span.sign{~~}`,
-//   signLeft: /~~/g,
-//   signRight: /~~/g,
 //   extendOnNewLine: false,
 // },
