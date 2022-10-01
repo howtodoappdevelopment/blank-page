@@ -4,40 +4,42 @@ import { strikeParser } from './strike-configs';
 describe('strike', () => {
   test('should parse ~~~~', () => {
     const content = 'content';
-    let html = parseToHtml(`~~${content}~~`, [strikeParser]).replace(
-      /^( *|\n|\t)*/gm,
-      ''
+    let html = parseToHtml(`~~${content}~~`, [], [strikeParser]).replace(
+      /[\n\t ]*</g,
+      '<'
     );
-    let expectedOutput = `<span class="et-strike">
-        <span class="sign">~~</span>
-        <span class="content">${content}</span>
-        <span class="sign">~~</span>
-      </span>`.replace(/^( *|\n|\t)*/gm, '');
+    let expectedOutput =
+      '<p><span class="et-strike">' +
+      '<span class="sign">~~</span>' +
+      '<span class="content">content</span>' +
+      '<span class="sign">~~</span>' +
+      '</span></p>';
     expect(html).toEqual(expectedOutput);
 
-    html = parseToHtml(` ~~${content}~~ r`, [strikeParser]).replace(
-      /^( *|\n|\t)*/gm,
-      ''
+    html = parseToHtml(`~~${content}~~ r`, [], [strikeParser]).replace(
+      /[\n\t ]*</g,
+      '<'
     );
 
-    expectedOutput = ` <span class="et-strike">
-        <span class="sign">~~</span>
-        <span class="content">${content}</span>
-        <span class="sign">~~</span>
-      </span> r`.replace(/^( *|\n|\t)*/gm, '');
+    expectedOutput =
+      '<p><span class="et-strike">' +
+      '<span class="sign">~~</span>' +
+      '<span class="content">content</span>' +
+      '<span class="sign">~~</span>' +
+      '</span> r</p>';
     expect(html).toEqual(expectedOutput);
   });
   test("shouldn't parse", () => {
     let content = `~ ~content~~`;
-    let html = parseToHtml(content, [strikeParser]);
-    expect(html).toEqual(content);
+    let html = parseToHtml(content, [], [strikeParser]);
+    expect(html).toEqual(`<p>${content}</p>`);
 
     content = ` ~~${content}~ ~ r`;
-    html = parseToHtml(content, [strikeParser]);
-    expect(html).toEqual(content);
+    html = parseToHtml(content, [], [strikeParser]);
+    expect(html).toEqual(`<p>${content}</p>`);
 
     content = ` ~~${content}~~r`;
-    html = parseToHtml(content, [strikeParser]);
-    expect(html).toEqual(content);
+    html = parseToHtml(content, [], [strikeParser]);
+    expect(html).toEqual(`<p>${content}</p>`);
   });
 });

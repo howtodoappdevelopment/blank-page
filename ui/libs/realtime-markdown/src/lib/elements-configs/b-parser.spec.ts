@@ -4,32 +4,32 @@ import { parseToHtml } from '../utils/parser.utils';
 describe('bold\\strong', () => {
   test('should parse **[^*]+**', () => {
     const content = 'bold txt';
-    const html = parseToHtml(`**${content}**`, [bParser]).replace(
-      /^( *|\n|\t)*/gm,
-      ''
+    const html = parseToHtml(`**${content}**`, [], [bParser]).replace(
+      /[\n\t ]*</g,
+      '<'
     );
-    const expectedOutput = `<b class="et-b">
-      <span class="sign">**</span>
-      <span class="content">${content}</span>
-      <span class="sign">**</span>
-    </b>`.replace(/^( *|\n|\t)*/gm, '');
+    const expectedOutput =
+      '<p><b class="et-b"><span class="sign">**</span>' +
+      '<span class="content">bold txt</span>' +
+      '<span class="sign">**</span>' +
+      '</b></p>';
     expect(html).toEqual(expectedOutput);
   });
   test("shouldn't parse", () => {
     let content = '** test**';
-    let html = parseToHtml(content, [bParser]);
-    expect(html).toEqual(content);
+    let html = parseToHtml(content, [], [bParser]);
+    expect(html).toEqual(`<p>${content}</p>`);
 
     content = '**test **';
-    html = parseToHtml(content, [bParser]);
-    expect(html).toEqual(content);
+    html = parseToHtml(content, [], [bParser]);
+    expect(html).toEqual(`<p>${content}</p>`);
 
     content = '****';
-    html = parseToHtml(content, [bParser]);
-    expect(html).toEqual(content);
+    html = parseToHtml(content, [], [bParser]);
+    expect(html).toEqual(`<p>${content}</p>`);
 
     content = '********';
-    html = parseToHtml(content, [bParser]);
-    expect(html).toEqual(content);
+    html = parseToHtml(content, [], [bParser]);
+    expect(html).toEqual(`<p>${content}</p>`);
   });
 });

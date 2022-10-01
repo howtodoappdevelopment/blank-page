@@ -1,10 +1,10 @@
-import { ParserType } from './types';
+import { BlockParserType } from './types';
 
 export const config = {
   maxIndent: 10,
 };
 
-export const STATIC_PARSERS: ParserType[] = [];
+export const STATIC_PARSERS: BlockParserType[] = [];
 
 // .et-* === .element-type-*
 // export const DYNAMIC_ELEMENTS_CONFIG: ElementRepresentationConfig[] = [

@@ -12,7 +12,10 @@ describe('heading', () => {
           .join('') + ' content'
     );
     for (const heading in headings) {
-      const html = parseToHtml(heading, [headingsParser]);
+      const html = parseToHtml(heading, [headingsParser]).replace(
+        /[\n\t ]*</g,
+        '<'
+      );
       const size = calcHeadingSize(heading);
       const [sign, content] = heading.split(' ');
       expect(html).toEqual(
@@ -31,7 +34,10 @@ describe('heading', () => {
         ' content'
     );
     for (const heading in headings) {
-      const html = parseToHtml(heading, [headingsParser]);
+      const html = parseToHtml(heading, [headingsParser]).replace(
+        /[\n\t ]*</g,
+        '<'
+      );
       expect(html).toEqual(`<p>${heading}</p>`);
     }
   });

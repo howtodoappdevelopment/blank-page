@@ -1,4 +1,4 @@
-import { ElementRepresentationConfig, ParserType } from '../types';
+import { ElementRepresentationConfig, BlockParserType } from '../types';
 import expand from 'emmet';
 import { calcHeadingSize } from '../utils/elements.utils';
 
@@ -25,48 +25,59 @@ export const h3Config: ElementRepresentationConfig = {
   initialEmmet: ({ innerHtml = '&nbsp;' }) =>
     `h3.et-h3>span.sign{###&nbsp;}+span.content{${innerHtml}}`,
   newLineEmmet: () => 'p{&nbsp;}',
-  signLeft: /^#{2} /g,
+  signLeft: /^#{3} /g,
   extendOnNewLine: false,
-  shortcut: ['ctrl', 2],
+  shortcut: ['ctrl', 3],
 };
 export const h4Config: ElementRepresentationConfig = {
   id: 'h4',
   initialEmmet: ({ innerHtml = '&nbsp;' }) =>
     `h4.et-h4>span.sign{####&nbsp;}+span.content{${innerHtml}}`,
   newLineEmmet: () => 'p{&nbsp;}',
-  signLeft: /^#{2} /g,
+  signLeft: /^#{4} /g,
   extendOnNewLine: false,
-  shortcut: ['ctrl', 2],
+  shortcut: ['ctrl', 4],
 };
 export const h5Config: ElementRepresentationConfig = {
   id: 'h5',
   initialEmmet: ({ innerHtml = '&nbsp;' }) =>
     `h5.et-h5>span.sign{#####&nbsp;}+span.content{${innerHtml}}`,
   newLineEmmet: () => 'p>span.content{&nbsp;}',
-  signLeft: /^#{2} /g,
+  signLeft: /^#{5} /g,
   extendOnNewLine: false,
-  shortcut: ['ctrl', 2],
+  shortcut: ['ctrl', 5],
 };
 export const h6Config: ElementRepresentationConfig = {
   id: 'h6',
   initialEmmet: ({ innerHtml = '&nbsp;' }) =>
     `h6.et-h6>span.sign{######&nbsp;}+span.content{${innerHtml}}`,
   newLineEmmet: () => 'p>span.content{&nbsp;}',
-  signLeft: /^#{2} /g,
+  signLeft: /^#{6} /g,
   extendOnNewLine: false,
-  shortcut: ['ctrl', 2],
+  shortcut: ['ctrl', 6],
 };
 
 const headingsMap = [h1Config, h2Config, h3Config, h4Config, h5Config, h6Config]
   .map((config) => ({ [config.id]: config }))
   .reduce((acc, config) => ({ ...acc, ...config }), {});
-export const headingsParser: ParserType = {
+export const headingsParser: BlockParserType = {
   id: 'heading',
-  regex: /^#{1,6} .*$/gm,
-  toHtml: (innerHtml: string) =>
-    expand(
-      headingsMap[`h${calcHeadingSize(innerHtml)}`].initialEmmet({
-        innerHtml: innerHtml.replace(/^#{1,6} /g, ''), // .replace(/^<[^>]*>[^>]*<\/[^>]*>/g, '')
+  toHtml: (line, txtParsers) => {
+    const regExp = /^#{1,6} .*$/gm;
+    if (!regExp.test(line)) {
+      return null;
+    }
+
+    const hTag = `h${calcHeadingSize(line)}`;
+    line = line.replace(/^#{1,6} /g, '');
+    for (const { toHtml } of txtParsers) {
+      line = toHtml(line);
+    }
+
+    return expand(
+      headingsMap[hTag].initialEmmet({
+        innerHtml: line,
       })
-    ),
+    );
+  },
 };

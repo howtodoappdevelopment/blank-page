@@ -1,7 +1,14 @@
-export type ParserType = {
+export type BlockParserType = {
   id: string;
-  regex: RegExp;
-  toHtml: (innerHtml: string) => string | string[];
+  toHtml: (
+    line: string,
+    txtParsers: TxtParserType[],
+    lineIterator?: IterableIterator<string>
+  ) => string | null;
+};
+export type TxtParserType = {
+  id: string;
+  toHtml: (line: string) => string;
 };
 
 export type EmmetFuncArgs = {
