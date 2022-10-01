@@ -1,4 +1,4 @@
-import { ElementRepresentationConfig, ParserType } from '../types';
+import { ElementRepresentationConfig, TxtParserType } from '../types';
 import expand from 'emmet';
 
 export const codeConfig: ElementRepresentationConfig = {
@@ -9,19 +9,23 @@ export const codeConfig: ElementRepresentationConfig = {
   signRight: /`/g,
   extendOnNewLine: false,
 };
-export const codeParser: ParserType = {
+export const codeParser: TxtParserType = {
   id: 'code',
-  regex: /( |^|>)`[^ ][^`]+[^ ]`( |$|<)/gm,
-  toHtml: (innerHtml: string) => {
-    const leftCharRegExp = /^( |)/g;
-    const leftChar = innerHtml.match(leftCharRegExp)[0] || '';
-    const rightCharRegExp = /( |)$/g;
-    const rightChar = innerHtml.match(rightCharRegExp)[0] || '';
-    innerHtml = innerHtml
-      .replace(leftCharRegExp, '')
-      .replace(rightCharRegExp, '')
-      .replace(/^`|`$/g, '');
-    const emmet = codeConfig.initialEmmet({ innerHtml });
-    return `${leftChar}${expand(emmet)}${rightChar}`;
+  toHtml: (line: string) => {
+    const regExp = /( |^|>)`[^ ][^`]+[^ ]`( |$|<)/gm;
+    return line.replace(regExp, (match) => _toCode(match));
   },
+};
+
+const _toCode = (match: string) => {
+  const leftCharRegExp = /^( |)/g;
+  const leftChar = match.match(leftCharRegExp)[0] || '';
+  const rightCharRegExp = /( |)$/g;
+  const rightChar = match.match(rightCharRegExp)[0] || '';
+  match = match
+    .replace(leftCharRegExp, '')
+    .replace(rightCharRegExp, '')
+    .replace(/^`|`$/g, '');
+  const emmet = codeConfig.initialEmmet({ innerHtml: match });
+  return `${leftChar}${expand(emmet)}${rightChar}`;
 };

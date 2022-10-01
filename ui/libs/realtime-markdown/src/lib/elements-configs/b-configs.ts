@@ -1,4 +1,8 @@
-import { ElementRepresentationConfig, ParserType } from '../types';
+import {
+  ElementRepresentationConfig,
+  BlockParserType,
+  TxtParserType,
+} from '../types';
 import expand from 'emmet';
 
 export const bConfig: ElementRepresentationConfig = {
@@ -10,30 +14,34 @@ export const bConfig: ElementRepresentationConfig = {
   extendOnNewLine: false,
 };
 
-export const bParser: ParserType = {
+export const bParser: TxtParserType = {
   id: 'b',
-  regex: /( |^)\*\*[^*]*\*\*( |$)/gm,
-  toHtml: (innerHtml: string) => {
-    const leftCharRegExp = /^( |)/g;
-    const leftChar = innerHtml.match(leftCharRegExp)[0] || '';
-    const rightCharRegExp = /( |)$/g;
-    const rightChar = innerHtml.match(rightCharRegExp)[0] || '';
-    const parsedInnerHtml = innerHtml
-      .replace(leftCharRegExp, '')
-      .replace(rightCharRegExp, '')
-      .replace(/^\*\*|\*\*$/g, '');
-
-    if (
-      parsedInnerHtml.startsWith(' ') ||
-      parsedInnerHtml.endsWith(' ') ||
-      parsedInnerHtml === ''
-    ) {
-      return innerHtml;
-    }
-
-    const emmet = bConfig.initialEmmet({
-      innerHtml: parsedInnerHtml,
-    });
-    return `${leftChar}${expand(emmet)}${rightChar}`;
+  toHtml: (line: string) => {
+    const regExp = /( |^)\*\*[^*]*\*\*( |$)/gm;
+    return line.replace(regExp, (match) => _toB(match));
   },
+};
+
+const _toB = (innerHtml: string) => {
+  const leftCharRegExp = /^( |)/g;
+  const leftChar = innerHtml.match(leftCharRegExp)[0] || '';
+  const rightCharRegExp = /( |)$/g;
+  const rightChar = innerHtml.match(rightCharRegExp)[0] || '';
+  const parsedInnerHtml = innerHtml
+    .replace(leftCharRegExp, '')
+    .replace(rightCharRegExp, '')
+    .replace(/^\*\*|\*\*$/g, '');
+
+  if (
+    parsedInnerHtml.startsWith(' ') ||
+    parsedInnerHtml.endsWith(' ') ||
+    parsedInnerHtml === ''
+  ) {
+    return innerHtml;
+  }
+
+  const emmet = bConfig.initialEmmet({
+    innerHtml: parsedInnerHtml,
+  });
+  return `${leftChar}${expand(emmet)}${rightChar}`;
 };

@@ -1,5 +1,5 @@
 import expand from 'emmet';
-import { ElementRepresentationConfig, ParserType } from '../types';
+import { ElementRepresentationConfig, TxtParserType } from '../types';
 
 export const aConfig: ElementRepresentationConfig = {
   id: 'a',
@@ -11,46 +11,52 @@ export const aConfig: ElementRepresentationConfig = {
   extendOnNewLine: false,
 };
 
-export const aParsers: ParserType[] = [
+export const aParsers: TxtParserType[] = [
   {
     id: 'a',
-    regex: /\[[^[\]]*]\([^()]*\)/gm,
-    toHtml: (innerHtml: string) => {
-      const aUrl = (innerHtml.match(/\(.*\)/g) as RegExpMatchArray)[0].replace(
-        /[()]/g,
-        ''
-      );
-      if (aUrl.startsWith(' ') || aUrl.endsWith(' ')) {
-        return innerHtml;
-      }
-
-      const aInnerHtml = (
-        innerHtml.match(/\[.*]/g) as RegExpMatchArray
-      )[0].replace(/[\\[\]]/g, '');
-      const emmet = aConfig.initialEmmet({
-        innerHtml: aInnerHtml,
-        url: aUrl,
-      });
-      return expand(emmet);
+    toHtml: (line: string) => {
+      const regExp = /\[[^[\]]*]\([^()]*\)/gm;
+      return line.replace(regExp, (match) => _toA(match));
     },
   },
   {
     id: 'a',
-    regex:
-      /( |^)https?:\/\/(www\.)?[-a-zA-Z\d@:%._+~#=]{1,256}\.[a-zA-Z\d]{2,6}\b([-a-zA-Z\d@:%_+.()~#?&\\/=]*)( |$)/gm,
-    toHtml: (innerHtml: string) => {
-      const leftCharRegExp = /^( |)/g;
-      const leftChar = innerHtml.match(leftCharRegExp)[0] || '';
-      const rightCharRegExp = /( |)$/g;
-      const rightChar = innerHtml.match(rightCharRegExp)[0] || '';
-      innerHtml = innerHtml
-        .replace(leftCharRegExp, '')
-        .replace(rightCharRegExp, '');
-      const emmet = aConfig.initialEmmet({
-        innerHtml: innerHtml,
-        url: innerHtml,
-      });
-      return `${leftChar}${expand(emmet)}${rightChar}`;
+    toHtml: (line: string) => {
+      const regExp =
+        /( |^)https?:\/\/(www\.)?[-a-zA-Z\d@:%._+~#=]{1,256}\.[a-zA-Z\d]{2,6}\b([-a-zA-Z\d@:%_+.()~#?&\\/=]*)( |$)/gm;
+      return line.replace(regExp, (match) => _txtToA(match));
     },
   },
 ];
+
+const _toA = (match: string) => {
+  const aUrl = (match.match(/\(.*\)/g) as RegExpMatchArray)[0].replace(
+    /[()]/g,
+    ''
+  );
+  if (aUrl.startsWith(' ') || aUrl.endsWith(' ')) {
+    return match;
+  }
+
+  const aInnerHtml = (match.match(/\[.*]/g) as RegExpMatchArray)[0].replace(
+    /[\\[\]]/g,
+    ''
+  );
+  const emmet = aConfig.initialEmmet({
+    innerHtml: aInnerHtml,
+    url: aUrl,
+  });
+  return expand(emmet);
+};
+const _txtToA = (match: string) => {
+  const leftCharRegExp = /^( |)/g;
+  const leftChar = match.match(leftCharRegExp)[0] || '';
+  const rightCharRegExp = /( |)$/g;
+  const rightChar = match.match(rightCharRegExp)[0] || '';
+  match = match.replace(leftCharRegExp, '').replace(rightCharRegExp, '');
+  const emmet = aConfig.initialEmmet({
+    innerHtml: match,
+    url: match,
+  });
+  return `${leftChar}${expand(emmet)}${rightChar}`;
+};

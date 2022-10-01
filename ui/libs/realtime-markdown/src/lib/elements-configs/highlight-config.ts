@@ -1,4 +1,8 @@
-import { ElementRepresentationConfig, ParserType } from '../types';
+import {
+  ElementRepresentationConfig,
+  BlockParserType,
+  TxtParserType,
+} from '../types';
 import expand from 'emmet';
 
 export const highlightConfig: ElementRepresentationConfig = {
@@ -9,21 +13,25 @@ export const highlightConfig: ElementRepresentationConfig = {
   signRight: /==/g,
   extendOnNewLine: false,
 };
-export const highlightParser: ParserType = {
+export const highlightParser: TxtParserType = {
   id: 'highlight',
-  regex: /( |^)==[^=]*==( |$)/gm,
-  toHtml: (innerHtml: string) => {
-    const leftCharRegExp = /^( |)/g;
-    const leftChar = innerHtml.match(leftCharRegExp)[0] || '';
-    const rightCharRegExp = /( |)$/g;
-    const rightChar = innerHtml.match(rightCharRegExp)[0] || '';
-    innerHtml = innerHtml
-      .replace(leftCharRegExp, '')
-      .replace(rightCharRegExp, '')
-      .replace(/(^==|==$)/g, '');
-    const emmet = highlightConfig.initialEmmet({
-      innerHtml,
-    });
-    return `${leftChar}${expand(emmet)}${rightChar}`;
+  toHtml: (line: string) => {
+    const regExp = /( |^)==[^=]*==( |$)/gm;
+    return line.replace(regExp, (match) => _toHighlight(match));
   },
+};
+
+const _toHighlight = (match: string) => {
+  const leftCharRegExp = /^( |)/g;
+  const leftChar = match.match(leftCharRegExp)[0] || '';
+  const rightCharRegExp = /( |)$/g;
+  const rightChar = match.match(rightCharRegExp)[0] || '';
+  match = match
+    .replace(leftCharRegExp, '')
+    .replace(rightCharRegExp, '')
+    .replace(/(^==|==$)/g, '');
+  const emmet = highlightConfig.initialEmmet({
+    innerHtml: match,
+  });
+  return `${leftChar}${expand(emmet)}${rightChar}`;
 };

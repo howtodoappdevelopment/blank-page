@@ -1,17 +1,36 @@
-import { isArray } from 'lodash-es';
-import { STATIC_PARSERS } from '../config';
-import { ParserType } from '../types';
+import { BlockParserType, TxtParserType } from '../types';
+import { textParser } from '../elements-configs/text-parser';
 
 export const parseToHtml = (
   markdown: string,
-  parsers: ParserType[] = STATIC_PARSERS
-): string => {
-  for (const { regex, toHtml } of parsers) {
-    markdown = markdown.replace(regex, (match) =>
-      toArray<string>(toHtml(match)).join('')
-    );
-  }
-  return markdown;
-};
+  blockParsers: BlockParserType[] = [],
+  txtParsers: TxtParserType[] = []
+): string => [..._parseToHtml(markdown, blockParsers, txtParsers)].join('');
 
-const toArray = <T>(val: unknown): T[] => (isArray(val) ? val : [val as T]);
+function* _parseToHtml(
+  markdown: string,
+  blockParsers: BlockParserType[] = [],
+  txtParsers: TxtParserType[] = []
+): Generator<string> {
+  const linesIterator: IterableIterator<string> = markdown
+    .split('\n')
+    .map((line) => `${line}\n`)
+    .values();
+  let html: string | null = null;
+  for (const line of linesIterator) {
+    // try parse txt block
+    for (const { toHtml } of blockParsers) {
+      html = toHtml(line, txtParsers, linesIterator);
+      if (html) {
+        yield html;
+        break;
+      }
+    }
+
+    // parse as regular txt
+    const isRegularTxt = html === null;
+    if (isRegularTxt) {
+      yield textParser.toHtml(line, txtParsers);
+    }
+  }
+}
