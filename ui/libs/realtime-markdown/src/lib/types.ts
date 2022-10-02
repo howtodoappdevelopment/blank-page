@@ -1,9 +1,11 @@
+import { ForkableIterator } from 'forkable-iterator';
+
 export type BlockParserType = {
   id: string;
   toHtml: (
     line: string,
     txtParsers: TxtParserType[],
-    lineIterator?: IterableIterator<string>
+    lineIterator?: ForkableIterator<string>
   ) => string | null;
 };
 export type TxtParserType = {
