@@ -1,51 +1,48 @@
 import { parseToHtml } from '../utils/parser.utils';
 import { quoteParser } from './quote-configs';
 
-xdescribe('quote', () => {
+describe('quote', () => {
   test('with indent', () => {
-    const content = 'content';
-    const html = parseToHtml(`  > ${content}`, [quoteParser]).replace(
-      /^( *|\n|\t)*/gm,
-      ''
-    );
-    const expectedOutput = `<p class="et-quote pl-1">
-        <span class="content">${content}</span>
-      </p>`.replace(/^( *|\n|\t)*/gm, '');
+    const html = parseToHtml(`  > content\nregular text`, [
+      quoteParser,
+    ]).replace(/[\n\t ]*</g, '<');
+    const expectedOutput =
+      '<p class="et-quote pl-1"><span class="content">content</span></p>' +
+      '<p>regular text</p>';
     expect(html).toEqual(expectedOutput);
   });
   test('without indent', () => {
-    const content = 'content';
-    const html = parseToHtml(`> ${content}`, [quoteParser]).replace(
-      /^( *|\n|\t)*/gm,
-      ''
+    const html = parseToHtml(`> content\nregular text`, [quoteParser]).replace(
+      /[\n\t ]*</g,
+      '<'
     );
-    const expectedOutput = `<p class="et-quote pl-0">
-        <span class="content">${content}</span>
-      </p>`.replace(/^( *|\n|\t)*/gm, '');
+    const expectedOutput =
+      '<p class="et-quote pl-0"><span class="content">content</span></p>' +
+      '<p>regular text</p>';
     expect(html).toEqual(expectedOutput);
   });
   test('multiline', () => {
-    const content = 'content';
-    let html = parseToHtml(`> ${content}\n> ${content}`, [quoteParser]).replace(
-      /^( *|\n|\t)*/gm,
-      ''
-    );
-    let expectedOutput = `<p class="et-quote pl-0">
-        <span class="content">${content}</span>
-        <span class="content">${content}</span>
-      </p>`.replace(/^( *|\n|\t)*/gm, '');
+    let html = parseToHtml(
+      `> content 1\n> content 2\n  > content 3\nregular text`,
+      [quoteParser]
+    ).replace(/[\n\t ]*</g, '<');
+    let expectedOutput =
+      '<p class="et-quote pl-0">' +
+      '<span class="content">content 1<br>content 2</span>' +
+      '</p>' +
+      '<p class="et-quote pl-1">' +
+      '<span class="content">content 3</span>' +
+      '</p>' +
+      '<p>regular text</p>';
     expect(html).toEqual(expectedOutput);
 
-    html = parseToHtml(`> ${content}\n  > ${content}`, [quoteParser]).replace(
-      /^( *|\n|\t)*/gm,
-      ''
+    html = parseToHtml(`> content\n  > content`, [quoteParser]).replace(
+      /[\n\t ]*</g,
+      '<'
     );
-    expectedOutput = `<p class="et-quote pl-0">
-        <span class="content">${content}</span>
-      </p>
-<p class="et-quote pl-1">
-        <span class="content">${content}</span>
-      </p>`.replace(/^( *|\n|\t)*/gm, '');
+    expectedOutput =
+      '<p class="et-quote pl-0"><span class="content">content</span></p>' +
+      '<p class="et-quote pl-1"><span class="content">content</span></p>';
     expect(html).toEqual(expectedOutput);
   });
 });

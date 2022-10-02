@@ -1,5 +1,6 @@
 import { BlockParserType, TxtParserType } from '../types';
 import { textParser } from '../elements-configs/text-parser';
+import { buildForkableIterator, ForkableIterator } from 'forkable-iterator';
 
 export const parseToHtml = (
   markdown: string,
@@ -12,12 +13,13 @@ function* _parseToHtml(
   blockParsers: BlockParserType[] = [],
   txtParsers: TxtParserType[] = []
 ): Generator<string> {
-  const linesIterator: IterableIterator<string> = markdown
-    .split('\n')
-    .map((line) => `${line}\n`)
-    .values();
+  const lines = markdown.split('\n').map((line) => `${line}\n`);
+  const linesIterator: ForkableIterator<string> = buildForkableIterator(
+    lines[Symbol.iterator]()
+  );
   let html: string | null = null;
-  for (const line of linesIterator) {
+  let line = linesIterator.next().value;
+  while (line) {
     // try parse txt block
     for (const { toHtml } of blockParsers) {
       html = toHtml(line, txtParsers, linesIterator);
@@ -32,5 +34,7 @@ function* _parseToHtml(
     if (isRegularTxt) {
       yield textParser.toHtml(line, txtParsers);
     }
+
+    line = linesIterator.next().value;
   }
 }

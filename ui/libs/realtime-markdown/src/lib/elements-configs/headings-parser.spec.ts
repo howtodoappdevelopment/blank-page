@@ -9,7 +9,7 @@ describe('heading', () => {
         Array(index)
           .fill(index)
           .map(() => '#')
-          .join('') + ' content'
+          .join('') + ' content\nregular text'
     );
     for (const heading in headings) {
       const html = parseToHtml(heading, [headingsParser]).replace(
@@ -17,10 +17,14 @@ describe('heading', () => {
         '<'
       );
       const size = calcHeadingSize(heading);
-      const [sign, content] = heading.split(' ');
-      expect(html).toEqual(
-        `<h${size}><span class="sign">${sign}</span><span class="content">${content}</span></h${size}>`
-      );
+      const sign = heading.split(' ')[0] + ' ';
+      const expectedOutput =
+        `<h${size}>` +
+        `<span class="sign">${sign}</span>` +
+        '<span class="content">content</span>' +
+        `</h${size}>` +
+        '<p>regular text</p>';
+      expect(html).toEqual(expectedOutput);
     }
   });
   test("shouldn't parse heading", () => {
@@ -31,14 +35,16 @@ describe('heading', () => {
           .fill(index)
           .map(() => '#')
           .join('') +
-        ' content'
+        ' content\nregular text'
     );
     for (const heading in headings) {
       const html = parseToHtml(heading, [headingsParser]).replace(
         /[\n\t ]*</g,
         '<'
       );
-      expect(html).toEqual(`<p>${heading}</p>`);
+      const firstLine = heading.split('\n')[0] + '\n';
+      const secondLine = heading.split('\n')[1];
+      expect(html).toEqual(`<p>${firstLine}</p><p>${secondLine}</p>`);
     }
   });
 });

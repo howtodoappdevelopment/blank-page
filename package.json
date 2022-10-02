@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "forkable-iterator": "^1.1.1"
+  }
+}
