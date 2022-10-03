@@ -14,15 +14,16 @@ function* _parseToHtml(
   txtParsers: TxtParserType[] = []
 ): Generator<string> {
   const lines = markdown.split('\n').map((line) => `${line}\n`);
-  const linesIterator: ForkableIterator<string> = buildForkableIterator(
+  const linesIterator: ForkableIterator<string, string> = buildForkableIterator(
     lines[Symbol.iterator]()
   );
   let html: string | null = null;
-  let line = linesIterator.next().value;
-  while (line) {
+  let nextItem = linesIterator.next();
+  let { value, done } = nextItem as { value: string; done: boolean };
+  while (!done) {
     // try parse txt block
     for (const { toHtml } of blockParsers) {
-      html = toHtml(line, txtParsers, linesIterator);
+      html = toHtml(value, txtParsers, linesIterator);
       if (html) {
         yield html;
         break;
@@ -32,9 +33,11 @@ function* _parseToHtml(
     // parse as regular txt
     const isRegularTxt = html === null;
     if (isRegularTxt) {
-      yield textParser.toHtml(line, txtParsers);
+      yield textParser.toHtml(value, txtParsers, linesIterator) as string;
     }
 
-    line = linesIterator.next().value;
+    nextItem = linesIterator.next();
+    value = nextItem.value as string;
+    done = !!nextItem.done;
   }
 }

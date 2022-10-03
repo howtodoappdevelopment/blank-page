@@ -1,10 +1,33 @@
-import { BlockParserType } from './types';
+import { BlockParserType, TxtParserType } from './types';
+import { aParsers } from './elements-configs/a-configs';
+import { bParser } from './elements-configs/b-configs';
+import { codeParser } from './elements-configs/code-configs';
+import { headingsParser } from './elements-configs/headings-configs';
+import { highlightParser } from './elements-configs/highlight-config';
+import { iParser } from './elements-configs/i-configs';
+import { imgParser } from './elements-configs/img-configs';
+import { strikeParser } from './elements-configs/strike-configs';
+import { precodeParser } from './elements-configs/precode-configs';
+import { quoteParser } from './elements-configs/quote-configs';
 
 export const config = {
   maxIndent: 10,
 };
 
-export const STATIC_PARSERS: BlockParserType[] = [];
+export const BLOCK_PARSERS: BlockParserType[] = [
+  headingsParser,
+  precodeParser,
+  quoteParser,
+];
+export const TXT_PARSERS: TxtParserType[] = [
+  ...aParsers,
+  bParser,
+  codeParser,
+  highlightParser,
+  iParser,
+  imgParser,
+  strikeParser,
+];
 
 // .et-* === .element-type-*
 // export const DYNAMIC_ELEMENTS_CONFIG: ElementRepresentationConfig[] = [

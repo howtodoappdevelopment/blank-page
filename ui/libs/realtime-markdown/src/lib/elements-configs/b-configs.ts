@@ -24,9 +24,9 @@ export const bParser: TxtParserType = {
 
 const _toB = (innerHtml: string) => {
   const leftCharRegExp = /^( |)/g;
-  const leftChar = innerHtml.match(leftCharRegExp)[0] || '';
+  const leftChar = innerHtml.match(leftCharRegExp)?.shift() || '';
   const rightCharRegExp = /( |)$/g;
-  const rightChar = innerHtml.match(rightCharRegExp)[0] || '';
+  const rightChar = innerHtml.match(rightCharRegExp)?.shift() || '';
   const parsedInnerHtml = innerHtml
     .replace(leftCharRegExp, '')
     .replace(rightCharRegExp, '')

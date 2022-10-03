@@ -5,7 +5,7 @@ export type BlockParserType = {
   toHtml: (
     line: string,
     txtParsers: TxtParserType[],
-    lineIterator?: ForkableIterator<string>
+    lineIterator: ForkableIterator<string, string>
   ) => string | null;
 };
 export type TxtParserType = {

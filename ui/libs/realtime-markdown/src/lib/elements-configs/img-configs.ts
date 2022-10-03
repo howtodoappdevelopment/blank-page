@@ -24,17 +24,15 @@ export const imgParser: TxtParserType = {
 
 const _toImg = (match: string) => {
   const leftCharRegExp = /^( |)/g;
-  const leftChar = match.match(leftCharRegExp)[0] || '';
+  const leftChar = match.match(leftCharRegExp)?.shift() || '';
   const rightCharRegExp = /( |)$/g;
-  const rightChar = match.match(rightCharRegExp)[0] || '';
-  const alt = (match.match(/\[.*]/g) as RegExpMatchArray)[0].replace(
-    /[\\[\]]/g,
-    ''
-  );
-  const src = (match.match(/\(.*\)/g) as RegExpMatchArray)[0].replace(
-    /[()]/g,
-    ''
-  );
+  const rightChar = match.match(rightCharRegExp)?.shift() || '';
+  const alt = (match.match(/\[.*]/g) as RegExpMatchArray)
+    ?.shift()
+    ?.replace(/[\\[\]]/g, '');
+  const src = (match.match(/\(.*\)/g) as RegExpMatchArray)
+    ?.shift()
+    ?.replace(/[()]/g, '');
   const emmet = imgConfig.initialEmmet({
     alt,
     src,

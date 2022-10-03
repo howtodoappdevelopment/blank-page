@@ -42,7 +42,8 @@ export const quoteParser: BlockParserType = {
         (content !== '' ? '<br>' : '') +
         lineToMatch.trimLeft().replace('> ', '');
       lastIndent = currentIndent;
-      lineToMatch = (iteratorDuplicate.next().value || null)?.replace('\n', '');
+      lineToMatch =
+        (iteratorDuplicate.next().value || null)?.replace('\n', '') || '';
       isQuoteLine = _isQuote(lineToMatch);
       parsedLines++;
     }
@@ -60,7 +61,7 @@ export const quoteParser: BlockParserType = {
   },
 };
 
-const _isQuote = (line: string) => !!line?.trim()?.startsWith('> ');
+const _isQuote = (line: string | undefined) => !!line?.trim()?.startsWith('> ');
 
 const _getParsedQuoteElement = (
   innerHtml: string,

@@ -5,6 +5,7 @@ import { createWrapper } from './wrapper.element';
 import { parseToHtml } from './utils/parser.utils';
 import { getAllSignsElements, hideSigns } from './helpers/signs.utils';
 import { createNewElement } from './utils/elements.utils';
+import { BLOCK_PARSERS, TXT_PARSERS } from './config';
 
 export const createMarkdownInput = (
   initialMarkdown?: string
@@ -13,8 +14,10 @@ export const createMarkdownInput = (
     .fill(createNewElement({ emmet: 'p{ }' }).outerHTML)
     .join('\n');
   if (initialMarkdown) {
-    innerHtml = parseToHtml(initialMarkdown);
+    innerHtml = parseToHtml(initialMarkdown, BLOCK_PARSERS, TXT_PARSERS);
   }
+
+  console.log(innerHtml);
   const contentEditable = createContentEditable(innerHtml);
   hideSigns(getAllSignsElements(contentEditable));
   return createWrapper(contentEditable);

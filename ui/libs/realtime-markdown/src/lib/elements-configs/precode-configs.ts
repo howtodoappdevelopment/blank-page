@@ -35,7 +35,7 @@ export const precodeParser: BlockParserType = {
 
       const { value, done } = iteratorDuplicate.next();
       currentLine = value as string;
-      isCodeBlockEnd = currentLine?.trimLeft()?.startsWith('```') || done;
+      isCodeBlockEnd = !!currentLine?.trimLeft()?.startsWith('```') || !!done;
       parsedLines++;
     }
 

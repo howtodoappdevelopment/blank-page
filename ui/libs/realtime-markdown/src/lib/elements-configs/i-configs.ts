@@ -18,9 +18,9 @@ export const iParser: TxtParserType = {
 };
 const _toI = (match: string) => {
   const leftCharRegExp = /^( |)/g;
-  const leftChar = match.match(leftCharRegExp)[0] || '';
+  const leftChar = match.match(leftCharRegExp)?.shift() || '';
   const rightCharRegExp = /( |)$/g;
-  const rightChar = match.match(rightCharRegExp)[0] || '';
+  const rightChar = match.match(rightCharRegExp)?.shift() || '';
   const parsedMatch = match
     .replace(leftCharRegExp, '')
     .replace(rightCharRegExp, '')
