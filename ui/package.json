@@ -14,6 +14,7 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "core-js": "^3.6.5",
     "emmet": "^2.3.6",
+    "forkable-iterator": "^1.1.1",
     "lodash-es": "^4.17.21",
     "lodash-uuid": "^0.0.3",
     "react": "18.2.0",
