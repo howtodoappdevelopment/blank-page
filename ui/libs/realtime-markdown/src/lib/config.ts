@@ -24,15 +24,6 @@ export const STATIC_PARSERS: BlockParserType[] = [];
 //       })
 //     ),
 // },
-//   id: 'precode',
-//   regex: /^( ?)+(```)((?!```)(.|\n))+(```)$/gm,
-//   toHtml: (innerHtml: string) =>
-//     expand(
-//       DYNAMIC_ELEMENTS_CONFIG['precode'].initialEmmet({
-//         innerHtml: innerHtml.replace(/^( ?)+(```)\n|( ?)+(```)$/g, ''),
-//       })
-//     ),
-// },
 // {
 //   id: 'ol',
 //   regex: /^( ?)+\d+\. .*$/gm,
@@ -68,13 +59,6 @@ export const STATIC_PARSERS: BlockParserType[] = [];
 // },
 //
 
-// precode: {
-//   initialEmmet: ({ indent = 0, innerHtml = '<br />' }) =>
-//     `pre.et-precode.pl-${indent}>code.et-precode>span.content{${innerHtml}}`,
-//   newLineEmmet: () => '{&nbsp;}',
-//   signTop: /^`{3}[a-z]* */g,
-//   extendOnNewLine: true,
-// },
 // ul: {
 //   initialEmmet: ({ indent = 0, innerHtml = '&nbsp;' }) =>
 //     `ul.pl-${indent}>li.et-ul>span.content{${innerHtml}}`,
