@@ -9,11 +9,11 @@ describe('highlight', () => {
       '<'
     );
     let expectedOutput =
-      '<p class="ml-0"><span class="et-highlight">' +
+      '<p class="ml-0"><span class="content"><span class="et-highlight">' +
       '<span class="sign">==</span>' +
       '<span class="content">content</span>' +
       '<span class="sign">==</span>' +
-      '</span></p>';
+      '</span></span></p>';
     expect(html).toEqual(expectedOutput);
 
     html = parseToHtml(`t ==${content}== r`, [], [highlightParser]).replace(
@@ -22,24 +22,30 @@ describe('highlight', () => {
     );
 
     expectedOutput =
-      '<p class="ml-0">t<span class="et-highlight">' +
+      '<p class="ml-0"><span class="content">t<span class="et-highlight">' +
       '<span class="sign">==</span>' +
       '<span class="content">content</span>' +
       '<span class="sign">==</span>' +
-      '</span> r</p>';
+      '</span> r</span></p>';
     expect(html).toEqual(expectedOutput);
   });
   test("shouldn't parse", () => {
     let content = `= =content==`;
     let html = parseToHtml(content, [], [highlightParser]);
-    expect(html).toEqual(`<p class="ml-0">${content}</p>`);
+    expect(html).toEqual(
+      `<p class="ml-0"><span class="content">${content}</span></p>`
+    );
 
     content = ` ==${content}= = r`;
     html = parseToHtml(content, [], [highlightParser]);
-    expect(html).toEqual(`<p class="ml-0">${content}</p>`);
+    expect(html).toEqual(
+      `<p class="ml-0"><span class="content">${content}</span></p>`
+    );
 
     content = ` ==${content}==r`;
     html = parseToHtml(content, [], [highlightParser]);
-    expect(html).toEqual(`<p class="ml-0">${content}</p>`);
+    expect(html).toEqual(
+      `<p class="ml-0"><span class="content">${content}</span></p>`
+    );
   });
 });

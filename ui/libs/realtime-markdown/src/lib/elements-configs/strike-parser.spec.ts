@@ -9,11 +9,11 @@ describe('strike', () => {
       '<'
     );
     let expectedOutput =
-      '<p class="ml-0"><span class="et-strike">' +
+      '<p class="ml-0"><span class="content"><span class="et-strike">' +
       '<span class="sign">~~</span>' +
       '<span class="content">content</span>' +
       '<span class="sign">~~</span>' +
-      '</span></p>';
+      '</span></span></p>';
     expect(html).toEqual(expectedOutput);
 
     html = parseToHtml(`~~${content}~~ r`, [], [strikeParser]).replace(
@@ -22,24 +22,30 @@ describe('strike', () => {
     );
 
     expectedOutput =
-      '<p class="ml-0"><span class="et-strike">' +
+      '<p class="ml-0"><span class="content"><span class="et-strike">' +
       '<span class="sign">~~</span>' +
       '<span class="content">content</span>' +
       '<span class="sign">~~</span>' +
-      '</span> r</p>';
+      '</span> r</span></p>';
     expect(html).toEqual(expectedOutput);
   });
   test("shouldn't parse", () => {
     let content = `~ ~content~~`;
     let html = parseToHtml(content, [], [strikeParser]);
-    expect(html).toEqual(`<p class="ml-0">${content}</p>`);
+    expect(html).toEqual(
+      `<p class="ml-0"><span class="content">${content}</span></p>`
+    );
 
     content = ` ~~${content}~ ~ r`;
     html = parseToHtml(content, [], [strikeParser]);
-    expect(html).toEqual(`<p class="ml-0">${content}</p>`);
+    expect(html).toEqual(
+      `<p class="ml-0"><span class="content">${content}</span></p>`
+    );
 
     content = ` ~~${content}~~r`;
     html = parseToHtml(content, [], [strikeParser]);
-    expect(html).toEqual(`<p class="ml-0">${content}</p>`);
+    expect(html).toEqual(
+      `<p class="ml-0"><span class="content">${content}</span></p>`
+    );
   });
 });

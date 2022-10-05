@@ -31,7 +31,7 @@ describe('precode', () => {
       '<pre class="et-precode ml-0"><code class="content">' +
       '# code<br># code 2<br>end line' +
       '</code></pre>' +
-      '<p class="ml-0">regular text</p>';
+      '<p class="ml-0"><span class="content">regular text</span></p>';
     expect(html).toEqual(expectedOutput);
   });
   test('should parse with code type name', () => {
@@ -43,7 +43,7 @@ describe('precode', () => {
       '<pre class="et-precode ml-0"><code class="content">' +
       '# code<br># code 2<br>end line' +
       '</code></pre>' +
-      '<p class="ml-0">regular text</p>';
+      '<p class="ml-0"><span class="content">regular text</span></p>';
     expect(html).toEqual(expectedOutput);
   });
   test('should parse with no content', () => {
@@ -54,7 +54,7 @@ describe('precode', () => {
       '<pre class="et-precode ml-0"><code class="content">' +
       '&nbsp;' +
       '</code></pre>' +
-      '<p class="ml-0">regular text</p>';
+      '<p class="ml-0"><span class="content">regular text</span></p>';
     expect(html).toEqual(expectedOutput);
   });
 });

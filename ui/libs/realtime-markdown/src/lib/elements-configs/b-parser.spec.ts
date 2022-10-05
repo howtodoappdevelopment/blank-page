@@ -9,27 +9,35 @@ describe('bold\\strong', () => {
       '<'
     );
     const expectedOutput =
-      '<p class="ml-0"><b class="et-b"><span class="sign">**</span>' +
+      '<p class="ml-0"><span class="content"><b class="et-b"><span class="sign">**</span>' +
       '<span class="content">bold txt</span>' +
       '<span class="sign">**</span>' +
-      '</b></p>';
+      '</b></span></p>';
     expect(html).toEqual(expectedOutput);
   });
   test("shouldn't parse", () => {
     let content = '** test**';
     let html = parseToHtml(content, [], [bParser]);
-    expect(html).toEqual(`<p class="ml-0">${content}</p>`);
+    expect(html).toEqual(
+      `<p class="ml-0"><span class="content">${content}</span></p>`
+    );
 
     content = '**test **';
     html = parseToHtml(content, [], [bParser]);
-    expect(html).toEqual(`<p class="ml-0">${content}</p>`);
+    expect(html).toEqual(
+      `<p class="ml-0"><span class="content">${content}</span></p>`
+    );
 
     content = '****';
     html = parseToHtml(content, [], [bParser]);
-    expect(html).toEqual(`<p class="ml-0">${content}</p>`);
+    expect(html).toEqual(
+      `<p class="ml-0"><span class="content">${content}</span></p>`
+    );
 
     content = '********';
     html = parseToHtml(content, [], [bParser]);
-    expect(html).toEqual(`<p class="ml-0">${content}</p>`);
+    expect(html).toEqual(
+      `<p class="ml-0"><span class="content">${content}</span></p>`
+    );
   });
 });

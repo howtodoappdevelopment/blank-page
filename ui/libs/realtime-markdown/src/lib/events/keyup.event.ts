@@ -12,5 +12,7 @@ export const onKeyUp = ($event: KeyboardEvent) => {
   ) {
     hideSignsOf($event.target as HTMLElement);
     showSignOf(caretContext.currentHtmlElement);
+  } else {
+    //
   }
 };

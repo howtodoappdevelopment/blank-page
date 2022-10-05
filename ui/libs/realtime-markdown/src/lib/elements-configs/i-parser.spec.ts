@@ -9,11 +9,11 @@ describe('i', () => {
       '<'
     );
     let expectedOutput =
-      '<p class="ml-0"><i class="et-i">' +
+      '<p class="ml-0"><span class="content"><i class="et-i">' +
       '<span class="sign">*</span>' +
       '<span class="content">content</span>' +
       '<span class="sign">*</span>' +
-      '</i></p>';
+      '</i></span></p>';
     expect(html).toEqual(expectedOutput);
 
     html = parseToHtml(` *${content}* r`, [], [iParser]).replace(
@@ -21,20 +21,24 @@ describe('i', () => {
       '<'
     );
     expectedOutput =
-      '<p class="ml-0"><i class="et-i">' +
+      '<p class="ml-0"><span class="content"><i class="et-i">' +
       '<span class="sign">*</span>' +
       '<span class="content">content</span>' +
       '<span class="sign">*</span>' +
-      '</i> r</p>';
+      '</i> r</span></p>';
     expect(html).toEqual(expectedOutput);
   });
   test("shouldn't parse", () => {
     let content = `*content *`;
     let html = parseToHtml(content, [], [iParser]);
-    expect(html).toEqual(`<p class="ml-0">${content}</p>`);
+    expect(html).toEqual(
+      `<p class="ml-0"><span class="content">${content}</span></p>`
+    );
 
     content = ` *${content}*r`;
     html = parseToHtml(content, [], [iParser]);
-    expect(html).toEqual(`<p class="ml-0">${content}</p>`);
+    expect(html).toEqual(
+      `<p class="ml-0"><span class="content">${content}</span></p>`
+    );
   });
 });
