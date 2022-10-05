@@ -23,7 +23,7 @@ describe('heading', () => {
         `<span class="sign">${sign}</span>` +
         '<span class="content">content</span>' +
         `</h${size}>` +
-        '<p>regular text</p>';
+        '<p class="pl-0">regular text</p>';
       expect(html).toEqual(expectedOutput);
     }
   });
@@ -44,7 +44,9 @@ describe('heading', () => {
       );
       const firstLine = heading.split('\n')[0] + '\n';
       const secondLine = heading.split('\n')[1];
-      expect(html).toEqual(`<p>${firstLine}</p><p>${secondLine}</p>`);
+      expect(html).toEqual(
+        `<p class="pl-0">${firstLine}</p><p>${secondLine}</p>`
+      );
     }
   });
 });

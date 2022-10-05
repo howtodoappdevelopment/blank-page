@@ -9,7 +9,7 @@ describe('i', () => {
       '<'
     );
     let expectedOutput =
-      '<p><i class="et-i">' +
+      '<p class="pl-0"><i class="et-i">' +
       '<span class="sign">*</span>' +
       '<span class="content">content</span>' +
       '<span class="sign">*</span>' +
@@ -21,7 +21,7 @@ describe('i', () => {
       '<'
     );
     expectedOutput =
-      '<p><i class="et-i">' +
+      '<p class="pl-0"><i class="et-i">' +
       '<span class="sign">*</span>' +
       '<span class="content">content</span>' +
       '<span class="sign">*</span>' +
@@ -31,10 +31,10 @@ describe('i', () => {
   test("shouldn't parse", () => {
     let content = `*content *`;
     let html = parseToHtml(content, [], [iParser]);
-    expect(html).toEqual(`<p>${content}</p>`);
+    expect(html).toEqual(`<p class="pl-0">${content}</p>`);
 
     content = ` *${content}*r`;
     html = parseToHtml(content, [], [iParser]);
-    expect(html).toEqual(`<p>${content}</p>`);
+    expect(html).toEqual(`<p class="pl-0">${content}</p>`);
   });
 });

@@ -9,22 +9,21 @@ describe('code', () => {
       '<'
     );
     const expectedOutput =
-      '<p><code class="et-code"><span class="sign">`</span>' +
+      '<p class="pl-0"><code class="et-code">' +
       '<span class="content">content</span>' +
-      '<span class="sign">`</span>' +
       '</code></p>';
     expect(html).toEqual(expectedOutput);
   });
   test("shouldn't parse ```", () => {
     let content = '```';
     let html = parseToHtml(`${content}`, [], [codeParser]);
-    expect(html).toEqual(`<p>${content}</p>`);
+    expect(html).toEqual(`<p class="pl-0">${content}</p>`);
 
     content = 'content';
     html = parseToHtml(`\`${content} \``, [], [codeParser]);
-    expect(html).toEqual(`<p>\`${content} \`</p>`);
+    expect(html).toEqual(`<p class="pl-0">\`${content} \`</p>`);
 
     html = parseToHtml(`\` ${content}\``, [], [codeParser]);
-    expect(html).toEqual(`<p>\` ${content}\`</p>`);
+    expect(html).toEqual(`<p class="pl-0">\` ${content}\`</p>`);
   });
 });

@@ -9,7 +9,7 @@ describe('highlight', () => {
       '<'
     );
     let expectedOutput =
-      '<p><span class="et-highlight">' +
+      '<p class="pl-0"><span class="et-highlight">' +
       '<span class="sign">==</span>' +
       '<span class="content">content</span>' +
       '<span class="sign">==</span>' +
@@ -22,7 +22,7 @@ describe('highlight', () => {
     );
 
     expectedOutput =
-      '<p>t<span class="et-highlight">' +
+      '<p class="pl-0">t<span class="et-highlight">' +
       '<span class="sign">==</span>' +
       '<span class="content">content</span>' +
       '<span class="sign">==</span>' +
@@ -32,14 +32,14 @@ describe('highlight', () => {
   test("shouldn't parse", () => {
     let content = `= =content==`;
     let html = parseToHtml(content, [], [highlightParser]);
-    expect(html).toEqual(`<p>${content}</p>`);
+    expect(html).toEqual(`<p class="pl-0">${content}</p>`);
 
     content = ` ==${content}= = r`;
     html = parseToHtml(content, [], [highlightParser]);
-    expect(html).toEqual(`<p>${content}</p>`);
+    expect(html).toEqual(`<p class="pl-0">${content}</p>`);
 
     content = ` ==${content}==r`;
     html = parseToHtml(content, [], [highlightParser]);
-    expect(html).toEqual(`<p>${content}</p>`);
+    expect(html).toEqual(`<p class="pl-0">${content}</p>`);
   });
 });

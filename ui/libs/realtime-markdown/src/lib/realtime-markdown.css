@@ -43,6 +43,11 @@
   padding-left: calc(10 * 15px);
 }
 
+/* General */
+.sign {
+  color: #d0d0d0;
+}
+
 /* Lists */
 /* TODO: Li markers */
 ul.pl-0 {
@@ -60,7 +65,7 @@ ol.pl-0 {
 /* Code block */
 .et-precode {
   padding: 8px;
-  background-color: #f1f1f1;
+  background-color: #f9f9f9;
 }
 
 /* Quote */
@@ -69,13 +74,13 @@ ol.pl-0 {
   border-style: solid;
   border-color: lightgray;
   padding-left: 10px;
-  background-color: #f1f1f1;
+  background-color: #f9f9f9;
 }
 
 /* Code */
 .et-code {
   color: crimson;
-  background-color: #f1f1f1;
+  background-color: #f9f9f9;
   padding: 4px;
   font-size: 80%;
 }

@@ -4,7 +4,7 @@ import expand from 'emmet';
 export const codeConfig: ElementRepresentationConfig = {
   id: 'code',
   initialEmmet: ({ innerHtml = '&nbsp;' }) =>
-    `code.et-code>span.sign{\`}+span.content{${innerHtml}}+span.sign{\`}`,
+    `code.et-code>span.content{${innerHtml}}`,
   signLeft: /`/g,
   signRight: /`/g,
   extendOnNewLine: false,

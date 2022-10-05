@@ -1,6 +1,7 @@
 import { setAttr, setStyle } from 'redom';
 import expand from 'emmet';
 import { config } from '../config';
+import { includes } from 'lodash-es';
 
 export type DOMConfig = {
   emmet: string;
@@ -21,6 +22,7 @@ export const createNewElement = ({
   setAttr(newElement, attr ?? {});
   return newElement;
 };
+
 export const isHeading = (currentElement: HTMLElement): boolean =>
   currentElement.tagName.toLowerCase().startsWith('h');
 export const calcHeadingSize = (innerHtml: string) =>
@@ -31,12 +33,24 @@ export const isDiv = (currentElement: HTMLElement): boolean =>
   currentElement.tagName.toLowerCase() === 'div';
 export const isSpan = (currentElement: HTMLElement): boolean =>
   currentElement.tagName.toLowerCase() === 'span';
+export const isSign = (element: HTMLElement): boolean =>
+  element.className.includes('sign');
+export const isContent = (element: HTMLElement): boolean =>
+  element.className.includes('content');
+
 export const calcIndent = (innerHtml: string): number => {
   const calcIndent = Math.floor(
     (innerHtml.match(/^ */g) as RegExpMatchArray)[0].length / 2
   );
   return calcIndent > config.maxIndent ? config.maxIndent : calcIndent;
 };
+export const getElementUUID = (element: HTMLElement): string | undefined =>
+  element.className
+    .match(/et-([a-zA-Z\d-]*)/g)
+    ?.shift()
+    ?.replace('et-', '');
+export const getAllSignsElements = (element: HTMLElement): HTMLElement[] =>
+  Array.from(element.getElementsByClassName('sign')) as HTMLElement[];
 export const increaseIndent = (
   element: HTMLElement | null | undefined
 ): void => {
@@ -74,36 +88,3 @@ export const getIndent = (element: HTMLElement | null | undefined): number => {
   const match = element.className.match(/pl-\d{1,2}/g);
   return match ? +match[0].replace('pl-', '') : -1;
 };
-
-export function uuid() {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
-    (
-      c ^
-      (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
-    ).toString(16)
-  );
-}
-export function canIndentRight(element: HTMLElement) {
-  const MAX_SEARCH_DEPTH = 100;
-  const currentElementIndent = getIndent(element);
-
-  let depth = 0;
-  let prevSibling = element.previousSibling as HTMLElement;
-  while (depth < MAX_SEARCH_DEPTH && prevSibling) {
-    const prevSiblingIndent = getIndent(prevSibling);
-    if (prevSiblingIndent === -1) {
-      return false;
-    }
-
-    if (prevSiblingIndent >= currentElementIndent) {
-      return true;
-    }
-
-    prevSibling = prevSibling.previousSibling as HTMLElement;
-    depth++;
-  }
-
-  return false;
-}
