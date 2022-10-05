@@ -9,7 +9,7 @@ describe('code', () => {
       '<'
     );
     const expectedOutput =
-      '<p class="pl-0"><code class="et-code">' +
+      '<p class="ml-0"><code class="et-code">' +
       '<span class="content">content</span>' +
       '</code></p>';
     expect(html).toEqual(expectedOutput);
@@ -17,13 +17,13 @@ describe('code', () => {
   test("shouldn't parse ```", () => {
     let content = '```';
     let html = parseToHtml(`${content}`, [], [codeParser]);
-    expect(html).toEqual(`<p class="pl-0">${content}</p>`);
+    expect(html).toEqual(`<p class="ml-0">${content}</p>`);
 
     content = 'content';
     html = parseToHtml(`\`${content} \``, [], [codeParser]);
-    expect(html).toEqual(`<p class="pl-0">\`${content} \`</p>`);
+    expect(html).toEqual(`<p class="ml-0">\`${content} \`</p>`);
 
     html = parseToHtml(`\` ${content}\``, [], [codeParser]);
-    expect(html).toEqual(`<p class="pl-0">\` ${content}\`</p>`);
+    expect(html).toEqual(`<p class="ml-0">\` ${content}\`</p>`);
   });
 });

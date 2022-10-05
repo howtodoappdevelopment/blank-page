@@ -12,6 +12,6 @@ export const textParser: BlockParserType = {
     let content = line.replace('\n', '');
     content = content.trim() === '' ? '&nbsp;' : content;
     content = content.replace(new RegExp(`^ {${indent * 2}}`, 'g'), '');
-    return `<p class="pl-${indent}">${content}</p>`;
+    return `<p class="ml-${indent}">${content}</p>`;
   },
 };

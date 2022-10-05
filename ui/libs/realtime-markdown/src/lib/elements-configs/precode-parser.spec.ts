@@ -7,7 +7,7 @@ describe('precode', () => {
       precodeParser,
     ]).replace(/[\n\t ]*</g, '<');
     const expectedOutput =
-      '<pre class="et-precode pl-1"><code class="content">' +
+      '<pre class="et-precode ml-1"><code class="content">' +
       '# code<br># code 2' +
       '</code></pre>';
     expect(html).toEqual(expectedOutput);
@@ -17,7 +17,7 @@ describe('precode', () => {
       precodeParser,
     ]).replace(/[\n\t ]*</g, '<');
     const expectedOutput =
-      '<pre class="et-precode pl-0"><code class="content">' +
+      '<pre class="et-precode ml-0"><code class="content">' +
       '# code<br># code 2<br>end line' +
       '</code></pre>';
     expect(html).toEqual(expectedOutput);
@@ -28,10 +28,10 @@ describe('precode', () => {
       [precodeParser]
     ).replace(/[\n\t ]*</g, '<');
     const expectedOutput =
-      '<pre class="et-precode pl-0"><code class="content">' +
+      '<pre class="et-precode ml-0"><code class="content">' +
       '# code<br># code 2<br>end line' +
       '</code></pre>' +
-      '<p class="pl-0">regular text</p>';
+      '<p class="ml-0">regular text</p>';
     expect(html).toEqual(expectedOutput);
   });
   test('should parse with code type name', () => {
@@ -40,10 +40,10 @@ describe('precode', () => {
       [precodeParser]
     ).replace(/[\n\t ]*</g, '<');
     const expectedOutput =
-      '<pre class="et-precode pl-0"><code class="content">' +
+      '<pre class="et-precode ml-0"><code class="content">' +
       '# code<br># code 2<br>end line' +
       '</code></pre>' +
-      '<p class="pl-0">regular text</p>';
+      '<p class="ml-0">regular text</p>';
     expect(html).toEqual(expectedOutput);
   });
   test('should parse with no content', () => {
@@ -51,10 +51,10 @@ describe('precode', () => {
       precodeParser,
     ]).replace(/[\n\t ]*</g, '<');
     const expectedOutput =
-      '<pre class="et-precode pl-0"><code class="content">' +
+      '<pre class="et-precode ml-0"><code class="content">' +
       '&nbsp;' +
       '</code></pre>' +
-      '<p class="pl-0">regular text</p>';
+      '<p class="ml-0">regular text</p>';
     expect(html).toEqual(expectedOutput);
   });
 });

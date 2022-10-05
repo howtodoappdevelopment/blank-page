@@ -7,7 +7,7 @@ describe('a hrefs', () => {
     const title = 'url';
     const html = parseToHtml(`[${title}](${url})`, [], aParsers);
     expect(html).toEqual(
-      `<p class="pl-0"><a href="${url}" class="et-a">${title}</a></p>`
+      `<p class="ml-0"><a href="${url}" class="et-a">${title}</a></p>`
     );
   });
   test('should parse [url](http://www.url.com)', () => {
@@ -15,7 +15,7 @@ describe('a hrefs', () => {
     const title = 'url';
     const html = parseToHtml(`[${title}](${url})`, [], aParsers);
     expect(html).toEqual(
-      `<p class="pl-0"><a href="${url}" class="et-a">${title}</a></p>`
+      `<p class="ml-0"><a href="${url}" class="et-a">${title}</a></p>`
     );
   });
   test('should parse [url](https://www.url.com)', () => {
@@ -23,7 +23,7 @@ describe('a hrefs', () => {
     const title = 'url';
     const html = parseToHtml(`[${title}](${url})`, [], aParsers);
     expect(html).toEqual(
-      `<p class="pl-0"><a href="${url}" class="et-a">${title}</a></p>`
+      `<p class="ml-0"><a href="${url}" class="et-a">${title}</a></p>`
     );
   });
   test('should parse [url](www.url.com)', () => {
@@ -31,55 +31,55 @@ describe('a hrefs', () => {
     const title = 'url';
     const html = parseToHtml(`[${title}](${url})`, [], aParsers);
     expect(html).toEqual(
-      `<p class="pl-0"><a href="${url}" class="et-a">${title}</a></p>`
+      `<p class="ml-0"><a href="${url}" class="et-a">${title}</a></p>`
     );
   });
   test('should parse http://url.com', () => {
     let url = 'http://www.url.com';
     let html = parseToHtml(url, [], aParsers);
     expect(html).toEqual(
-      `<p class="pl-0"><a href="${url}" class="et-a">${url}</a></p>`
+      `<p class="ml-0"><a href="${url}" class="et-a">${url}</a></p>`
     );
 
     url = ' http://www.url.com';
     html = parseToHtml(url, [], aParsers);
     expect(html).toEqual(
-      `<p class="pl-0"> <a href="${url.trim()}" class="et-a">${url.trim()}</a></p>`
+      `<p class="ml-0"> <a href="${url.trim()}" class="et-a">${url.trim()}</a></p>`
     );
   });
   test('should parse https://url.com', () => {
     const url = 'https://www.url.com';
     const html = parseToHtml(url, [], aParsers);
     expect(html).toEqual(
-      `<p class="pl-0"><a href="${url}" class="et-a">${url}</a></p>`
+      `<p class="ml-0"><a href="${url}" class="et-a">${url}</a></p>`
     );
   });
   test('should parse [url]( http://url.com )', () => {
     const url = '[url]( http://url.com )';
     const html = parseToHtml(url, [], aParsers);
     expect(html).toEqual(
-      '<p class="pl-0">[url]( <a href="http://url.com" class="et-a">http://url.com</a> )</p>'
+      '<p class="ml-0">[url]( <a href="http://url.com" class="et-a">http://url.com</a> )</p>'
     );
   });
   test("shouldn't parse url.com", () => {
     let url = 'url.com';
     let html = parseToHtml(url, [], aParsers);
-    expect(html).toEqual(`<p class="pl-0">${url}</p>`);
+    expect(html).toEqual(`<p class="ml-0">${url}</p>`);
 
     url = '<a href="http://url.com"></a>';
     html = parseToHtml(url, [], aParsers);
-    expect(html).toEqual(`<p class="pl-0">${url}</p>`);
+    expect(html).toEqual(`<p class="ml-0">${url}</p>`);
 
     url = '[url]( url.com )';
     html = parseToHtml(url, [], aParsers);
-    expect(html).toEqual(`<p class="pl-0">${url}</p>`);
+    expect(html).toEqual(`<p class="ml-0">${url}</p>`);
 
     url = '[url]( url.com)';
     html = parseToHtml(url, [], aParsers);
-    expect(html).toEqual(`<p class="pl-0">${url}</p>`);
+    expect(html).toEqual(`<p class="ml-0">${url}</p>`);
 
     url = '[url](url.com )';
     html = parseToHtml(url, [], aParsers);
-    expect(html).toEqual(`<p class="pl-0">${url}</p>`);
+    expect(html).toEqual(`<p class="ml-0">${url}</p>`);
   });
 });

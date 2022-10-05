@@ -10,7 +10,7 @@ import { fork } from 'forkable-iterator';
 export const quoteConfig: ElementRepresentationConfig = {
   id: 'quote',
   initialEmmet: ({ indent = 0, innerHtml = '&nbsp;' }) =>
-    `p.et-quote.pl-${indent}>span.content{${innerHtml}}`,
+    `p.et-quote.ml-${indent}>span.content{${innerHtml}}`,
   newLineEmmet: () => ``,
   signLeft: /^ *- \[([x ])]/g,
   extendOnNewLine: false,

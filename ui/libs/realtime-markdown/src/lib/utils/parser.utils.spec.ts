@@ -6,7 +6,7 @@ describe('parser utils', () => {
   test('should parse standard text', () => {
     const html = parseToHtml(`regular text\n\tregular text`);
     expect(html).toEqual(
-      `<p class="pl-0">regular text</p><p class="pl-0">\tregular text</p>`
+      `<p class="ml-0">regular text</p><p class="ml-0">\tregular text</p>`
     );
   });
   test('should parse heading block element', () => {
@@ -25,7 +25,7 @@ describe('parser utils', () => {
     const expectedOutput =
       '<h1 class="et-h1"><span class="sign">#&nbsp;</span><span class="content">h1</span></h1>' +
       '<h2 class="et-h2"><span class="sign">##&nbsp;</span><span class="content">h2</span></h2>' +
-      '<p class="pl-0">text</p>';
+      '<p class="ml-0">text</p>';
     expect(html).toEqual(expectedOutput);
   });
   test('should parse bold txt element', () => {
@@ -34,7 +34,7 @@ describe('parser utils', () => {
       '<'
     );
     const expectedOutput =
-      '<p class="pl-0"><b class="et-b">' +
+      '<p class="ml-0"><b class="et-b">' +
       '<span class="sign">**</span>' +
       '<span class="content">bold</span>' +
       '<span class="sign">**</span>' +
@@ -44,7 +44,7 @@ describe('parser utils', () => {
   test('should parse empty lines', () => {
     const html = parseToHtml(`\n\n`, [], [bParser]).replace(/[\n\t ]*</g, '<');
     const expectedOutput =
-      '<p class="pl-0">&nbsp;</p><p class="pl-0">&nbsp;</p><p class="pl-0">&nbsp;</p>';
+      '<p class="ml-0">&nbsp;</p><p class="ml-0">&nbsp;</p><p class="ml-0">&nbsp;</p>';
     expect(html).toEqual(expectedOutput);
   });
 });
