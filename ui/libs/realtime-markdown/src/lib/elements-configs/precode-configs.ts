@@ -11,7 +11,7 @@ import { quoteConfig } from './quote-configs';
 export const precodeConfig: ElementRepresentationConfig = {
   id: 'precode',
   initialEmmet: ({ indent = 0, innerHtml = '<br />' }) =>
-    `pre.et-precode.pl-${indent}>code.content{${innerHtml}}`,
+    `pre.et-precode.ml-${indent}>code.content{${innerHtml}}`,
   newLineEmmet: () => '{&nbsp;}',
   signTop: /^`{3}[a-z]* */g,
   extendOnNewLine: true,

@@ -1,46 +1,46 @@
 /* padding left aka indent */
-.pl-0 {
-  padding-left: 0;
+.ml-0 {
+  margin-left: 0;
 }
 
-.pl-1 {
-  padding-left: calc(1 * 15px);
+.ml-1 {
+  margin-left: calc(1 * 15px);
 }
 
-.pl-2 {
-  padding-left: calc(2 * 15px);
+.ml-2 {
+  margin-left: calc(2 * 15px);
 }
 
-.pl-3 {
-  padding-left: calc(3 * 15px);
+.ml-3 {
+  margin-left: calc(3 * 15px);
 }
 
-.pl-4 {
-  padding-left: calc(4 * 15px);
+.ml-4 {
+  margin-left: calc(4 * 15px);
 }
 
-.pl-5 {
-  padding-left: calc(5 * 15px);
+.ml-5 {
+  margin-left: calc(5 * 15px);
 }
 
-.pl-6 {
-  padding-left: calc(6 * 15px);
+.ml-6 {
+  margin-left: calc(6 * 15px);
 }
 
-.pl-7 {
-  padding-left: calc(7 * 15px);
+.ml-7 {
+  margin-left: calc(7 * 15px);
 }
 
-.pl-8 {
-  padding-left: calc(8 * 15px);
+.ml-8 {
+  margin-left: calc(8 * 15px);
 }
 
-.pl-9 {
-  padding-left: calc(9 * 15px);
+.ml-9 {
+  margin-left: calc(9 * 15px);
 }
 
-.pl-10 {
-  padding-left: calc(10 * 15px);
+.ml-10 {
+  margin-left: calc(10 * 15px);
 }
 
 /* General */
@@ -50,15 +50,15 @@
 
 /* Lists */
 /* TODO: Li markers */
-ul.pl-0 {
+ul.ml-0 {
   list-style-type: circle;
 }
 
-ul.pl-1 {
+ul.ml-1 {
   list-style-type: square;
 }
 
-ol.pl-0 {
+ol.ml-0 {
   list-style-type: decimal;
 }
 

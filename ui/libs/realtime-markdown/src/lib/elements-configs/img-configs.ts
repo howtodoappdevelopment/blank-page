@@ -1,8 +1,4 @@
-import {
-  ElementRepresentationConfig,
-  BlockParserType,
-  TxtParserType,
-} from '../types';
+import { ElementRepresentationConfig, TxtParserType } from '../types';
 import expand from 'emmet';
 
 export const imgConfig: ElementRepresentationConfig = {
