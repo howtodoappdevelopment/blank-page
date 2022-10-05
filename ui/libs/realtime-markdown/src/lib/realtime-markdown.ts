@@ -7,9 +7,10 @@ import { createNewElement } from './utils/elements.utils';
 import { BLOCK_PARSERS, TXT_PARSERS } from './config';
 
 import './realtime-markdown.css';
-import { onKeyDown } from './keydown.event';
-import { onMouseDown } from './mousedown.event';
+import { onKeyDown } from './events/keydown.event';
+import { onMouseDown } from './events/mousedown.event';
 import { hideSignsOf } from './utils/sign.utils';
+import { onKeyUp } from './events/keyup.event';
 
 export const createMarkdownInput = (
   initialMarkdown?: string
@@ -48,6 +49,7 @@ export const createContentEditable = (children: string): HTMLElement => {
 
   contentEditable.addEventListener('mousedown', onMouseDown);
   contentEditable.addEventListener('keydown', onKeyDown);
+  contentEditable.addEventListener('keyup', onKeyUp);
 
   return contentEditable;
 };
