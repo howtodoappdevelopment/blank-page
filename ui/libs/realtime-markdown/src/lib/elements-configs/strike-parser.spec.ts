@@ -9,7 +9,7 @@ describe('strike', () => {
       '<'
     );
     let expectedOutput =
-      '<p><span class="et-strike">' +
+      '<p class="pl-0"><span class="et-strike">' +
       '<span class="sign">~~</span>' +
       '<span class="content">content</span>' +
       '<span class="sign">~~</span>' +
@@ -22,7 +22,7 @@ describe('strike', () => {
     );
 
     expectedOutput =
-      '<p><span class="et-strike">' +
+      '<p class="pl-0"><span class="et-strike">' +
       '<span class="sign">~~</span>' +
       '<span class="content">content</span>' +
       '<span class="sign">~~</span>' +
@@ -32,14 +32,14 @@ describe('strike', () => {
   test("shouldn't parse", () => {
     let content = `~ ~content~~`;
     let html = parseToHtml(content, [], [strikeParser]);
-    expect(html).toEqual(`<p>${content}</p>`);
+    expect(html).toEqual(`<p class="pl-0">${content}</p>`);
 
     content = ` ~~${content}~ ~ r`;
     html = parseToHtml(content, [], [strikeParser]);
-    expect(html).toEqual(`<p>${content}</p>`);
+    expect(html).toEqual(`<p class="pl-0">${content}</p>`);
 
     content = ` ~~${content}~~r`;
     html = parseToHtml(content, [], [strikeParser]);
-    expect(html).toEqual(`<p>${content}</p>`);
+    expect(html).toEqual(`<p class="pl-0">${content}</p>`);
   });
 });

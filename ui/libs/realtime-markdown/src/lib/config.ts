@@ -1,18 +1,58 @@
-import { BlockParserType, TxtParserType } from './types';
-import { aParsers } from './elements-configs/a-configs';
-import { bParser } from './elements-configs/b-configs';
-import { codeParser } from './elements-configs/code-configs';
-import { headingsParser } from './elements-configs/headings-configs';
-import { highlightParser } from './elements-configs/highlight-config';
-import { iParser } from './elements-configs/i-configs';
-import { imgParser } from './elements-configs/img-configs';
-import { strikeParser } from './elements-configs/strike-configs';
-import { precodeParser } from './elements-configs/precode-configs';
-import { quoteParser } from './elements-configs/quote-configs';
+import {
+  BlockParserType,
+  ElementRepresentationConfig,
+  TxtParserType,
+} from './types';
+import { aConfig, aParsers } from './elements-configs/a-configs';
+import { bConfig, bParser } from './elements-configs/b-configs';
+import { codeConfig, codeParser } from './elements-configs/code-configs';
+import {
+  h1Config,
+  h2Config,
+  h3Config,
+  h4Config,
+  h5Config,
+  h6Config,
+  headingsParser,
+} from './elements-configs/headings-configs';
+import {
+  highlightConfig,
+  highlightParser,
+} from './elements-configs/highlight-config';
+import { iConfig, iParser } from './elements-configs/i-configs';
+import { imgConfig, imgParser } from './elements-configs/img-configs';
+import { strikeConfig, strikeParser } from './elements-configs/strike-configs';
+import {
+  precodeConfig,
+  precodeParser,
+} from './elements-configs/precode-configs';
+import { quoteConfig, quoteParser } from './elements-configs/quote-configs';
 
 export const config = {
   maxIndent: 10,
 };
+
+export const ELEMENTS_CONFIGS: {
+  [uid: string]: ElementRepresentationConfig;
+} = [
+  h1Config,
+  h2Config,
+  h3Config,
+  h4Config,
+  h5Config,
+  h6Config,
+  precodeConfig,
+  quoteConfig,
+  imgConfig,
+  aConfig,
+  bConfig,
+  codeConfig,
+  highlightConfig,
+  iConfig,
+  strikeConfig,
+]
+  .map((config) => ({ [config.id]: config }))
+  .reduce((acc, config) => ({ ...acc, ...config }), {});
 
 export const BLOCK_PARSERS: BlockParserType[] = [
   headingsParser,
@@ -20,21 +60,16 @@ export const BLOCK_PARSERS: BlockParserType[] = [
   quoteParser,
 ];
 export const TXT_PARSERS: TxtParserType[] = [
+  imgParser,
   ...aParsers,
   bParser,
   codeParser,
   highlightParser,
   iParser,
-  imgParser,
   strikeParser,
 ];
 
 // .et-* === .element-type-*
-// export const DYNAMIC_ELEMENTS_CONFIG: ElementRepresentationConfig[] = [
-//   aConfig,
-//   bConfig,
-//   highlightConfig
-// ];
 // {
 //   id: 'checkbox',
 //   regex: /^ *- \[([x ])] .*(\n|$)/gm,
@@ -70,18 +105,6 @@ export const TXT_PARSERS: TxtParserType[] = [
 //     ),
 // },
 
-// {
-//   id: 'text',
-//   regex: /[^<>\n]+(?![^<]*>|[^<>]*<\/)$/gm,
-//   toHtml: (innerHtml: string): string[] => {
-//     return innerHtml
-//       .split('\n')
-//       .filter((html) => html.trim() !== '')
-//       .map((html) => expand(`p{${html}}`));
-//   },
-// },
-//
-
 // ul: {
 //   initialEmmet: ({ indent = 0, innerHtml = '&nbsp;' }) =>
 //     `ul.pl-${indent}>li.et-ul>span.content{${innerHtml}}`,
@@ -106,4 +129,3 @@ export const TXT_PARSERS: TxtParserType[] = [
 //   signLeft: /^ *- \[([x ])]/g,
 //   extendOnNewLine: false,
 // },
-// quote:

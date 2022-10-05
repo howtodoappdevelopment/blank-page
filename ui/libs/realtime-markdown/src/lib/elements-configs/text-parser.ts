@@ -1,4 +1,5 @@
 import { BlockParserType } from '../types';
+import { calcIndent } from '../utils/elements.utils';
 
 export const textParser: BlockParserType = {
   id: 'p',
@@ -7,6 +8,10 @@ export const textParser: BlockParserType = {
       line = toHtml(line);
     }
 
-    return `<p>${line.replace('\n', '')}</p>`;
+    const indent = calcIndent(line);
+    let content = line.replace('\n', '');
+    content = content.trim() === '' ? '&nbsp;' : content;
+    content = content.replace(new RegExp(`^ {${indent * 2}}`, 'g'), '');
+    return `<p class="pl-${indent}">${content}</p>`;
   },
 };
