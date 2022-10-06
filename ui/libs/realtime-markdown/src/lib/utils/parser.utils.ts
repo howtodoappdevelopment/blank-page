@@ -1,5 +1,5 @@
 import { BlockParserType, TxtParserType } from '../types';
-import { textParser } from '../elements-configs/text-parser';
+import { textParser } from '../elements/text-parser';
 import { buildForkableIterator, ForkableIterator } from 'forkable-iterator';
 
 export const parseToHtml = (

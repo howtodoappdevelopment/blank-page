@@ -1,5 +1,5 @@
 // import { CaretContext } from '../utils/caret.utils';
-// import { isDiv, isParagraph, isSpan } from '../utils/elements-configs.utils';
+// import { isDiv, isParagraph, isSpan } from '../utils/elements.utils';
 // import { createParagraph } from './paragraph.element';
 // import { mount, unmount } from 'redom';
 // import { config } from '../config';

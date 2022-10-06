@@ -3,9 +3,9 @@ import {
   ElementRepresentationConfig,
   TxtParserType,
 } from './types';
-import { aConfig, aParsers } from './elements-configs/a-configs';
-import { bConfig, bParser } from './elements-configs/b-configs';
-import { codeConfig, codeParser } from './elements-configs/code-configs';
+import { aConfig, aParsers } from './elements/a-configs';
+import { bConfig, bParser } from './elements/b-configs';
+import { codeConfig, codeParser } from './elements/code-configs';
 import {
   h1Config,
   h2Config,
@@ -14,19 +14,13 @@ import {
   h5Config,
   h6Config,
   headingsParser,
-} from './elements-configs/headings-configs';
-import {
-  highlightConfig,
-  highlightParser,
-} from './elements-configs/highlight-config';
-import { iConfig, iParser } from './elements-configs/i-configs';
-import { imgConfig, imgParser } from './elements-configs/img-configs';
-import { strikeConfig, strikeParser } from './elements-configs/strike-configs';
-import {
-  precodeConfig,
-  precodeParser,
-} from './elements-configs/precode-configs';
-import { quoteConfig, quoteParser } from './elements-configs/quote-configs';
+} from './elements/headings-configs';
+import { highlightConfig, highlightParser } from './elements/highlight-config';
+import { iConfig, iParser } from './elements/i-configs';
+import { imgConfig, imgParser } from './elements/img-configs';
+import { strikeConfig, strikeParser } from './elements/strike-configs';
+import { precodeConfig, precodeParser } from './elements/precode-configs';
+import { quoteConfig, quoteParser } from './elements/quote-configs';
 
 export const config = {
   maxIndent: 10,
