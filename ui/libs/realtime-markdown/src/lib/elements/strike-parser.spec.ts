@@ -1,10 +1,10 @@
 import { parseToHtml } from '../utils/static-parser.utils';
-import { strikeParser } from './strike-configs';
+import { strikeStaticParser } from './strike-configs';
 
 describe('strike', () => {
   test('should parse ~~~~', () => {
     const content = 'content';
-    let html = parseToHtml(`~~${content}~~`, [], [strikeParser]).replace(
+    let html = parseToHtml(`~~${content}~~`, [], [strikeStaticParser]).replace(
       /[\n\t ]*</g,
       '<'
     );
@@ -16,7 +16,7 @@ describe('strike', () => {
       '</span></span></p>';
     expect(html).toEqual(expectedOutput);
 
-    html = parseToHtml(`~~${content}~~ r`, [], [strikeParser]).replace(
+    html = parseToHtml(`~~${content}~~ r`, [], [strikeStaticParser]).replace(
       /[\n\t ]*</g,
       '<'
     );
@@ -31,19 +31,19 @@ describe('strike', () => {
   });
   test("shouldn't parse", () => {
     let content = `~ ~content~~`;
-    let html = parseToHtml(content, [], [strikeParser]);
+    let html = parseToHtml(content, [], [strikeStaticParser]);
     expect(html).toEqual(
       `<p class="et-p ml-0"><span class="content">${content}</span></p>`
     );
 
     content = ` ~~${content}~ ~ r`;
-    html = parseToHtml(content, [], [strikeParser]);
+    html = parseToHtml(content, [], [strikeStaticParser]);
     expect(html).toEqual(
       `<p class="et-p ml-0"><span class="content">${content}</span></p>`
     );
 
     content = ` ~~${content}~~r`;
-    html = parseToHtml(content, [], [strikeParser]);
+    html = parseToHtml(content, [], [strikeStaticParser]);
     expect(html).toEqual(
       `<p class="et-p ml-0"><span class="content">${content}</span></p>`
     );

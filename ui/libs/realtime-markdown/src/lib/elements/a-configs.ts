@@ -1,23 +1,22 @@
 import expand from 'emmet';
-import { TxtConfig, TxtParserType } from '../types';
+import { toOuterHtmlFunction, TxtStaticParserType } from '../types';
 
-export const aConfig: TxtConfig = {
-  id: 'a',
-  toEmmet: ({ innerHtml = '&nbsp;', url = '' }) =>
-    `a[href=${url}].et-a{${innerHtml}}`,
-};
-
-export const aParsers: TxtParserType[] = [
+export const A_ID = 'a';
+export const toOuterHtml: toOuterHtmlFunction = ({
+  innerHtml = '&nbsp;',
+  url = '',
+}) => expand(`a[href=${url}].et-${A_ID}{${innerHtml}}`);
+export const aStaticParsers: TxtStaticParserType[] = [
   {
-    id: 'a',
-    toHtml: (line: string) => {
+    id: A_ID,
+    parseMarkdownToHtml: (line: string) => {
       const regExp = /\[[^[\]]*]\([^()]*\)/gm;
       return line.replace(regExp, (match) => _toA(match));
     },
   },
   {
-    id: 'a',
-    toHtml: (line: string) => {
+    id: A_ID,
+    parseMarkdownToHtml: (line: string) => {
       const regExp =
         /( |^)https?:\/\/(www\.)?[-a-zA-Z\d@:%._+~#=]{1,256}\.[a-zA-Z\d]{2,6}\b([-a-zA-Z\d@:%_+.()~#?&\\/=]*)( |$)/gm;
       return line.replace(regExp, (match) => _txtToA(match));
@@ -38,11 +37,7 @@ const _toA = (match: string) => {
     /[\\[\]]/g,
     ''
   );
-  const emmet = aConfig.toEmmet({
-    innerHtml: aInnerHtml,
-    url: aUrl,
-  });
-  return expand(emmet);
+  return toOuterHtml({ innerHtml: aInnerHtml, url: aUrl });
 };
 const _txtToA = (match: string) => {
   const leftCharRegExp = /^( |)/g;
@@ -50,9 +45,8 @@ const _txtToA = (match: string) => {
   const rightCharRegExp = /( |)$/g;
   const rightChar = match.match(rightCharRegExp)?.shift() || '';
   match = match.replace(leftCharRegExp, '').replace(rightCharRegExp, '');
-  const emmet = aConfig.toEmmet({
+  return `${leftChar}${toOuterHtml({
     innerHtml: match,
     url: match,
-  });
-  return `${leftChar}${expand(emmet)}${rightChar}`;
+  })}${rightChar}`;
 };

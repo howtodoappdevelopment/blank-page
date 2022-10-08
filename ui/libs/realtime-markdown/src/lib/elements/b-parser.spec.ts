@@ -1,10 +1,10 @@
-import { bParser } from './b-configs';
+import { bStaticParser } from './b-configs';
 import { parseToHtml } from '../utils/static-parser.utils';
 
 describe('bold\\strong', () => {
   test('should parse **[^*]+**', () => {
     const content = 'bold txt';
-    const html = parseToHtml(`**${content}**`, [], [bParser]).replace(
+    const html = parseToHtml(`**${content}**`, [], [bStaticParser]).replace(
       /[\n\t ]*</g,
       '<'
     );
@@ -17,25 +17,25 @@ describe('bold\\strong', () => {
   });
   test("shouldn't parse", () => {
     let content = '** test**';
-    let html = parseToHtml(content, [], [bParser]);
+    let html = parseToHtml(content, [], [bStaticParser]);
     expect(html).toEqual(
       `<p class="et-p ml-0"><span class="content">${content}</span></p>`
     );
 
     content = '**test **';
-    html = parseToHtml(content, [], [bParser]);
+    html = parseToHtml(content, [], [bStaticParser]);
     expect(html).toEqual(
       `<p class="et-p ml-0"><span class="content">${content}</span></p>`
     );
 
     content = '****';
-    html = parseToHtml(content, [], [bParser]);
+    html = parseToHtml(content, [], [bStaticParser]);
     expect(html).toEqual(
       `<p class="et-p ml-0"><span class="content">${content}</span></p>`
     );
 
     content = '********';
-    html = parseToHtml(content, [], [bParser]);
+    html = parseToHtml(content, [], [bStaticParser]);
     expect(html).toEqual(
       `<p class="et-p ml-0"><span class="content">${content}</span></p>`
     );

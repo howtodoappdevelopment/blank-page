@@ -1,14 +1,14 @@
-import { TxtConfig, TxtParserType } from '../types';
+import { TxtStaticParserType } from '../types';
 import expand from 'emmet';
 
-export const iConfig: TxtConfig = {
-  id: 'i',
-  toEmmet: ({ innerHtml = '&nbsp;' }) =>
-    `i.et-i>span.sign{\\*}+span.content{${innerHtml}}+span.sign{\\*}`,
-};
-export const iParser: TxtParserType = {
-  id: 'i',
-  toHtml: (line: string) => {
+export const I_ID = 'i';
+export const toOuterHtml = ({ innerHtml = '&nbsp;' }) =>
+  expand(
+    `i.et-${I_ID}>span.sign{\\*}+span.content{${innerHtml}}+span.sign{\\*}`
+  );
+export const iStaticParser: TxtStaticParserType = {
+  id: I_ID,
+  parseMarkdownToHtml: (line: string) => {
     const regExp = /( |^)\*[^*]+\*( |$)/gm;
     return line.replace(regExp, (match) => _toI(match));
   },
@@ -29,9 +29,5 @@ const _toI = (match: string) => {
   ) {
     return match;
   }
-
-  const emmet = iConfig.toEmmet({
-    innerHtml: parsedMatch,
-  });
-  return `${leftChar}${expand(emmet)}${rightChar}`;
+  return `${leftChar}${toOuterHtml({ innerHtml: parsedMatch })}${rightChar}`;
 };

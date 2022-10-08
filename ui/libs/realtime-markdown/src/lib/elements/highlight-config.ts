@@ -1,14 +1,14 @@
-import { TxtConfig, TxtParserType } from '../types';
+import { toOuterHtmlFunction, TxtStaticParserType } from '../types';
 import expand from 'emmet';
 
-export const highlightConfig: TxtConfig = {
-  id: 'highlight',
-  toEmmet: ({ innerHtml = '&nbsp;' }) =>
-    `span.et-highlight>span.sign{==}+span.content{${innerHtml}}+span.sign{==}`,
-};
-export const highlightParser: TxtParserType = {
-  id: 'highlight',
-  toHtml: (line: string) => {
+export const HIGHLIGHT_ID = 'highlight';
+export const toOuterHtml: toOuterHtmlFunction = ({ innerHtml = '&nbsp;' }) =>
+  expand(
+    `span.et-${HIGHLIGHT_ID}>span.sign{==}+span.content{${innerHtml}}+span.sign{==}`
+  );
+export const highlightStaticParser: TxtStaticParserType = {
+  id: HIGHLIGHT_ID,
+  parseMarkdownToHtml: (line: string) => {
     const regExp = /( |^)==[^=]*==( |$)/gm;
     return line.replace(regExp, (match) => _toHighlight(match));
   },
@@ -23,8 +23,5 @@ const _toHighlight = (match: string) => {
     .replace(leftCharRegExp, '')
     .replace(rightCharRegExp, '')
     .replace(/(^==|==$)/g, '');
-  const emmet = highlightConfig.toEmmet({
-    innerHtml: match,
-  });
-  return `${leftChar}${expand(emmet)}${rightChar}`;
+  return `${leftChar}${toOuterHtml({ innerHtml: match })}${rightChar}`;
 };

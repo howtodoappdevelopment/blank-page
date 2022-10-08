@@ -1,19 +1,20 @@
 import { calcIndent } from '../utils/elements.utils';
 import expand from 'emmet';
-import { BlockConfig, BlockParserType, TxtParserType } from '../types';
+import {
+  BlockStaticParserType,
+  toOuterHtmlFunction,
+  TxtStaticParserType,
+} from '../types';
 import { fork } from 'forkable-iterator';
 
 export const QUOTE_ID = 'quote';
-export const quoteConfig: BlockConfig = {
+export const toOuterHtml: toOuterHtmlFunction = ({
+  indent = 0,
+  innerHtml = '&nbsp;',
+}) => expand(`p.et-${QUOTE_ID}.ml-${indent}>span.content{${innerHtml}}`);
+export const quoteStaticParser: BlockStaticParserType = {
   id: QUOTE_ID,
-  toEmmet: ({ indent = 0, innerHtml = '&nbsp;' }) =>
-    `p.et-${QUOTE_ID}.ml-${indent}>span.content{${innerHtml}}`,
-  newLineToEmmet: () => ``,
-  extendOnNewLine: false,
-};
-export const quoteParser: BlockParserType = {
-  id: QUOTE_ID,
-  toHtml: (line, txtParsers, linesIterator) => {
+  parseMarkdownToHtml: (line, txtParsers, linesIterator) => {
     if (!_isQuote(line)) {
       return null;
     }
@@ -62,16 +63,11 @@ const _isQuote = (line: string | undefined) => !!line?.trim()?.startsWith('> ');
 const _getParsedQuoteElement = (
   innerHtml: string,
   indent: number,
-  txtParsers: TxtParserType[]
+  txtParsers: TxtStaticParserType[]
 ) => {
-  for (const { toHtml } of txtParsers) {
-    innerHtml = toHtml(innerHtml);
+  for (const { parseMarkdownToHtml } of txtParsers) {
+    innerHtml = parseMarkdownToHtml(innerHtml);
   }
 
-  return expand(
-    quoteConfig.toEmmet({
-      indent,
-      innerHtml,
-    })
-  );
+  return toOuterHtml({ indent, innerHtml });
 };
