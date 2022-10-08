@@ -1,6 +1,7 @@
-import { BlockConfig, BlockParserType } from '../types';
+import { BlockStaticParserType } from '../types';
 import expand from 'emmet';
 import { calcHeadingSize } from '../utils/elements.utils';
+import { keyBy } from 'lodash-es';
 
 export const H1_ID = 'h1';
 export const H2_ID = 'h2';
@@ -9,61 +10,44 @@ export const H4_ID = 'h4';
 export const H5_ID = 'h5';
 export const H6_ID = 'h6';
 
-export const h1Config: BlockConfig = {
+export const h1Config = {
   id: H1_ID,
-  toEmmet: ({ innerHtml = '&nbsp;' }) =>
-    `h1.et-${H1_ID}>span.sign{#&nbsp;}+span.content{${innerHtml}}`,
-  newLineToEmmet: () => 'p{&nbsp;}',
-  extendOnNewLine: false,
-  shortcut: ['ctrl', 1],
+  toOuterHtml: ({ innerHtml = '&nbsp;' }) =>
+    expand(`h1.et-${H1_ID}>span.sign{#&nbsp;}+span.content{${innerHtml}}`),
 };
-export const h2Config: BlockConfig = {
+export const h2Config = {
   id: H2_ID,
-  toEmmet: ({ innerHtml = '&nbsp;' }) =>
-    `h2.et-${H2_ID}>span.sign{##&nbsp;}+span.content{${innerHtml}}`,
-  newLineToEmmet: () => 'p{&nbsp;}',
-  extendOnNewLine: false,
-  shortcut: ['ctrl', 2],
+  toOuterHtml: ({ innerHtml = '&nbsp;' }) =>
+    expand(`h2.et-${H2_ID}>span.sign{##&nbsp;}+span.content{${innerHtml}}`),
 };
-export const h3Config: BlockConfig = {
+export const h3Config = {
   id: H3_ID,
-  toEmmet: ({ innerHtml = '&nbsp;' }) =>
-    `h3.et-${H3_ID}>span.sign{###&nbsp;}+span.content{${innerHtml}}`,
-  newLineToEmmet: () => 'p{&nbsp;}',
-  extendOnNewLine: false,
-  shortcut: ['ctrl', 3],
+  toOuterHtml: ({ innerHtml = '&nbsp;' }) =>
+    expand(`h3.et-${H3_ID}>span.sign{###&nbsp;}+span.content{${innerHtml}}`),
 };
-export const h4Config: BlockConfig = {
+export const h4Config = {
   id: H4_ID,
-  toEmmet: ({ innerHtml = '&nbsp;' }) =>
-    `h4.et-${H4_ID}>span.sign{####&nbsp;}+span.content{${innerHtml}}`,
-  newLineToEmmet: () => 'p{&nbsp;}',
-  extendOnNewLine: false,
-  shortcut: ['ctrl', 4],
+  toOuterHtml: ({ innerHtml = '&nbsp;' }) =>
+    expand(`h4.et-${H4_ID}>span.sign{####&nbsp;}+span.content{${innerHtml}}`),
 };
-export const h5Config: BlockConfig = {
+export const h5Config = {
   id: H5_ID,
-  toEmmet: ({ innerHtml = '&nbsp;' }) =>
-    `h5.et-${H5_ID}>span.sign{#####&nbsp;}+span.content{${innerHtml}}`,
-  newLineToEmmet: () => 'p>span.content{&nbsp;}',
-  extendOnNewLine: false,
-  shortcut: ['ctrl', 5],
+  toOuterHtml: ({ innerHtml = '&nbsp;' }) =>
+    expand(`h5.et-${H5_ID}>span.sign{#####&nbsp;}+span.content{${innerHtml}}`),
 };
-export const h6Config: BlockConfig = {
+export const h6Config = {
   id: H6_ID,
-  toEmmet: ({ innerHtml = '&nbsp;' }) =>
-    `h6.et-${H6_ID}>span.sign{######&nbsp;}+span.content{${innerHtml}}`,
-  newLineToEmmet: () => 'p>span.content{&nbsp;}',
-  extendOnNewLine: false,
-  shortcut: ['ctrl', 6],
+  toOuterHtml: ({ innerHtml = '&nbsp;' }) =>
+    expand(`h6.et-${H6_ID}>span.sign{######&nbsp;}+span.content{${innerHtml}}`),
 };
 
-const headingsMap = [h1Config, h2Config, h3Config, h4Config, h5Config, h6Config]
-  .map((config) => ({ [config.id]: config }))
-  .reduce((acc, config) => ({ ...acc, ...config }), {});
-export const headingsParser: BlockParserType = {
+const headingsMap = keyBy(
+  [h1Config, h2Config, h3Config, h4Config, h5Config, h6Config],
+  'id'
+);
+export const headingsStaticParser: BlockStaticParserType = {
   id: 'heading',
-  toHtml: (line, txtParsers) => {
+  parseMarkdownToHtml: (line, txtParsers) => {
     const regExp = /^#{1,6} .*$/gm;
     if (!regExp.test(line)) {
       return null;
@@ -71,12 +55,12 @@ export const headingsParser: BlockParserType = {
 
     const H_ID = `h${calcHeadingSize(line)}`;
     line = line.replace(/^#{1,6} /g, '');
-    for (const { toHtml } of txtParsers) {
-      line = toHtml(line);
+    for (const { parseMarkdownToHtml } of txtParsers) {
+      line = parseMarkdownToHtml(line);
     }
 
     return expand(
-      headingsMap[H_ID].toEmmet({
+      headingsMap[H_ID].toOuterHtml({
         innerHtml: line,
       })
     );

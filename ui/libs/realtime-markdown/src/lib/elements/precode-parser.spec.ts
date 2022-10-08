@@ -1,10 +1,10 @@
 import { parseToHtml } from '../utils/static-parser.utils';
-import { precodeParser } from './precode-configs';
+import { precodeStaticParser } from './precode-configs';
 
 describe('precode', () => {
   test('should parse with indent', () => {
     const html = parseToHtml('  ```\n# code\n# code 2\n```', [
-      precodeParser,
+      precodeStaticParser,
     ]).replace(/[\n\t ]*</g, '<');
     const expectedOutput =
       '<pre class="et-precode ml-1"><code class="content">' +
@@ -14,7 +14,7 @@ describe('precode', () => {
   });
   test('should parse to the end of file', () => {
     const html = parseToHtml('```\n# code\n# code 2\nend line', [
-      precodeParser,
+      precodeStaticParser,
     ]).replace(/[\n\t ]*</g, '<');
     const expectedOutput =
       '<pre class="et-precode ml-0"><code class="content">' +
@@ -25,7 +25,7 @@ describe('precode', () => {
   test('should parse without indent', () => {
     const html = parseToHtml(
       '```\n# code\n# code 2\nend line\n```\nregular text   ',
-      [precodeParser]
+      [precodeStaticParser]
     ).replace(/[\n\t ]*</g, '<');
     const expectedOutput =
       '<pre class="et-precode ml-0"><code class="content">' +
@@ -37,7 +37,7 @@ describe('precode', () => {
   test('should parse with code type name', () => {
     const html = parseToHtml(
       '```javascript\n# code\n# code 2\nend line\n```\nregular text   ',
-      [precodeParser]
+      [precodeStaticParser]
     ).replace(/[\n\t ]*</g, '<');
     const expectedOutput =
       '<pre class="et-precode ml-0"><code class="content">' +
@@ -48,7 +48,7 @@ describe('precode', () => {
   });
   test('should parse with no content', () => {
     const html = parseToHtml('```javascript\n```\nregular text   ', [
-      precodeParser,
+      precodeStaticParser,
     ]).replace(/[\n\t ]*</g, '<');
     const expectedOutput =
       '<pre class="et-precode ml-0"><code class="content">' +

@@ -1,10 +1,10 @@
 import { parseToHtml } from '../utils/static-parser.utils';
-import { codeParser } from './code-configs';
+import { codeStaticParser } from './code-configs';
 
 describe('code', () => {
   test('should parse ``', () => {
     const content = 'content';
-    const html = parseToHtml(`\`${content}\``, [], [codeParser]).replace(
+    const html = parseToHtml(`\`${content}\``, [], [codeStaticParser]).replace(
       /[\n\t ]*</g,
       '<'
     );
@@ -18,18 +18,18 @@ describe('code', () => {
   });
   test("shouldn't parse ```", () => {
     let content = '```';
-    let html = parseToHtml(`${content}`, [], [codeParser]);
+    let html = parseToHtml(`${content}`, [], [codeStaticParser]);
     expect(html).toEqual(
       `<p class="et-p ml-0"><span class="content">${content}</span></p>`
     );
 
     content = 'content';
-    html = parseToHtml(`\`${content} \``, [], [codeParser]);
+    html = parseToHtml(`\`${content} \``, [], [codeStaticParser]);
     expect(html).toEqual(
       `<p class="et-p ml-0"><span class="content">\`${content} \`</span></p>`
     );
 
-    html = parseToHtml(`\` ${content}\``, [], [codeParser]);
+    html = parseToHtml(`\` ${content}\``, [], [codeStaticParser]);
     expect(html).toEqual(
       `<p class="et-p ml-0"><span class="content">\` ${content}\`</span></p>`
     );

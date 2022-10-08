@@ -1,20 +1,20 @@
-import { BlockParserType, BlockConfig, TxtParserType } from '../types';
+import {
+  BlockStaticParserType,
+  TxtStaticParserType,
+  toOuterHtmlFunction,
+} from '../types';
 import { fork } from 'forkable-iterator';
 import { calcIndent } from '../utils/elements.utils';
 import expand from 'emmet';
 
 export const PRECODE_ID = 'precode';
-export const precodeConfig: BlockConfig = {
+export const toOuterHtml: toOuterHtmlFunction = ({
+  indent = 0,
+  innerHtml = '<br />',
+}) => expand(`pre.et-${PRECODE_ID}.ml-${indent}>code.content{${innerHtml}}`);
+export const precodeStaticParser: BlockStaticParserType = {
   id: PRECODE_ID,
-  toEmmet: ({ indent = 0, innerHtml = '<br />' }) =>
-    `pre.et-${PRECODE_ID}.ml-${indent}>code.content{${innerHtml}}`,
-  newLineToEmmet: () => '{&nbsp;}',
-  extendOnNewLine: true,
-};
-
-export const precodeParser: BlockParserType = {
-  id: PRECODE_ID,
-  toHtml: (line, txtParsers, linesIterator) => {
+  parseMarkdownToHtml: (line, txtParsers, linesIterator) => {
     const isCodeBlockStart = line.match(/^ *```[a-zA-Z\d]*/g);
     if (!isCodeBlockStart) {
       return null;
@@ -54,16 +54,11 @@ export const precodeParser: BlockParserType = {
 const _getParsedPrecodeElement = (
   innerHtml: string,
   indent: number,
-  txtParsers: TxtParserType[]
+  txtParsers: TxtStaticParserType[]
 ) => {
-  for (const { toHtml } of txtParsers) {
-    innerHtml = toHtml(innerHtml);
+  for (const { parseMarkdownToHtml } of txtParsers) {
+    innerHtml = parseMarkdownToHtml(innerHtml);
   }
 
-  return expand(
-    precodeConfig.toEmmet({
-      indent,
-      innerHtml,
-    })
-  );
+  return toOuterHtml({ innerHtml, indent });
 };

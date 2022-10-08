@@ -1,10 +1,10 @@
 import { parseToHtml } from '../utils/static-parser.utils';
-import { iParser } from './i-configs';
+import { iStaticParser } from './i-configs';
 
 describe('i', () => {
   test('should parse', () => {
     const content = 'content';
-    let html = parseToHtml(`*${content}*`, [], [iParser]).replace(
+    let html = parseToHtml(`*${content}*`, [], [iStaticParser]).replace(
       /[\n\t ]*</g,
       '<'
     );
@@ -16,7 +16,7 @@ describe('i', () => {
       '</i></span></p>';
     expect(html).toEqual(expectedOutput);
 
-    html = parseToHtml(` *${content}* r`, [], [iParser]).replace(
+    html = parseToHtml(` *${content}* r`, [], [iStaticParser]).replace(
       /[\n\t ]*</g,
       '<'
     );
@@ -30,13 +30,13 @@ describe('i', () => {
   });
   test("shouldn't parse", () => {
     let content = `*content *`;
-    let html = parseToHtml(content, [], [iParser]);
+    let html = parseToHtml(content, [], [iStaticParser]);
     expect(html).toEqual(
       `<p class="et-p ml-0"><span class="content">${content}</span></p>`
     );
 
     content = ` *${content}*r`;
-    html = parseToHtml(content, [], [iParser]);
+    html = parseToHtml(content, [], [iStaticParser]);
     expect(html).toEqual(
       `<p class="et-p ml-0"><span class="content">${content}</span></p>`
     );

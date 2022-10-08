@@ -1,32 +1,44 @@
 import { ForkableIterator } from 'forkable-iterator';
+import { CaretContext } from './utils/caret.utils';
 
-export type BlockParserType = {
-  id: string;
-  toHtml: (
-    line: string,
-    txtParsers: TxtParserType[],
-    lineIterator: ForkableIterator<string, string>
-  ) => string | null;
-};
-export type TxtParserType = {
-  id: string;
-  toHtml: (line: string) => string;
-};
-
-export type EmmetFuncArgs = {
+export type toHtmlFuncArgs = {
   indent?: number;
   innerHtml?: string;
   [arg: string]: unknown | unknown[];
 };
-export type BlockConfig = {
+export type toOuterHtmlFunction = (args: toHtmlFuncArgs) => string;
+export type BlockStaticParserType = {
   id: string;
-  toEmmet: (args: EmmetFuncArgs) => string;
-  newLineToEmmet?: (args: EmmetFuncArgs) => string;
-  extendOnNewLine: boolean;
+  parseMarkdownToHtml: (
+    line: string,
+    txtParsers: TxtStaticParserType[],
+    lineIterator: ForkableIterator<string, string>
+  ) => string | null;
+};
+export type TxtStaticParserType = {
+  id: string;
+  parseMarkdownToHtml: (line: string) => string;
+};
+export type BlockDynamicParserType = {
+  id: string;
+  parseModifiedElement: (
+    $event: KeyboardEvent,
+    caretContext: CaretContext,
+    setCaretPosition: (element: Element, position: number) => void
+  ) => boolean;
+  parseExtendedElement: (
+    $event: KeyboardEvent,
+    caretContext: CaretContext,
+    setCaretPosition: (element: Element, position: number) => void
+  ) => boolean;
   shortcut?: Array<string | number>;
 };
-export type TxtConfig = {
+export type TxtDynamicParserType = {
   id: string;
-  toEmmet: (args: EmmetFuncArgs) => string;
+  parseModifiedElement: (
+    $event: KeyboardEvent,
+    caretContext: CaretContext,
+    setCaretPosition: (element: Element, position: number) => void
+  ) => boolean;
   shortcut?: Array<string | number>;
 };

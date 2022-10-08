@@ -1,6 +1,6 @@
 import { parseToHtml } from './static-parser.utils';
-import { headingsParser } from '../elements/headings-configs';
-import { bParser } from '../elements/b-configs';
+import { headingsStaticParser } from '../elements/headings-configs';
+import { bStaticParser } from '../elements/b-configs';
 
 describe('parser utils', () => {
   test('should parse standard text', () => {
@@ -10,7 +10,7 @@ describe('parser utils', () => {
     );
   });
   test('should parse heading block element', () => {
-    const html = parseToHtml(`# h1\n## h2`, [headingsParser])
+    const html = parseToHtml(`# h1\n## h2`, [headingsStaticParser])
       .replace(/[\n\t ]*</g, '<')
       .replace(/>[\n\t ]*/g, '>');
     const expectedOutput =
@@ -19,7 +19,7 @@ describe('parser utils', () => {
     expect(html).toEqual(expectedOutput);
   });
   test('should parse heading block element and pure text', () => {
-    const html = parseToHtml(`# h1\n## h2\ntext`, [headingsParser])
+    const html = parseToHtml(`# h1\n## h2\ntext`, [headingsStaticParser])
       .replace(/[\n\t ]*</g, '<')
       .replace(/>[\n\t ]*/g, '>');
     const expectedOutput =
@@ -29,7 +29,7 @@ describe('parser utils', () => {
     expect(html).toEqual(expectedOutput);
   });
   test('should parse bold txt element', () => {
-    const html = parseToHtml(`**bold**  r`, [], [bParser]).replace(
+    const html = parseToHtml(`**bold**  r`, [], [bStaticParser]).replace(
       /[\n\t ]*</g,
       '<'
     );
@@ -42,7 +42,10 @@ describe('parser utils', () => {
     expect(html).toEqual(expectedOutput);
   });
   test('should parse empty lines', () => {
-    const html = parseToHtml(`\n\n`, [], [bParser]).replace(/[\n\t ]*</g, '<');
+    const html = parseToHtml(`\n\n`, [], [bStaticParser]).replace(
+      /[\n\t ]*</g,
+      '<'
+    );
     const expectedOutput =
       '<p class="et-p ml-0"><span class="content">&nbsp;</span></p><p class="et-p ml-0"><span class="content">&nbsp;</span></p><p class="et-p ml-0"><span class="content">&nbsp;</span></p>';
     expect(html).toEqual(expectedOutput);
