@@ -2,9 +2,9 @@ import { el, setAttr, setStyle } from 'redom';
 import { uniqueId } from 'lodash-es';
 
 import { createWrapper } from './wrapper.element';
-import { parseToHtml } from './utils/parser.utils';
+import { parseToHtml } from './utils/static-parser.utils';
 import { createNewElement } from './utils/elements.utils';
-import { BLOCK_PARSERS, TXT_PARSERS } from './config';
+import { STATIC_BLOCK_PARSERS, STATIC_TXT_PARSERS } from './config';
 
 import './realtime-markdown.css';
 import { onKeyDown } from './events/keydown.event';
@@ -19,7 +19,11 @@ export const createMarkdownInput = (
     .fill(createNewElement({ emmet: 'p{ }' }).outerHTML)
     .join('\n');
   if (initialMarkdown) {
-    innerHtml = parseToHtml(initialMarkdown, BLOCK_PARSERS, TXT_PARSERS);
+    innerHtml = parseToHtml(
+      initialMarkdown,
+      STATIC_BLOCK_PARSERS,
+      STATIC_TXT_PARSERS
+    );
   }
 
   const contentEditable = createContentEditable(innerHtml);

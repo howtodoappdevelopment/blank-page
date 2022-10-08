@@ -1,5 +1,5 @@
 import { calcHeadingSize } from '../utils/elements.utils';
-import { parseToHtml } from '../utils/parser.utils';
+import { parseToHtml } from '../utils/static-parser.utils';
 import { headingsParser } from './headings-configs';
 
 describe('heading', () => {
@@ -23,7 +23,7 @@ describe('heading', () => {
         `<span class="sign">${sign}</span>` +
         '<span class="content">content</span>' +
         `</h${size}>` +
-        '<p class="ml-0">regular text</p>';
+        '<p class="et-p ml-0">regular text</p>';
       expect(html).toEqual(expectedOutput);
     }
   });
@@ -45,7 +45,7 @@ describe('heading', () => {
       const firstLine = heading.split('\n')[0] + '\n';
       const secondLine = heading.split('\n')[1];
       expect(html).toEqual(
-        `<p class="ml-0">${firstLine}</p><p>${secondLine}</p>`
+        `<p class="et-p ml-0">${firstLine}</p><p>${secondLine}</p>`
       );
     }
   });

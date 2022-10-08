@@ -1,4 +1,4 @@
-import { parseToHtml } from '../utils/parser.utils';
+import { parseToHtml } from '../utils/static-parser.utils';
 
 describe('text parser', () => {
   test('should parse', () => {

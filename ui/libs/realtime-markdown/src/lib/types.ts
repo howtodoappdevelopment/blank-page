@@ -18,14 +18,15 @@ export type EmmetFuncArgs = {
   innerHtml?: string;
   [arg: string]: unknown | unknown[];
 };
-export type ElementRepresentationConfig = {
+export type BlockConfig = {
   id: string;
-  initialEmmet: (args: EmmetFuncArgs) => string;
-  newLineEmmet?: (args: EmmetFuncArgs) => string;
+  toEmmet: (args: EmmetFuncArgs) => string;
+  newLineToEmmet?: (args: EmmetFuncArgs) => string;
   extendOnNewLine: boolean;
-  signTop?: RegExp;
-  signLeft?: RegExp;
-  signRight?: RegExp;
-  signInner?: RegExp;
+  shortcut?: Array<string | number>;
+};
+export type TxtConfig = {
+  id: string;
+  toEmmet: (args: EmmetFuncArgs) => string;
   shortcut?: Array<string | number>;
 };

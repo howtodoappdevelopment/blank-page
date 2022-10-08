@@ -1,22 +1,18 @@
 import { calcIndent } from '../utils/elements.utils';
 import expand from 'emmet';
-import {
-  ElementRepresentationConfig,
-  BlockParserType,
-  TxtParserType,
-} from '../types';
+import { BlockConfig, BlockParserType, TxtParserType } from '../types';
 import { fork } from 'forkable-iterator';
 
-export const quoteConfig: ElementRepresentationConfig = {
-  id: 'quote',
-  initialEmmet: ({ indent = 0, innerHtml = '&nbsp;' }) =>
-    `p.et-quote.ml-${indent}>span.content{${innerHtml}}`,
-  newLineEmmet: () => ``,
-  signLeft: /^ *- \[([x ])]/g,
+export const QUOTE_ID = 'quote';
+export const quoteConfig: BlockConfig = {
+  id: QUOTE_ID,
+  toEmmet: ({ indent = 0, innerHtml = '&nbsp;' }) =>
+    `p.et-${QUOTE_ID}.ml-${indent}>span.content{${innerHtml}}`,
+  newLineToEmmet: () => ``,
   extendOnNewLine: false,
 };
 export const quoteParser: BlockParserType = {
-  id: 'quote',
+  id: QUOTE_ID,
   toHtml: (line, txtParsers, linesIterator) => {
     if (!_isQuote(line)) {
       return null;
@@ -73,7 +69,7 @@ const _getParsedQuoteElement = (
   }
 
   return expand(
-    quoteConfig.initialEmmet({
+    quoteConfig.toEmmet({
       indent,
       innerHtml,
     })

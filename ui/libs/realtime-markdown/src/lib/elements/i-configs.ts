@@ -1,13 +1,10 @@
-import { ElementRepresentationConfig, TxtParserType } from '../types';
+import { TxtConfig, TxtParserType } from '../types';
 import expand from 'emmet';
 
-export const iConfig: ElementRepresentationConfig = {
+export const iConfig: TxtConfig = {
   id: 'i',
-  initialEmmet: ({ innerHtml = '&nbsp;' }) =>
+  toEmmet: ({ innerHtml = '&nbsp;' }) =>
     `i.et-i>span.sign{\\*}+span.content{${innerHtml}}+span.sign{\\*}`,
-  signLeft: /\*/g,
-  signRight: /\*/g,
-  extendOnNewLine: false,
 };
 export const iParser: TxtParserType = {
   id: 'i',
@@ -33,7 +30,7 @@ const _toI = (match: string) => {
     return match;
   }
 
-  const emmet = iConfig.initialEmmet({
+  const emmet = iConfig.toEmmet({
     innerHtml: parsedMatch,
   });
   return `${leftChar}${expand(emmet)}${rightChar}`;
