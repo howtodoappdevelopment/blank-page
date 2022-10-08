@@ -27,14 +27,14 @@ xdescribe('checkbox', () => {
     let content = 'content';
     let html = toHtml(`     - [ ] ${content}`);
     expect(html).toEqual(
-      `<p class="ml-0"><input type="checkbox" /> ${content}</p>`
+      `<p class="et-p ml-0"><input type="checkbox" /> ${content}</p>`
     );
 
     content = 'content';
     html = toHtml(`    - [ ] ${content}
       - [ ] ${content}`);
     expect(html).toEqual(
-      `<p class="ml-0"><input type="checkbox" /> ${content}</p>
+      `<p class="et-p ml-0"><input type="checkbox" /> ${content}</p>
 <p class="ml-1"><input type="checkbox"> ${content}</p>`
     );
   });
@@ -42,14 +42,14 @@ xdescribe('checkbox', () => {
     let content = 'content';
     let html = toHtml(`     - [x] ${content}`);
     expect(html).toEqual(
-      `<p class="ml-0"><input type="checkbox" checked="checked" /> ${content}</p>`
+      `<p class="et-p ml-0"><input type="checkbox" checked="checked" /> ${content}</p>`
     );
 
     content = 'content';
     html = toHtml(`    - [x] ${content}
       - [x] ${content}`);
     expect(html).toEqual(
-      `<p class="ml-0"><input type="checkbox" checked="checked" /> ${content}</p>
+      `<p class="et-p ml-0"><input type="checkbox" checked="checked" /> ${content}</p>
 <p class="ml-1"><input type="checkbox" checked="checked"> ${content}</p>`
     );
   });

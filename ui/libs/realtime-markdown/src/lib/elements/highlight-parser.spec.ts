@@ -1,5 +1,5 @@
 import { highlightParser } from './highlight-config';
-import { parseToHtml } from '../utils/parser.utils';
+import { parseToHtml } from '../utils/static-parser.utils';
 
 describe('highlight', () => {
   test('should parse ^ *\n', () => {
@@ -9,7 +9,7 @@ describe('highlight', () => {
       '<'
     );
     let expectedOutput =
-      '<p class="ml-0"><span class="content"><span class="et-highlight">' +
+      '<p class="et-p ml-0"><span class="content"><span class="et-highlight">' +
       '<span class="sign">==</span>' +
       '<span class="content">content</span>' +
       '<span class="sign">==</span>' +
@@ -22,7 +22,7 @@ describe('highlight', () => {
     );
 
     expectedOutput =
-      '<p class="ml-0"><span class="content">t<span class="et-highlight">' +
+      '<p class="et-p ml-0"><span class="content">t<span class="et-highlight">' +
       '<span class="sign">==</span>' +
       '<span class="content">content</span>' +
       '<span class="sign">==</span>' +
@@ -33,19 +33,19 @@ describe('highlight', () => {
     let content = `= =content==`;
     let html = parseToHtml(content, [], [highlightParser]);
     expect(html).toEqual(
-      `<p class="ml-0"><span class="content">${content}</span></p>`
+      `<p class="et-p ml-0"><span class="content">${content}</span></p>`
     );
 
     content = ` ==${content}= = r`;
     html = parseToHtml(content, [], [highlightParser]);
     expect(html).toEqual(
-      `<p class="ml-0"><span class="content">${content}</span></p>`
+      `<p class="et-p ml-0"><span class="content">${content}</span></p>`
     );
 
     content = ` ==${content}==r`;
     html = parseToHtml(content, [], [highlightParser]);
     expect(html).toEqual(
-      `<p class="ml-0"><span class="content">${content}</span></p>`
+      `<p class="et-p ml-0"><span class="content">${content}</span></p>`
     );
   });
 });

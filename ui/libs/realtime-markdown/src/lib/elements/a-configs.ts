@@ -1,14 +1,10 @@
 import expand from 'emmet';
-import { ElementRepresentationConfig, TxtParserType } from '../types';
+import { TxtConfig, TxtParserType } from '../types';
 
-export const aConfig: ElementRepresentationConfig = {
+export const aConfig: TxtConfig = {
   id: 'a',
-  initialEmmet: ({ innerHtml = '&nbsp;', url = '' }) =>
+  toEmmet: ({ innerHtml = '&nbsp;', url = '' }) =>
     `a[href=${url}].et-a{${innerHtml}}`,
-  signLeft: /\[/g,
-  signRight: /\)/g,
-  signInner: /\\]\(/g,
-  extendOnNewLine: false,
 };
 
 export const aParsers: TxtParserType[] = [
@@ -42,7 +38,7 @@ const _toA = (match: string) => {
     /[\\[\]]/g,
     ''
   );
-  const emmet = aConfig.initialEmmet({
+  const emmet = aConfig.toEmmet({
     innerHtml: aInnerHtml,
     url: aUrl,
   });
@@ -54,7 +50,7 @@ const _txtToA = (match: string) => {
   const rightCharRegExp = /( |)$/g;
   const rightChar = match.match(rightCharRegExp)?.shift() || '';
   match = match.replace(leftCharRegExp, '').replace(rightCharRegExp, '');
-  const emmet = aConfig.initialEmmet({
+  const emmet = aConfig.toEmmet({
     innerHtml: match,
     url: match,
   });

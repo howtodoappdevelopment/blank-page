@@ -1,17 +1,10 @@
-import {
-  ElementRepresentationConfig,
-  BlockParserType,
-  TxtParserType,
-} from '../types';
+import { TxtConfig, TxtParserType } from '../types';
 import expand from 'emmet';
 
-export const highlightConfig: ElementRepresentationConfig = {
+export const highlightConfig: TxtConfig = {
   id: 'highlight',
-  initialEmmet: ({ innerHtml = '&nbsp;' }) =>
+  toEmmet: ({ innerHtml = '&nbsp;' }) =>
     `span.et-highlight>span.sign{==}+span.content{${innerHtml}}+span.sign{==}`,
-  signLeft: /==/g,
-  signRight: /==/g,
-  extendOnNewLine: false,
 };
 export const highlightParser: TxtParserType = {
   id: 'highlight',
@@ -30,7 +23,7 @@ const _toHighlight = (match: string) => {
     .replace(leftCharRegExp, '')
     .replace(rightCharRegExp, '')
     .replace(/(^==|==$)/g, '');
-  const emmet = highlightConfig.initialEmmet({
+  const emmet = highlightConfig.toEmmet({
     innerHtml: match,
   });
   return `${leftChar}${expand(emmet)}${rightChar}`;

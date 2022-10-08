@@ -1,4 +1,4 @@
-import { parseToHtml } from '../utils/parser.utils';
+import { parseToHtml } from '../utils/static-parser.utils';
 import { strikeParser } from './strike-configs';
 
 describe('strike', () => {
@@ -9,7 +9,7 @@ describe('strike', () => {
       '<'
     );
     let expectedOutput =
-      '<p class="ml-0"><span class="content"><span class="et-strike">' +
+      '<p class="et-p ml-0"><span class="content"><span class="et-strike">' +
       '<span class="sign">~~</span>' +
       '<span class="content">content</span>' +
       '<span class="sign">~~</span>' +
@@ -22,7 +22,7 @@ describe('strike', () => {
     );
 
     expectedOutput =
-      '<p class="ml-0"><span class="content"><span class="et-strike">' +
+      '<p class="et-p ml-0"><span class="content"><span class="et-strike">' +
       '<span class="sign">~~</span>' +
       '<span class="content">content</span>' +
       '<span class="sign">~~</span>' +
@@ -33,19 +33,19 @@ describe('strike', () => {
     let content = `~ ~content~~`;
     let html = parseToHtml(content, [], [strikeParser]);
     expect(html).toEqual(
-      `<p class="ml-0"><span class="content">${content}</span></p>`
+      `<p class="et-p ml-0"><span class="content">${content}</span></p>`
     );
 
     content = ` ~~${content}~ ~ r`;
     html = parseToHtml(content, [], [strikeParser]);
     expect(html).toEqual(
-      `<p class="ml-0"><span class="content">${content}</span></p>`
+      `<p class="et-p ml-0"><span class="content">${content}</span></p>`
     );
 
     content = ` ~~${content}~~r`;
     html = parseToHtml(content, [], [strikeParser]);
     expect(html).toEqual(
-      `<p class="ml-0"><span class="content">${content}</span></p>`
+      `<p class="et-p ml-0"><span class="content">${content}</span></p>`
     );
   });
 });

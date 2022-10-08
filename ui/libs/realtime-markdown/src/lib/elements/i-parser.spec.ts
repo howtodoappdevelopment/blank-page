@@ -1,4 +1,4 @@
-import { parseToHtml } from '../utils/parser.utils';
+import { parseToHtml } from '../utils/static-parser.utils';
 import { iParser } from './i-configs';
 
 describe('i', () => {
@@ -9,7 +9,7 @@ describe('i', () => {
       '<'
     );
     let expectedOutput =
-      '<p class="ml-0"><span class="content"><i class="et-i">' +
+      '<p class="et-p ml-0"><span class="content"><i class="et-i">' +
       '<span class="sign">*</span>' +
       '<span class="content">content</span>' +
       '<span class="sign">*</span>' +
@@ -21,7 +21,7 @@ describe('i', () => {
       '<'
     );
     expectedOutput =
-      '<p class="ml-0"><span class="content"><i class="et-i">' +
+      '<p class="et-p ml-0"><span class="content"><i class="et-i">' +
       '<span class="sign">*</span>' +
       '<span class="content">content</span>' +
       '<span class="sign">*</span>' +
@@ -32,13 +32,13 @@ describe('i', () => {
     let content = `*content *`;
     let html = parseToHtml(content, [], [iParser]);
     expect(html).toEqual(
-      `<p class="ml-0"><span class="content">${content}</span></p>`
+      `<p class="et-p ml-0"><span class="content">${content}</span></p>`
     );
 
     content = ` *${content}*r`;
     html = parseToHtml(content, [], [iParser]);
     expect(html).toEqual(
-      `<p class="ml-0"><span class="content">${content}</span></p>`
+      `<p class="et-p ml-0"><span class="content">${content}</span></p>`
     );
   });
 });

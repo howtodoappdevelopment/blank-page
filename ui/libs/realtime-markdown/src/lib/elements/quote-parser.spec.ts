@@ -1,4 +1,4 @@
-import { parseToHtml } from '../utils/parser.utils';
+import { parseToHtml } from '../utils/static-parser.utils';
 import { quoteParser } from './quote-configs';
 
 describe('quote', () => {
@@ -8,7 +8,7 @@ describe('quote', () => {
     ]).replace(/[\n\t ]*</g, '<');
     const expectedOutput =
       '<p class="et-quote ml-1"><span class="content">content</span></p>' +
-      '<p class="ml-0"><span class="content">regular text</span></p>';
+      '<p class="et-p ml-0"><span class="content">regular text</span></p>';
     expect(html).toEqual(expectedOutput);
   });
   test('without indent', () => {
@@ -18,7 +18,7 @@ describe('quote', () => {
     );
     const expectedOutput =
       '<p class="et-quote ml-0"><span class="content">content</span></p>' +
-      '<p class="ml-0"><span class="content">regular text</span></p>';
+      '<p class="et-p ml-0"><span class="content">regular text</span></p>';
     expect(html).toEqual(expectedOutput);
   });
   test('multiline', () => {
@@ -33,7 +33,7 @@ describe('quote', () => {
       '<p class="et-quote ml-1">' +
       '<span class="content">content 3</span>' +
       '</p>' +
-      '<p class="ml-0"><span class="content">regular text</span></p>';
+      '<p class="et-p ml-0"><span class="content">regular text</span></p>';
     expect(html).toEqual(expectedOutput);
 
     html = parseToHtml(`> content\n  > content`, [quoteParser]).replace(

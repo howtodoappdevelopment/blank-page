@@ -1,14 +1,10 @@
-import { ElementRepresentationConfig, TxtParserType } from '../types';
+import { TxtConfig, TxtParserType } from '../types';
 import expand from 'emmet';
 
-export const imgConfig: ElementRepresentationConfig = {
+export const imgConfig: TxtConfig = {
   id: 'img',
-  initialEmmet: ({ src = '&nbsp;', alt = '' }) =>
+  toEmmet: ({ src = '&nbsp;', alt = '' }) =>
     `img.et-img[alt=${alt}][src=${src}]`,
-  signLeft: /!\[/g,
-  signRight: /\)/g,
-  signInner: /]\(/g,
-  extendOnNewLine: false,
 };
 export const imgParser: TxtParserType = {
   id: 'img',
@@ -29,7 +25,7 @@ const _toImg = (match: string) => {
   const src = (match.match(/\(.*\)/g) as RegExpMatchArray)
     ?.shift()
     ?.replace(/[()]/g, '');
-  const emmet = imgConfig.initialEmmet({
+  const emmet = imgConfig.toEmmet({
     alt,
     src,
   });

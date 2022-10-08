@@ -1,13 +1,10 @@
-import { ElementRepresentationConfig, TxtParserType } from '../types';
+import { TxtConfig, TxtParserType } from '../types';
 import expand from 'emmet';
 
-export const codeConfig: ElementRepresentationConfig = {
+export const codeConfig: TxtConfig = {
   id: 'code',
-  initialEmmet: ({ innerHtml = '&nbsp;' }) =>
-    `code.et-code>span.content{${innerHtml}}`,
-  signLeft: /`/g,
-  signRight: /`/g,
-  extendOnNewLine: false,
+  toEmmet: ({ innerHtml = '&nbsp;' }) =>
+    `code.et-code>span.sign{\`}+span.content{${innerHtml}}+span.sign{\`}`,
 };
 export const codeParser: TxtParserType = {
   id: 'code',
@@ -26,6 +23,6 @@ const _toCode = (match: string) => {
     .replace(leftCharRegExp, '')
     .replace(rightCharRegExp, '')
     .replace(/^`|`$/g, '');
-  const emmet = codeConfig.initialEmmet({ innerHtml: match });
+  const emmet = codeConfig.toEmmet({ innerHtml: match });
   return `${leftChar}${expand(emmet)}${rightChar}`;
 };

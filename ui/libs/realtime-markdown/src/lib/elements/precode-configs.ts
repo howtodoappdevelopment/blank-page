@@ -1,24 +1,19 @@
-import {
-  BlockParserType,
-  ElementRepresentationConfig,
-  TxtParserType,
-} from '../types';
+import { BlockParserType, BlockConfig, TxtParserType } from '../types';
 import { fork } from 'forkable-iterator';
 import { calcIndent } from '../utils/elements.utils';
 import expand from 'emmet';
-import { quoteConfig } from './quote-configs';
 
-export const precodeConfig: ElementRepresentationConfig = {
-  id: 'precode',
-  initialEmmet: ({ indent = 0, innerHtml = '<br />' }) =>
-    `pre.et-precode.ml-${indent}>code.content{${innerHtml}}`,
-  newLineEmmet: () => '{&nbsp;}',
-  signTop: /^`{3}[a-z]* */g,
+export const PRECODE_ID = 'precode';
+export const precodeConfig: BlockConfig = {
+  id: PRECODE_ID,
+  toEmmet: ({ indent = 0, innerHtml = '<br />' }) =>
+    `pre.et-${PRECODE_ID}.ml-${indent}>code.content{${innerHtml}}`,
+  newLineToEmmet: () => '{&nbsp;}',
   extendOnNewLine: true,
 };
 
 export const precodeParser: BlockParserType = {
-  id: 'precode',
+  id: PRECODE_ID,
   toHtml: (line, txtParsers, linesIterator) => {
     const isCodeBlockStart = line.match(/^ *```[a-zA-Z\d]*/g);
     if (!isCodeBlockStart) {
@@ -66,7 +61,7 @@ const _getParsedPrecodeElement = (
   }
 
   return expand(
-    precodeConfig.initialEmmet({
+    precodeConfig.toEmmet({
       indent,
       innerHtml,
     })
