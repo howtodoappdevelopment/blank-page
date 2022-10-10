@@ -7,38 +7,18 @@ export type toHtmlFuncArgs = {
   [arg: string]: unknown | unknown[];
 };
 export type toOuterHtmlFunction = (args: toHtmlFuncArgs) => string;
-export type BlockStaticParserType = {
-  id: string;
-  parseMarkdownToHtml: (
-    line: string,
-    txtParsers: TxtStaticParserType[],
-    lineIterator: ForkableIterator<string, string>
-  ) => string | null;
-};
-export type TxtStaticParserType = {
-  id: string;
-  parseMarkdownToHtml: (line: string) => string;
-};
-export type BlockDynamicParserType = {
-  id: string;
-  parseModifiedElement: (
-    $event: KeyboardEvent,
-    caretContext: CaretContext,
-    setCaretPosition: (element: Element, position: number) => void
-  ) => boolean;
-  parseExtendedElement: (
-    $event: KeyboardEvent,
-    caretContext: CaretContext,
-    setCaretPosition: (element: Element, position: number) => void
-  ) => boolean;
-  shortcut?: Array<string | number>;
-};
-export type TxtDynamicParserType = {
-  id: string;
-  parseModifiedElement: (
-    $event: KeyboardEvent,
-    caretContext: CaretContext,
-    setCaretPosition: (element: Element, position: number) => void
-  ) => boolean;
-  shortcut?: Array<string | number>;
+export type ParseBlockMarkdownToHtml = (
+  line: string,
+  txtParsers: ParserTxtMarkdownToHtml[],
+  lineIterator: ForkableIterator<string, string>
+) => string | null;
+export type ParserTxtMarkdownToHtml = (line: string) => string;
+export type ParseOnModification = (
+  $event: KeyboardEvent,
+  caretContext: CaretContext,
+  setCaretPosition: (element: Element, position: number) => void
+) => boolean;
+export type ParseOnShortCut = {
+  shortcut: string[];
+  parse: ParseOnModification;
 };

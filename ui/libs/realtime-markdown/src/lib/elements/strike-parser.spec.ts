@@ -1,13 +1,14 @@
-import { parseToHtml } from '../utils/static-parser.utils';
+import { parseMarkdownToHtml } from '../utils/static-parser.utils';
 import { strikeStaticParser } from './strike-configs';
 
 describe('strike', () => {
   test('should parse ~~~~', () => {
     const content = 'content';
-    let html = parseToHtml(`~~${content}~~`, [], [strikeStaticParser]).replace(
-      /[\n\t ]*</g,
-      '<'
-    );
+    let html = parseMarkdownToHtml(
+      `~~${content}~~`,
+      [],
+      [strikeStaticParser]
+    ).replace(/[\n\t ]*</g, '<');
     let expectedOutput =
       '<p class="et-p ml-0"><span class="content"><span class="et-strike">' +
       '<span class="sign">~~</span>' +
@@ -16,10 +17,11 @@ describe('strike', () => {
       '</span></span></p>';
     expect(html).toEqual(expectedOutput);
 
-    html = parseToHtml(`~~${content}~~ r`, [], [strikeStaticParser]).replace(
-      /[\n\t ]*</g,
-      '<'
-    );
+    html = parseMarkdownToHtml(
+      `~~${content}~~ r`,
+      [],
+      [strikeStaticParser]
+    ).replace(/[\n\t ]*</g, '<');
 
     expectedOutput =
       '<p class="et-p ml-0"><span class="content"><span class="et-strike">' +
@@ -31,19 +33,19 @@ describe('strike', () => {
   });
   test("shouldn't parse", () => {
     let content = `~ ~content~~`;
-    let html = parseToHtml(content, [], [strikeStaticParser]);
+    let html = parseMarkdownToHtml(content, [], [strikeStaticParser]);
     expect(html).toEqual(
       `<p class="et-p ml-0"><span class="content">${content}</span></p>`
     );
 
     content = ` ~~${content}~ ~ r`;
-    html = parseToHtml(content, [], [strikeStaticParser]);
+    html = parseMarkdownToHtml(content, [], [strikeStaticParser]);
     expect(html).toEqual(
       `<p class="et-p ml-0"><span class="content">${content}</span></p>`
     );
 
     content = ` ~~${content}~~r`;
-    html = parseToHtml(content, [], [strikeStaticParser]);
+    html = parseMarkdownToHtml(content, [], [strikeStaticParser]);
     expect(html).toEqual(
       `<p class="et-p ml-0"><span class="content">${content}</span></p>`
     );

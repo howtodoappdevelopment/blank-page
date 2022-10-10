@@ -1,9 +1,9 @@
 import { calcIndent } from '../utils/elements.utils';
 import expand from 'emmet';
 import {
-  BlockStaticParserType,
+  ParseBlockMarkdownToHtml,
   toOuterHtmlFunction,
-  TxtStaticParserType,
+  ParserTxtMarkdownToHtml,
 } from '../types';
 import { fork } from 'forkable-iterator';
 
@@ -12,50 +12,50 @@ export const toOuterHtml: toOuterHtmlFunction = ({
   indent = 0,
   innerHtml = '&nbsp;',
 }) => expand(`p.et-${QUOTE_ID}.ml-${indent}>span.content{${innerHtml}}`);
-export const quoteStaticParser: BlockStaticParserType = {
-  id: QUOTE_ID,
-  parseMarkdownToHtml: (line, txtParsers, linesIterator) => {
-    if (!_isQuote(line)) {
-      return null;
+export const quoteStaticParser: ParseBlockMarkdownToHtml = (
+  line,
+  txtParsers,
+  linesIterator
+) => {
+  if (!_isQuote(line)) {
+    return null;
+  }
+
+  const iteratorDuplicate = fork(linesIterator);
+
+  let parsed = '';
+  let lineToMatch = line.replace('\n', '');
+  let content = '';
+  let lastIndent = calcIndent(lineToMatch);
+  let currentIndent = -1;
+  let parsedLines = -1;
+  let isQuoteLine = true;
+  while (isQuoteLine) {
+    currentIndent = calcIndent(lineToMatch);
+    if (lastIndent !== currentIndent) {
+      parsed += _getParsedQuoteElement(content, lastIndent, txtParsers);
+      content = '';
     }
 
-    const iteratorDuplicate = fork(linesIterator);
+    content +=
+      (content !== '' ? '<br>' : '') + lineToMatch.trimLeft().replace('> ', '');
+    lastIndent = currentIndent;
+    lineToMatch =
+      (iteratorDuplicate.next().value || null)?.replace('\n', '') || '';
+    isQuoteLine = _isQuote(lineToMatch);
+    parsedLines++;
+  }
 
-    let parsed = '';
-    let lineToMatch = line.replace('\n', '');
-    let content = '';
-    let lastIndent = calcIndent(lineToMatch);
-    let currentIndent = -1;
-    let parsedLines = -1;
-    let isQuoteLine = true;
-    while (isQuoteLine) {
-      currentIndent = calcIndent(lineToMatch);
-      if (lastIndent !== currentIndent) {
-        parsed += _getParsedQuoteElement(content, lastIndent, txtParsers);
-        content = '';
-      }
+  parsed += _getParsedQuoteElement(content, currentIndent, txtParsers);
 
-      content +=
-        (content !== '' ? '<br>' : '') +
-        lineToMatch.trimLeft().replace('> ', '');
-      lastIndent = currentIndent;
-      lineToMatch =
-        (iteratorDuplicate.next().value || null)?.replace('\n', '') || '';
-      isQuoteLine = _isQuote(lineToMatch);
-      parsedLines++;
+  // move main iterator to skip already parsed lines
+  if (parsedLines > 0) {
+    for (let i = 0; i < parsedLines; i++) {
+      linesIterator.next();
     }
+  }
 
-    parsed += _getParsedQuoteElement(content, currentIndent, txtParsers);
-
-    // move main iterator to skip already parsed lines
-    if (parsedLines > 0) {
-      for (let i = 0; i < parsedLines; i++) {
-        linesIterator.next();
-      }
-    }
-
-    return parsed;
-  },
+  return parsed;
 };
 
 const _isQuote = (line: string | undefined) => !!line?.trim()?.startsWith('> ');
@@ -63,9 +63,9 @@ const _isQuote = (line: string | undefined) => !!line?.trim()?.startsWith('> ');
 const _getParsedQuoteElement = (
   innerHtml: string,
   indent: number,
-  txtParsers: TxtStaticParserType[]
+  txtParsers: ParserTxtMarkdownToHtml[]
 ) => {
-  for (const { parseMarkdownToHtml } of txtParsers) {
+  for (const parseMarkdownToHtml of txtParsers) {
     innerHtml = parseMarkdownToHtml(innerHtml);
   }
 

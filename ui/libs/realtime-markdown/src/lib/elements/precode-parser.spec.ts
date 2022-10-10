@@ -1,9 +1,9 @@
-import { parseToHtml } from '../utils/static-parser.utils';
+import { parseMarkdownToHtml } from '../utils/static-parser.utils';
 import { precodeStaticParser } from './precode-configs';
 
 describe('precode', () => {
   test('should parse with indent', () => {
-    const html = parseToHtml('  ```\n# code\n# code 2\n```', [
+    const html = parseMarkdownToHtml('  ```\n# code\n# code 2\n```', [
       precodeStaticParser,
     ]).replace(/[\n\t ]*</g, '<');
     const expectedOutput =
@@ -13,7 +13,7 @@ describe('precode', () => {
     expect(html).toEqual(expectedOutput);
   });
   test('should parse to the end of file', () => {
-    const html = parseToHtml('```\n# code\n# code 2\nend line', [
+    const html = parseMarkdownToHtml('```\n# code\n# code 2\nend line', [
       precodeStaticParser,
     ]).replace(/[\n\t ]*</g, '<');
     const expectedOutput =
@@ -23,7 +23,7 @@ describe('precode', () => {
     expect(html).toEqual(expectedOutput);
   });
   test('should parse without indent', () => {
-    const html = parseToHtml(
+    const html = parseMarkdownToHtml(
       '```\n# code\n# code 2\nend line\n```\nregular text   ',
       [precodeStaticParser]
     ).replace(/[\n\t ]*</g, '<');
@@ -35,7 +35,7 @@ describe('precode', () => {
     expect(html).toEqual(expectedOutput);
   });
   test('should parse with code type name', () => {
-    const html = parseToHtml(
+    const html = parseMarkdownToHtml(
       '```javascript\n# code\n# code 2\nend line\n```\nregular text   ',
       [precodeStaticParser]
     ).replace(/[\n\t ]*</g, '<');
@@ -47,7 +47,7 @@ describe('precode', () => {
     expect(html).toEqual(expectedOutput);
   });
   test('should parse with no content', () => {
-    const html = parseToHtml('```javascript\n```\nregular text   ', [
+    const html = parseMarkdownToHtml('```javascript\n```\nregular text   ', [
       precodeStaticParser,
     ]).replace(/[\n\t ]*</g, '<');
     const expectedOutput =

@@ -1,4 +1,4 @@
-import { BlockStaticParserType } from '../types';
+import { ParseBlockMarkdownToHtml } from '../types';
 import expand from 'emmet';
 import { calcHeadingSize } from '../utils/elements.utils';
 import { keyBy } from 'lodash-es';
@@ -45,24 +45,23 @@ const headingsMap = keyBy(
   [h1Config, h2Config, h3Config, h4Config, h5Config, h6Config],
   'id'
 );
-export const headingsStaticParser: BlockStaticParserType = {
-  id: 'heading',
-  parseMarkdownToHtml: (line, txtParsers) => {
-    const regExp = /^#{1,6} .*$/gm;
-    if (!regExp.test(line)) {
-      return null;
-    }
 
-    const H_ID = `h${calcHeadingSize(line)}`;
-    line = line.replace(/^#{1,6} /g, '');
-    for (const { parseMarkdownToHtml } of txtParsers) {
-      line = parseMarkdownToHtml(line);
-    }
+export const headingsStaticParser: ParseBlockMarkdownToHtml = (
+  line,
+  txtParsers
+) => {
+  const regExp = /^#{1,6} .*$/gm;
+  if (!regExp.test(line)) {
+    return null;
+  }
 
-    return expand(
-      headingsMap[H_ID].toOuterHtml({
-        innerHtml: line,
-      })
-    );
-  },
+  const H_ID = `h${calcHeadingSize(line)}`;
+  line = line.replace(/^#{1,6} /g, '');
+  for (const parseMarkdownToHtml of txtParsers) {
+    line = parseMarkdownToHtml(line);
+  }
+
+  return headingsMap[H_ID].toOuterHtml({
+    innerHtml: line,
+  });
 };

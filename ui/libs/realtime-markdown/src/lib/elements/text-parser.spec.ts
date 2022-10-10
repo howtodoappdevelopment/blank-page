@@ -1,11 +1,11 @@
-import { parseToHtml } from '../utils/static-parser.utils';
+import { parseMarkdownToHtml } from '../utils/static-parser.utils';
 
 describe('text parser', () => {
   test('should parse', () => {
     const content = '     content';
-    const html = parseToHtml(content).replace(/[\n\t ]*</g, '<');
+    const html = parseMarkdownToHtml(content).replace(/[\n\t ]*</g, '<');
     expect(html).toEqual(
-      `<p class="ml-2"><span class="content"> ${content.trimLeft()}</span></p>`
+      `<p class="et-p ml-2"><span class="content"> ${content.trimLeft()}</span></p>`
     );
   });
 });

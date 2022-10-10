@@ -1,4 +1,4 @@
-import { toOuterHtmlFunction, TxtStaticParserType } from '../types';
+import { toOuterHtmlFunction, ParserTxtMarkdownToHtml } from '../types';
 import expand from 'emmet';
 
 export const B_ID = 'b';
@@ -6,12 +6,9 @@ export const toOuterHtml: toOuterHtmlFunction = ({ innerHtml = '&nbsp;' }) =>
   expand(
     `b.et-${B_ID}>span.sign{\\*\\*}+span.content{${innerHtml}}+span.sign{\\*\\*}`
   );
-export const bStaticParser: TxtStaticParserType = {
-  id: B_ID,
-  parseMarkdownToHtml: (line: string) => {
-    const regExp = /( |^)\*\*[^*]*\*\*( |$)/gm;
-    return line.replace(regExp, (match) => _toB(match));
-  },
+export const bStaticParser: ParserTxtMarkdownToHtml = (line: string) => {
+  const regExp = /( |^)\*\*[^*]*\*\*( |$)/gm;
+  return line.replace(regExp, (match) => _toB(match));
 };
 
 const _toB = (innerHtml: string) => {
