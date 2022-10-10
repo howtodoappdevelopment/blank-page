@@ -2,7 +2,7 @@ import { el, setAttr, setStyle } from 'redom';
 import { uniqueId } from 'lodash-es';
 
 import { createWrapper } from './wrapper.element';
-import { parseToHtml } from './utils/static-parser.utils';
+import { parseMarkdownToHtml } from './utils/static-parser.utils';
 import { createNewElement } from './utils/elements.utils';
 import { STATIC_BLOCK_PARSERS, STATIC_TXT_PARSERS } from './config';
 
@@ -19,7 +19,7 @@ export const createMarkdownInput = (
     .fill(createNewElement({ emmet: 'p{ }' }).outerHTML)
     .join('\n');
   if (initialMarkdown) {
-    innerHtml = parseToHtml(
+    innerHtml = parseMarkdownToHtml(
       initialMarkdown,
       STATIC_BLOCK_PARSERS,
       STATIC_TXT_PARSERS

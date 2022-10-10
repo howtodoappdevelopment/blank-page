@@ -1,4 +1,4 @@
-import { toOuterHtmlFunction, TxtStaticParserType } from '../types';
+import { toOuterHtmlFunction, ParserTxtMarkdownToHtml } from '../types';
 import expand from 'emmet';
 
 export const IMG_ID = 'img';
@@ -6,12 +6,11 @@ export const toOuterHtml: toOuterHtmlFunction = ({
   src = '&nbsp;',
   alt = '',
 }) => expand(`img.et-${IMG_ID}[alt=${alt}][src=${src}]`);
-export const imgStaticParser: TxtStaticParserType = {
-  id: IMG_ID,
-  parseMarkdownToHtml: (line: string): string => {
-    const regExp = /( |^)!\[[^[\]]*]\([^()]*\)( |$)/gm;
-    return line.replace(regExp, (match) => _toImg(match));
-  },
+export const imgStaticParser: ParserTxtMarkdownToHtml = (
+  line: string
+): string => {
+  const regExp = /( |^)!\[[^[\]]*]\([^()]*\)( |$)/gm;
+  return line.replace(regExp, (match) => _toImg(match));
 };
 
 const _toImg = (match: string) => {

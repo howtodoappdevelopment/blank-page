@@ -1,4 +1,4 @@
-import { toOuterHtmlFunction, TxtStaticParserType } from '../types';
+import { toOuterHtmlFunction, ParserTxtMarkdownToHtml } from '../types';
 import expand from 'emmet';
 
 export const CODE_ID = 'code';
@@ -6,12 +6,9 @@ export const toOuterHtml: toOuterHtmlFunction = ({ innerHtml = '&nbsp;' }) =>
   expand(
     `code.et-${CODE_ID}>span.sign{\`}+span.content{${innerHtml}}+span.sign{\`}`
   );
-export const codeStaticParser: TxtStaticParserType = {
-  id: CODE_ID,
-  parseMarkdownToHtml: (line: string) => {
-    const regExp = /( |^|>)`[^ ][^`]+[^ ]`( |$|<)/gm;
-    return line.replace(regExp, (match) => _toCode(match));
-  },
+export const codeStaticParser: ParserTxtMarkdownToHtml = (line: string) => {
+  const regExp = /( |^|>)`[^ ][^`]+[^ ]`( |$|<)/gm;
+  return line.replace(regExp, (match) => _toCode(match));
 };
 
 const _toCode = (match: string) => {

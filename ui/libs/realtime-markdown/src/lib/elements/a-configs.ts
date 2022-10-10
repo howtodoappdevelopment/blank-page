@@ -1,26 +1,20 @@
 import expand from 'emmet';
-import { toOuterHtmlFunction, TxtStaticParserType } from '../types';
+import { toOuterHtmlFunction, ParserTxtMarkdownToHtml } from '../types';
 
 export const A_ID = 'a';
 export const toOuterHtml: toOuterHtmlFunction = ({
   innerHtml = '&nbsp;',
   url = '',
 }) => expand(`a[href=${url}].et-${A_ID}{${innerHtml}}`);
-export const aStaticParsers: TxtStaticParserType[] = [
-  {
-    id: A_ID,
-    parseMarkdownToHtml: (line: string) => {
-      const regExp = /\[[^[\]]*]\([^()]*\)/gm;
-      return line.replace(regExp, (match) => _toA(match));
-    },
+export const aStaticParsers: ParserTxtMarkdownToHtml[] = [
+  (line: string) => {
+    const regExp = /\[[^[\]]*]\([^()]*\)/gm;
+    return line.replace(regExp, (match) => _toA(match));
   },
-  {
-    id: A_ID,
-    parseMarkdownToHtml: (line: string) => {
-      const regExp =
-        /( |^)https?:\/\/(www\.)?[-a-zA-Z\d@:%._+~#=]{1,256}\.[a-zA-Z\d]{2,6}\b([-a-zA-Z\d@:%_+.()~#?&\\/=]*)( |$)/gm;
-      return line.replace(regExp, (match) => _txtToA(match));
-    },
+  (line: string) => {
+    const regExp =
+      /( |^)https?:\/\/(www\.)?[-a-zA-Z\d@:%._+~#=]{1,256}\.[a-zA-Z\d]{2,6}\b([-a-zA-Z\d@:%_+.()~#?&\\/=]*)( |$)/gm;
+    return line.replace(regExp, (match) => _txtToA(match));
   },
 ];
 

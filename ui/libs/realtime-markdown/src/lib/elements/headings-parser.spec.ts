@@ -1,5 +1,5 @@
 import { calcHeadingSize } from '../utils/elements.utils';
-import { parseToHtml } from '../utils/static-parser.utils';
+import { parseMarkdownToHtml } from '../utils/static-parser.utils';
 import { headingsStaticParser } from './headings-configs';
 
 describe('heading', () => {
@@ -12,7 +12,7 @@ describe('heading', () => {
           .join('') + ' content\nregular text'
     );
     for (const heading in headings) {
-      const html = parseToHtml(heading, [headingsStaticParser]).replace(
+      const html = parseMarkdownToHtml(heading, [headingsStaticParser]).replace(
         /[\n\t ]*</g,
         '<'
       );
@@ -38,7 +38,7 @@ describe('heading', () => {
         ' content\nregular text'
     );
     for (const heading in headings) {
-      const html = parseToHtml(heading, [headingsStaticParser]).replace(
+      const html = parseMarkdownToHtml(heading, [headingsStaticParser]).replace(
         /[\n\t ]*</g,
         '<'
       );

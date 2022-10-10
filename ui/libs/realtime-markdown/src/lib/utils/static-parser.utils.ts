@@ -1,17 +1,17 @@
-import { BlockStaticParserType, TxtStaticParserType } from '../types';
+import { ParseBlockMarkdownToHtml, ParserTxtMarkdownToHtml } from '../types';
 import { paragraphStaticParser } from '../elements/text-parser';
 import { buildForkableIterator, ForkableIterator } from 'forkable-iterator';
 
-export const parseToHtml = (
+export const parseMarkdownToHtml = (
   markdown: string,
-  blockParsers: BlockStaticParserType[] = [],
-  txtParsers: TxtStaticParserType[] = []
+  blockParsers: ParseBlockMarkdownToHtml[] = [],
+  txtParsers: ParserTxtMarkdownToHtml[] = []
 ): string => [..._parseToHtml(markdown, blockParsers, txtParsers)].join('');
 
 function* _parseToHtml(
   markdown: string,
-  blockParsers: BlockStaticParserType[] = [],
-  txtParsers: TxtStaticParserType[] = []
+  blockParsers: ParseBlockMarkdownToHtml[] = [],
+  txtParsers: ParserTxtMarkdownToHtml[] = []
 ): Generator<string> {
   const lines = markdown.split('\n').map((line) => `${line}\n`);
   const linesIterator: ForkableIterator<string, string> = buildForkableIterator(
@@ -22,7 +22,7 @@ function* _parseToHtml(
   let { value, done } = nextItem as { value: string; done: boolean };
   while (!done) {
     // try parse txt block
-    for (const { parseMarkdownToHtml } of blockParsers) {
+    for (const parseMarkdownToHtml of blockParsers) {
       html = parseMarkdownToHtml(value, txtParsers, linesIterator);
       if (html) {
         yield html;
@@ -33,11 +33,7 @@ function* _parseToHtml(
     // parse as regular txt
     const isRegularTxt = html === null;
     if (isRegularTxt) {
-      yield paragraphStaticParser.parseMarkdownToHtml(
-        value,
-        txtParsers,
-        linesIterator
-      ) as string;
+      yield paragraphStaticParser(value, txtParsers, linesIterator) as string;
     }
 
     nextItem = linesIterator.next();

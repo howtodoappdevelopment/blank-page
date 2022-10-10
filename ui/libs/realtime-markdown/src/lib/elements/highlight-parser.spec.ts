@@ -1,10 +1,10 @@
 import { highlightStaticParser } from './highlight-config';
-import { parseToHtml } from '../utils/static-parser.utils';
+import { parseMarkdownToHtml } from '../utils/static-parser.utils';
 
 describe('highlight', () => {
   test('should parse ^ *\n', () => {
     const content = 'content';
-    let html = parseToHtml(
+    let html = parseMarkdownToHtml(
       `==${content}==`,
       [],
       [highlightStaticParser]
@@ -17,7 +17,7 @@ describe('highlight', () => {
       '</span></span></p>';
     expect(html).toEqual(expectedOutput);
 
-    html = parseToHtml(
+    html = parseMarkdownToHtml(
       `t ==${content}== r`,
       [],
       [highlightStaticParser]
@@ -33,19 +33,19 @@ describe('highlight', () => {
   });
   test("shouldn't parse", () => {
     let content = `= =content==`;
-    let html = parseToHtml(content, [], [highlightStaticParser]);
+    let html = parseMarkdownToHtml(content, [], [highlightStaticParser]);
     expect(html).toEqual(
       `<p class="et-p ml-0"><span class="content">${content}</span></p>`
     );
 
     content = ` ==${content}= = r`;
-    html = parseToHtml(content, [], [highlightStaticParser]);
+    html = parseMarkdownToHtml(content, [], [highlightStaticParser]);
     expect(html).toEqual(
       `<p class="et-p ml-0"><span class="content">${content}</span></p>`
     );
 
     content = ` ==${content}==r`;
-    html = parseToHtml(content, [], [highlightStaticParser]);
+    html = parseMarkdownToHtml(content, [], [highlightStaticParser]);
     expect(html).toEqual(
       `<p class="et-p ml-0"><span class="content">${content}</span></p>`
     );
