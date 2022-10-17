@@ -1,6 +1,6 @@
 import { calcHeadingSize } from '../utils/elements.utils';
 import { parseMarkdownToHtml } from '../utils/static-parser.utils';
-import { headingsStaticParser } from './headings-configs';
+import { headingsStaticParser } from './headings.parsers';
 
 describe('heading', () => {
   test('should parse heading', () => {

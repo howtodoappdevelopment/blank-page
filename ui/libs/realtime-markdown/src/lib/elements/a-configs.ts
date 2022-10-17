@@ -1,12 +1,12 @@
 import expand from 'emmet';
-import { toOuterHtmlFunction, ParserTxtMarkdownToHtml } from '../types';
+import { toOuterHtmlFunction, ParseTxtMarkdownToHtml } from '../types';
 
 export const A_ID = 'a';
 export const toOuterHtml: toOuterHtmlFunction = ({
   innerHtml = '&nbsp;',
   url = '',
 }) => expand(`a[href=${url}].et-${A_ID}{${innerHtml}}`);
-export const aStaticParsers: ParserTxtMarkdownToHtml[] = [
+export const aStaticParsers: ParseTxtMarkdownToHtml[] = [
   (line: string) => {
     const regExp = /\[[^[\]]*]\([^()]*\)/gm;
     return line.replace(regExp, (match) => _toA(match));

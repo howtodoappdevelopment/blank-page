@@ -3,7 +3,7 @@ import expand from 'emmet';
 import {
   ParseBlockMarkdownToHtml,
   toOuterHtmlFunction,
-  ParserTxtMarkdownToHtml,
+  ParseTxtMarkdownToHtml,
 } from '../types';
 import { fork } from 'forkable-iterator';
 
@@ -63,7 +63,7 @@ const _isQuote = (line: string | undefined) => !!line?.trim()?.startsWith('> ');
 const _getParsedQuoteElement = (
   innerHtml: string,
   indent: number,
-  txtParsers: ParserTxtMarkdownToHtml[]
+  txtParsers: ParseTxtMarkdownToHtml[]
 ) => {
   for (const parseMarkdownToHtml of txtParsers) {
     innerHtml = parseMarkdownToHtml(innerHtml);

@@ -1,4 +1,4 @@
-import { ParserTxtMarkdownToHtml } from '../types';
+import { ParseTxtMarkdownToHtml } from '../types';
 import expand from 'emmet';
 
 export const I_ID = 'i';
@@ -6,7 +6,7 @@ export const toOuterHtml = ({ innerHtml = '&nbsp;' }) =>
   expand(
     `i.et-${I_ID}>span.sign{\\*}+span.content{${innerHtml}}+span.sign{\\*}`
   );
-export const iStaticParser: ParserTxtMarkdownToHtml = (line: string) => {
+export const iStaticParser: ParseTxtMarkdownToHtml = (line: string) => {
   const regExp = /( |^)\*[^*]+\*( |$)/gm;
   return line.replace(regExp, (match) => _toI(match));
 };

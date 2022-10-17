@@ -7,7 +7,6 @@ export default {
       tsconfig: '<rootDir>/tsconfig.spec.json',
     },
   },
-  testEnvironment: 'node',
   transform: {
     '^.+\\.[tj]sx?$': 'ts-jest',
   },
@@ -16,4 +15,6 @@ export default {
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../coverage/libs/realtime-markdown',
+  // setupFiles: ['./src/__mocks__/dom.ts'],
+  testEnvironment: 'jsdom',
 };

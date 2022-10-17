@@ -1,6 +1,6 @@
 import {
   ParseBlockMarkdownToHtml,
-  ParserTxtMarkdownToHtml,
+  ParseTxtMarkdownToHtml,
   toOuterHtmlFunction,
 } from '../types';
 import { fork } from 'forkable-iterator';
@@ -54,7 +54,7 @@ export const precodeStaticParser: ParseBlockMarkdownToHtml = (
 const _getParsedPrecodeElement = (
   innerHtml: string,
   indent: number,
-  txtParsers: ParserTxtMarkdownToHtml[]
+  txtParsers: ParseTxtMarkdownToHtml[]
 ) => {
   for (const parseMarkdownToHtml of txtParsers) {
     innerHtml = parseMarkdownToHtml(innerHtml);

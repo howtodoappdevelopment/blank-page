@@ -3,7 +3,6 @@ import { uniqueId } from 'lodash-es';
 
 import { createWrapper } from './wrapper.element';
 import { parseMarkdownToHtml } from './utils/static-parser.utils';
-import { createNewElement } from './utils/elements.utils';
 import { STATIC_BLOCK_PARSERS, STATIC_TXT_PARSERS } from './config';
 
 import './realtime-markdown.css';
@@ -11,13 +10,12 @@ import { onKeyDown } from './events/keydown.event';
 import { onMouseDown } from './events/mousedown.event';
 import { hideSignsOf } from './utils/sign.utils';
 import { onKeyUp } from './events/keyup.event';
+import expand from 'emmet';
 
 export const createMarkdownInput = (
   initialMarkdown?: string
 ): HTMLDivElement => {
-  let innerHtml: string = Array(10)
-    .fill(createNewElement({ emmet: 'p{ }' }).outerHTML)
-    .join('\n');
+  let innerHtml: string = Array(10).fill(expand('p{ }')).join('\n');
   if (initialMarkdown) {
     innerHtml = parseMarkdownToHtml(
       initialMarkdown,
