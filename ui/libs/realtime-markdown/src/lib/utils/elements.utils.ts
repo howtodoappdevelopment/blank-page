@@ -1,32 +1,50 @@
-import { setAttr, setStyle } from 'redom';
-import expand from 'emmet';
 import { config } from '../config';
-import { includes } from 'lodash-es';
 
-export type DOMConfig = {
-  emmet: string;
-  attr?: string | object;
-  styles?: string | object;
-  className?: string;
+export const currentInnerHtml = (
+  $event: KeyboardEvent,
+  innerHtml: string,
+  relativePosition: number
+): string => {
+  switch ($event.key) {
+    case 'Backspace':
+      return [
+        innerHtml.slice(0, relativePosition - 1),
+        innerHtml.slice(relativePosition),
+      ].join('');
+    default:
+      return [
+        innerHtml.slice(0, relativePosition),
+        $event.key,
+        innerHtml.slice(relativePosition),
+      ].join('');
+  }
 };
-export const createNewElement = ({
-  emmet,
-  attr,
-  styles,
-}: DOMConfig): HTMLElement => {
-  const parsedHtml = expand(emmet);
+
+export const htmlToElement = (html: string): HTMLElement => {
   const div = document.createElement('div');
-  div.innerHTML = parsedHtml;
-  const newElement = div.firstChild as HTMLElement;
-  setStyle(newElement, styles ?? {});
-  setAttr(newElement, attr ?? {});
-  return newElement;
+  div.innerHTML = html;
+  return div.firstChild as HTMLElement;
 };
 
+export const getParentElementOf = (
+  currentHtmlElement: HTMLElement
+): HTMLElement =>
+  isSign(currentHtmlElement) || isContent(currentHtmlElement)
+    ? (currentHtmlElement.parentElement as HTMLElement)
+    : currentHtmlElement;
 export const isHeading = (currentElement: HTMLElement): boolean =>
-  currentElement.tagName.toLowerCase().startsWith('h');
-export const calcHeadingSize = (innerHtml: string) =>
-  (innerHtml.match(/^#{1,6} /g) as RegExpMatchArray)[0].length - 1;
+  currentElement.className.includes('et-h');
+export const getHeadingSize = (currentElement: HTMLElement): number | -1 =>
+  isHeading(currentElement)
+    ? +(currentElement.className.match(/et-h\d/g) || ['-1'])[0].replace(
+        'et-h',
+        ''
+      )
+    : -1;
+export const NOT_HEADING = 0;
+export const calcHeadingSize = (innerHtml: string): number | 0 =>
+  (innerHtml.match(/^#{1,6}( |&nbsp;)/g) || [''])[0].replace(/( |&nbsp;)/, '')
+    .length;
 export const isParagraph = (currentElement: HTMLElement): boolean =>
   currentElement.tagName.toLowerCase() === 'p';
 export const isDiv = (currentElement: HTMLElement): boolean =>
@@ -76,8 +94,8 @@ export const decreaseIndent = (
   const currentIndent = getIndent(element);
   const newIndent = currentIndent - 1 < 0 ? 0 : currentIndent - 1;
   element.className = element.className.replace(
-    /pl-\d{1,2}/g,
-    `pl-${newIndent}`
+    /ml-\d{1,2}/g,
+    `ml-${newIndent}`
   );
 };
 export const getIndent = (element: HTMLElement | null | undefined): number => {
@@ -85,6 +103,6 @@ export const getIndent = (element: HTMLElement | null | undefined): number => {
     return -1;
   }
 
-  const match = element.className.match(/pl-\d{1,2}/g);
-  return match ? +match[0].replace('pl-', '') : -1;
+  const match = element.className.match(/ml-\d{1,2}/g);
+  return match ? +match[0].replace('ml-', '') : -1;
 };

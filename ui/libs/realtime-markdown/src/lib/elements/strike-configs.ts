@@ -1,4 +1,4 @@
-import { toOuterHtmlFunction, ParserTxtMarkdownToHtml } from '../types';
+import { toOuterHtmlFunction, ParseTxtMarkdownToHtml } from '../types';
 import expand from 'emmet';
 
 export const STRIKE_ID = 'strike';
@@ -6,7 +6,7 @@ export const toOuterHtml: toOuterHtmlFunction = ({ innerHtml = '&nbsp;' }) =>
   expand(
     `span.et-${STRIKE_ID}>span.sign{~~}+span.content{${innerHtml}}+span.sign{~~}`
   );
-export const strikeStaticParser: ParserTxtMarkdownToHtml = (line: string) => {
+export const strikeStaticParser: ParseTxtMarkdownToHtml = (line: string) => {
   const regExp = /( |^)~~[^~]*~~( |$)/gm;
   return line.replace(regExp, (match) => _toStrike(match));
 };

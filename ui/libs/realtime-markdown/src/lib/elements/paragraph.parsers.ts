@@ -7,8 +7,7 @@ export const toOuterHtml: toOuterHtmlFunction = ({
   innerHtml = '&nbsp;',
 }) =>
   `<p class="et-${P_ID} ml-${indent}"><span class="content">${innerHtml}</span></p>`;
-
-export const paragraphStaticParser: ParseBlockMarkdownToHtml = (
+export const parseParagraphMarkdownToHtml: ParseBlockMarkdownToHtml = (
   line: string,
   txtParsers
 ): string => {

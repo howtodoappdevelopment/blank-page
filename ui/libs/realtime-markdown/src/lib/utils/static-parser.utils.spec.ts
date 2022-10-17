@@ -1,5 +1,5 @@
 import { parseMarkdownToHtml } from './static-parser.utils';
-import { headingsStaticParser } from '../elements/headings-configs';
+import { headingsStaticParser } from '../elements/headings.parsers';
 import { bStaticParser } from '../elements/b-configs';
 
 describe('parser utils', () => {

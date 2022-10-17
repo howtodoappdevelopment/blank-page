@@ -9,14 +9,15 @@ export type toHtmlFuncArgs = {
 export type toOuterHtmlFunction = (args: toHtmlFuncArgs) => string;
 export type ParseBlockMarkdownToHtml = (
   line: string,
-  txtParsers: ParserTxtMarkdownToHtml[],
+  txtParsers: ParseTxtMarkdownToHtml[],
   lineIterator: ForkableIterator<string, string>
 ) => string | null;
-export type ParserTxtMarkdownToHtml = (line: string) => string;
+export type ParseTxtMarkdownToHtml = (line: string) => string;
 export type ParseOnModification = (
   $event: KeyboardEvent,
   caretContext: CaretContext,
-  setCaretPosition: (element: Element, position: number) => void
+  setCaretPosition: (element: Element, position: number) => void,
+  txtParsers?: ParseOnModification[]
 ) => boolean;
 export type ParseOnShortCut = {
   shortcut: string[];

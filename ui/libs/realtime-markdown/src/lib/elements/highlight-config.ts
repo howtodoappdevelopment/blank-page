@@ -1,4 +1,4 @@
-import { toOuterHtmlFunction, ParserTxtMarkdownToHtml } from '../types';
+import { toOuterHtmlFunction, ParseTxtMarkdownToHtml } from '../types';
 import expand from 'emmet';
 
 export const HIGHLIGHT_ID = 'highlight';
@@ -6,9 +6,7 @@ export const toOuterHtml: toOuterHtmlFunction = ({ innerHtml = '&nbsp;' }) =>
   expand(
     `span.et-${HIGHLIGHT_ID}>span.sign{==}+span.content{${innerHtml}}+span.sign{==}`
   );
-export const highlightStaticParser: ParserTxtMarkdownToHtml = (
-  line: string
-) => {
+export const highlightStaticParser: ParseTxtMarkdownToHtml = (line: string) => {
   const regExp = /( |^)==[^=]*==( |$)/gm;
   return line.replace(regExp, (match) => _toHighlight(match));
 };

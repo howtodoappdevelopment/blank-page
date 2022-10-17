@@ -12,22 +12,19 @@ export const getCaretContext = (element: Element): CaretContext | null => {
     return null;
   }
 
-  const range = selection.rangeCount > 0 ? selection.getRangeAt(0) : undefined;
+  const range =
+    selection.rangeCount > 0 ? selection.getRangeAt(0).cloneRange() : undefined;
   if (!range) {
     return null;
   }
 
-  const clonedRange = range.cloneRange();
-  clonedRange.selectNodeContents(element);
-  clonedRange.setEnd(range.endContainer, range.endOffset);
-  const absolutePosition = clonedRange.toString().length;
-  clonedRange.detach();
+  range.selectNodeContents(element);
+  range.setEnd(range.endContainer, range.endOffset);
+  const absolutePosition = range.toString().length;
+  range.detach();
 
   let currentNode = selection.anchorNode as HTMLElement;
-  if (
-    currentNode.nodeType === 3 ||
-    currentNode.tagName.toLowerCase() === 'span'
-  ) {
+  if (currentNode.nodeType === 3) {
     currentNode = selection.anchorNode?.parentNode as HTMLElement;
   }
 
